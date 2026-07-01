@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LOKALI — Localise ton prestataire à portée de main</title>
+<meta name="description" content="Trouve instantanément le meilleur prestataire près de toi en Afrique francophone. 100% gratuit.">
+<link rel="stylesheet" href="lokali.css">
+<link rel="manifest" id="pwaManifest">
+<meta name="theme-color" content="#F97316">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="LOKALI">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23F97316' rx='20'/%3E%3Ccircle cx='50' cy='38' r='18' fill='%23fff'/%3E%3Ccircle cx='50' cy='38' r='7' fill='%23F97316'/%3E%3Ccircle cx='50' cy='38' r='3' fill='%2310B981'/%3E%3Cpath d='M35 50 Q50 75 50 78 Q50 75 65 50Z' fill='%23fff'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<!-- BANNIÈRE INSTALLATION PWA -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:3000;background:linear-gradient(135deg,#1A1A2E,#0F3460);border-top:2px solid var(--orange);padding:14px 20px;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 -4px 24px rgba(0,0,0,.4)">
+  <div style="display:flex;align-items:center;gap:12px">
+    <div style="width:44px;height:44px;background:var(--orange);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">📍</div>
+    <div>
+      <div style="font-size:14px;font-weight:800;color:#fff">Installer LOKALI</div>
+      <div style="font-size:12px;color:rgba(255,255,255,.6)">Accès rapide depuis ton écran d'accueil</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px;flex-shrink:0">
+    <button id="installBtn" style="background:var(--orange);color:#fff;border:none;border-radius:10px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer">Installer</button>
+    <button onclick="document.getElementById('installBanner').style.display='none'" style="background:rgba(255,255,255,.1);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-size:13px;cursor:pointer">✕</button>
+  </div>
+</div>
+
+<!-- NOTIF BUBBLE -->
+<div class="notif-bubble" id="notifBubble"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="#">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="11" r="8" fill="#FF6B2C"/>
+      <circle cx="14" cy="11" r="3.5" fill="#0D0D0D"/>
+      <circle cx="14" cy="11" r="1.5" fill="#00E676"/>
+      <path d="M 8 17 Q 14 27 14 28 Q 14 27 20 17 Z" fill="#FF6B2C"/>
+    </svg>
+    <span class="nav-logo-txt"><b>L</b>OKALI</span>
+    <span class="nav-slogan">Sans visibilité, le talent ne sert à rien.</span>
+  </a>
+  <div class="nav-btns">
+    <button class="btn-express" onclick="openExpressSearch()" title="LOKALI Express">⚡</button>
+    <button class="btn-annonces" onclick="showAnnoncesPage()" title="Annonces">📢<span class="ndot"></span></button>
+    <button class="btn-pri" onclick="openMonCompte()">👤 Mon compte</button>
+  </div>
+</nav>
+
+  <div id="homePage">
+<!-- TICKER CITATIONS -->
+  <div class="ticker-wrap" id="tickerWrap">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item">"Ubuntu : je suis parce que nous sommes." <span>— Proverbe africain</span></span><span class="ticker-item">"Seul on va vite, ensemble on va loin." <span>— Proverbe africain</span></span><span class="ticker-item">"La forêt serait silencieuse si aucun oiseau ne chantait, sauf celui qui chante le mieux." <span>— Proverbe africain</span></span><span class="ticker-item">"Le succès est la somme de petits efforts répétés jour après jour." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui n'est pas visible n'existe pas." <span>— Proverbe africain</span></span><span class="ticker-item">"La nuit est longue pour celui qui ne dort pas." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce que tu fais parle si fort que je n'entends pas ce que tu dis." <span>— Proverbe africain</span></span><span class="ticker-item">"Le talent sans travail est un crime." <span>— Proverbe africain</span></span><span class="ticker-item">"Chaque expert a été un jour un débutant." <span>— Proverbe africain</span></span><span class="ticker-item">"Un couteau ne se coupe pas lui-même." <span>— Proverbe africain</span></span><span class="ticker-item">"Votre temps est limité. Ne le gâchez pas en vivant la vie de quelqu'un d'autre." <span>— Steve Jobs</span></span><span class="ticker-item">"Le succès c'est d'aller d'échec en échec sans perdre son enthousiasme." <span>— Winston Churchill</span></span><span class="ticker-item">"Ne cherchez pas à être meilleur que les autres. Cherchez à être meilleur qu'hier." <span>— Unknown</span></span><span class="ticker-item">"Les opportunités ne se présentent pas d'elles-mêmes. C'est vous qui les créez." <span>— Chris Grosser</span></span><span class="ticker-item">"Commencez là où vous êtes. Utilisez ce que vous avez. Faites ce que vous pouvez." <span>— Arthur Ashe</span></span><span class="ticker-item">"Votre marque est ce que les gens disent de vous quand vous n'êtes pas dans la pièce." <span>— Jeff Bezos</span></span><span class="ticker-item">"Le meilleur moment pour planter un arbre c'était il y a vingt ans. Le deuxième meilleur moment c'est maintenant." <span>— Proverbe chinois</span></span><span class="ticker-item">"Travaillez comme si vous n'aviez pas besoin d'argent, aimez comme si vous n'aviez jamais été blessé." <span>— Unknown</span></span><span class="ticker-item">"Chaque grande entreprise a commencé par une idée simple." <span>— Unknown</span></span><span class="ticker-item">"L'innovation distingue le leader du suiveur." <span>— Steve Jobs</span></span><span class="ticker-item">"Pour réussir, il faut d'abord croire que c'est possible." <span>— Nido Qubein</span></span><span class="ticker-item">"La persévérance est la clé de toutes les grandes réalisations." <span>— Mandela</span></span><span class="ticker-item">"Un rêve n'est qu'un rêve. Un objectif est un rêve avec un plan et une date limite." <span>— Harvey Mackay</span></span><span class="ticker-item">"La réussite n'est pas finale, l'échec n'est pas fatal. C'est le courage de continuer qui compte." <span>— Winston Churchill</span></span><span class="ticker-item">"Ne rêvez pas de succès, travaillez-y." <span>— Estée Lauder</span></span><span class="ticker-item">"Votre attitude détermine votre direction." <span>— Unknown</span></span><span class="ticker-item">"Le talent est donné par Dieu. Sois humble. La renommée est donnée par les hommes. Sois reconnaissant." <span>— Unknown</span></span><span class="ticker-item">"L'excellence n'est jamais un accident. C'est toujours le résultat d'une haute intention." <span>— Aristotle</span></span><span class="ticker-item">"Chaque client insatisfait est une leçon gratuite." <span>— Unknown</span></span><span class="ticker-item">"La vraie richesse c'est d'avoir le temps de faire ce qu'on aime." <span>— Unknown</span></span><span class="ticker-item">"Construis quelque chose qui mérite d'être trouvé." <span>— Unknown</span></span><span class="ticker-item">"Sans visibilité, le talent ne sert à rien." <span>— LOKALI</span></span><span class="ticker-item">"Votre réputation vous précède ou vous suit. Assurez-vous qu'elle ouvre des portes." <span>— Unknown</span></span><span class="ticker-item">"Le service exceptionnel transforme les clients en ambassadeurs." <span>— Unknown</span></span><span class="ticker-item">"Chaque besoin est une opportunité déguisée." <span>— Unknown</span></span><span class="ticker-item">"Faites de votre passion votre profession et vous n'aurez jamais à travailler." <span>— Confucius</span></span><span class="ticker-item">"Les grands accomplissements commencent toujours par une décision audacieuse." <span>— Unknown</span></span><span class="ticker-item">"Celui qui ose, réussit. Celui qui attend, disparaît." <span>— Unknown</span></span><span class="ticker-item">"Un professionnel visible est un professionnel qui grandit." <span>— LOKALI</span></span><span class="ticker-item">"La confiance se gagne en actes, pas en mots." <span>— Unknown</span></span><span class="ticker-item">"Être visible c'est être vivant dans le monde des affaires." <span>— Unknown</span></span><span class="ticker-item">"L'Afrique a du talent. Il faut juste l'endroit pour le montrer." <span>— LOKALI</span></span><span class="ticker-item">"Le meilleur investissement que vous puissiez faire c'est en vous-même." <span>— Warren Buffett</span></span><span class="ticker-item">"Les petites choses faites avec excellence créent les grandes réussites." <span>— Unknown</span></span><span class="ticker-item">"Chaque expertise mérite d'être reconnue." <span>— LOKALI</span></span><span class="ticker-item">"Votre savoir-faire est votre capital le plus précieux." <span>— Unknown</span></span><span class="ticker-item">"La proximité crée la confiance. La confiance crée le business." <span>— LOKALI</span></span><span class="ticker-item">"Entreprendre c'est transformer ses rêves en réalité." <span>— Unknown</span></span><span class="ticker-item">"Le travail silencieux prépare les succès bruyants." <span>— Unknown</span></span><span class="ticker-item">"Construire sa réputation prend des années. La perdre prend un instant." <span>— Unknown</span></span><span class="ticker-item">"L'artisan qui maîtrise son art ne cherche pas les clients. Les clients viennent à lui." <span>— Proverbe africain</span></span><span class="ticker-item">"Sois tellement bon qu'on ne peut pas t'ignorer." <span>— Steve Martin</span></span><span class="ticker-item">"Connecter les talents, c'est accélérer le développement." <span>— LOKALI</span></span><span class="ticker-item">"La valeur ne se cache pas. Elle se démontre." <span>— Unknown</span></span><span class="ticker-item">"Chaque nouveau client est la preuve que votre travail parle pour vous." <span>— Unknown</span></span><span class="ticker-item">"Dans le monde digital, celui qui n'est pas en ligne n'existe pas." <span>— Unknown</span></span><span class="ticker-item">"Travailler dur en silence. Laisser le succès faire le bruit." <span>— Frank Ocean</span></span><span class="ticker-item">"L'Afrique de demain se construit avec les entrepreneurs d'aujourd'hui." <span>— LOKALI</span></span><span class="ticker-item">"Un service de qualité est le meilleur marketing qui soit." <span>— Unknown</span></span><span class="ticker-item">"Votre expertise a de la valeur. Montrez-la au monde." <span>— LOKALI</span></span><span class="ticker-item">"Qui sème dans la sueur récolte dans la joie." <span>— Proverbe africain</span></span><span class="ticker-item">"L'arbre ne tombe pas au premier coup de hache." <span>— Proverbe africain</span></span><span class="ticker-item">"Si tu veux aller vite, marche seul. Si tu veux aller loin, marche accompagné." <span>— Proverbe africain</span></span><span class="ticker-item">"La patience peut cuire une pierre." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail est un trésor que nul ne peut voler." <span>— Proverbe africain</span></span><span class="ticker-item">"On ne peut pas empêcher les oiseaux de voler au-dessus de ta tête, mais tu peux les empêcher d'y faire un nid." <span>— Proverbe africain</span></span><span class="ticker-item">"La main qui donne est toujours au-dessus de celle qui reçoit." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui cherche un bon arbre cherche d'abord une bonne terre." <span>— Proverbe africain</span></span><span class="ticker-item">"Un client satisfait revient. Un client respecté en amène dix." <span>— Proverbe africain</span></span><span class="ticker-item">"L'union des mains fait la force du panier." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu donnes ta parole, donne aussi ton honneur." <span>— Proverbe africain</span></span><span class="ticker-item">"Petit à petit, l'oiseau fait son nid." <span>— Proverbe africain</span></span><span class="ticker-item">"La rivière ne peut pas oublier sa source." <span>— Proverbe africain</span></span><span class="ticker-item">"Mieux vaut tendre la main que tendre le cou." <span>— Proverbe africain</span></span><span class="ticker-item">"Le fleuve ne grossit pas en restant immobile." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce que la main fait avec amour, le cœur le porte avec fierté." <span>— Proverbe africain</span></span><span class="ticker-item">"Le bois mort ne fait pas de feu, mais il l'alimente." <span>— Proverbe africain</span></span><span class="ticker-item">"Pour connaître la route, demande à celui qui revient." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand on veut tuer son chien, on dit qu'il a la rage. Quand on veut grandir, on cherche les bonnes raisons." <span>— Proverbe africain</span></span><span class="ticker-item">"Le palmier ne pousse pas en un jour, mais il finit par dominer la forêt." <span>— Proverbe africain</span></span><span class="ticker-item">"Un seul doigt ne peut pas ramasser le sable." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail honnête n'a jamais appauvri personne." <span>— Proverbe africain</span></span><span class="ticker-item">"Même la plus longue marche commence par un premier pas." <span>— Proverbe africain</span></span><span class="ticker-item">"Le marché ne reste jamais vide longtemps : il y a toujours quelqu'un qui vient vendre ou acheter." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui plante un baobab ne s'attend pas à s'asseoir sous son ombre." <span>— Proverbe africain</span></span><span class="ticker-item">"La sagesse est comme un baobab : nul ne peut l'embrasser de ses deux bras." <span>— Proverbe africain</span></span><span class="ticker-item">"Une seule main ne peut pas attacher un fagot." <span>— Proverbe africain</span></span><span class="ticker-item">"Le client est un roi qu'on sert avec le sourire, pas avec la peur." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce n'est pas la taille du chien dans le combat qui compte, mais la taille du combat dans le chien." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand les toiles d'araignées s'unissent, elles peuvent immobiliser un lion." <span>— Proverbe africain</span></span><span class="ticker-item">"On ne mesure pas la valeur d'un homme à ses promesses, mais à ses actes." <span>— Proverbe africain</span></span><span class="ticker-item">"Le savoir est comme un jardin : si on ne le cultive pas, on ne peut pas le récolter." <span>— Proverbe africain</span></span><span class="ticker-item">"Le repas se mange en commun, mais le travail aussi se partage." <span>— Proverbe africain</span></span><span class="ticker-item">"Une bonne réputation vaut plus que des richesses cachées." <span>— Proverbe africain</span></span><span class="ticker-item">"Le coq qui chante le premier n'est pas toujours le plus courageux, mais le plus matinal récolte les vers." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu construis ta maison, ne détruis pas celle du voisin." <span>— Proverbe africain</span></span><span class="ticker-item">"Le succès du fermier se voit dans son champ, pas dans ses discours." <span>— Proverbe africain</span></span><span class="ticker-item">"Ne méprise jamais un petit ruisseau : un jour il deviendra un fleuve." <span>— Proverbe africain</span></span><span class="ticker-item">"La confiance se construit en gouttes et se perd en torrents." <span>— Proverbe africain</span></span><span class="ticker-item">"Un bon nom est meilleur qu'une grande richesse." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui a faim de progrès ne dort jamais sur ses lauriers." <span>— Proverbe africain</span></span><span class="ticker-item">"L'opportunité ne frappe jamais deux fois à la même porte fermée." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu plantes un manguier, n'attends pas des mangues le lendemain." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail bien fait parle plus fort que mille paroles." <span>— Proverbe africain</span></span><span class="ticker-item">"Les grandes rivières naissent de petites sources." <span>— Proverbe africain</span></span><span class="ticker-item">"L'échec n'est qu'une étape vers la maîtrise, pas une destination." <span>— Proverbe africain</span></span><span class="ticker-item">"Le marchand habile connaît la valeur de chaque sourire offert à son client." <span>— Proverbe africain</span></span><span class="ticker-item">"Aucun fardeau n'est trop lourd pour celui qui croit en sa réussite." <span>— Proverbe africain</span></span><span class="ticker-item">"La main qui travaille aujourd'hui mangera demain." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand la racine est profonde, l'arbre n'a pas à craindre le vent." <span>— Proverbe africain</span></span><span class="ticker-item">"Le secret de la réussite : toujours réinvestir dans ses propres rêves." <span>— Inspiré des entrepreneurs africains</span></span><span class="ticker-item">"Le succès n'est jamais un accident : c'est travail, persévérance et passion réunis." <span>— Sagesse populaire</span></span><span class="ticker-item">"Construisez votre réputation sur la qualité, le reste suivra naturellement." <span>— LOKALI</span></span><span class="ticker-item">"Ne demandez pas pourquoi personne ne vous donne d'opportunités. Créez les vôtres." <span>— LOKALI</span></span><span class="ticker-item">"L'entrepreneuriat africain n'a pas besoin de permission, il a besoin d'audace." <span>— Esprit entrepreneurial africain</span></span><span class="ticker-item">"Ubuntu : je suis parce que nous sommes." <span>— Proverbe africain</span></span><span class="ticker-item">"Seul on va vite, ensemble on va loin." <span>— Proverbe africain</span></span><span class="ticker-item">"La forêt serait silencieuse si aucun oiseau ne chantait, sauf celui qui chante le mieux." <span>— Proverbe africain</span></span><span class="ticker-item">"Le succès est la somme de petits efforts répétés jour après jour." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui n'est pas visible n'existe pas." <span>— Proverbe africain</span></span><span class="ticker-item">"La nuit est longue pour celui qui ne dort pas." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce que tu fais parle si fort que je n'entends pas ce que tu dis." <span>— Proverbe africain</span></span><span class="ticker-item">"Le talent sans travail est un crime." <span>— Proverbe africain</span></span><span class="ticker-item">"Chaque expert a été un jour un débutant." <span>— Proverbe africain</span></span><span class="ticker-item">"Un couteau ne se coupe pas lui-même." <span>— Proverbe africain</span></span><span class="ticker-item">"Votre temps est limité. Ne le gâchez pas en vivant la vie de quelqu'un d'autre." <span>— Steve Jobs</span></span><span class="ticker-item">"Le succès c'est d'aller d'échec en échec sans perdre son enthousiasme." <span>— Winston Churchill</span></span><span class="ticker-item">"Ne cherchez pas à être meilleur que les autres. Cherchez à être meilleur qu'hier." <span>— Unknown</span></span><span class="ticker-item">"Les opportunités ne se présentent pas d'elles-mêmes. C'est vous qui les créez." <span>— Chris Grosser</span></span><span class="ticker-item">"Commencez là où vous êtes. Utilisez ce que vous avez. Faites ce que vous pouvez." <span>— Arthur Ashe</span></span><span class="ticker-item">"Votre marque est ce que les gens disent de vous quand vous n'êtes pas dans la pièce." <span>— Jeff Bezos</span></span><span class="ticker-item">"Le meilleur moment pour planter un arbre c'était il y a vingt ans. Le deuxième meilleur moment c'est maintenant." <span>— Proverbe chinois</span></span><span class="ticker-item">"Travaillez comme si vous n'aviez pas besoin d'argent, aimez comme si vous n'aviez jamais été blessé." <span>— Unknown</span></span><span class="ticker-item">"Chaque grande entreprise a commencé par une idée simple." <span>— Unknown</span></span><span class="ticker-item">"L'innovation distingue le leader du suiveur." <span>— Steve Jobs</span></span><span class="ticker-item">"Pour réussir, il faut d'abord croire que c'est possible." <span>— Nido Qubein</span></span><span class="ticker-item">"La persévérance est la clé de toutes les grandes réalisations." <span>— Mandela</span></span><span class="ticker-item">"Un rêve n'est qu'un rêve. Un objectif est un rêve avec un plan et une date limite." <span>— Harvey Mackay</span></span><span class="ticker-item">"La réussite n'est pas finale, l'échec n'est pas fatal. C'est le courage de continuer qui compte." <span>— Winston Churchill</span></span><span class="ticker-item">"Ne rêvez pas de succès, travaillez-y." <span>— Estée Lauder</span></span><span class="ticker-item">"Votre attitude détermine votre direction." <span>— Unknown</span></span><span class="ticker-item">"Le talent est donné par Dieu. Sois humble. La renommée est donnée par les hommes. Sois reconnaissant." <span>— Unknown</span></span><span class="ticker-item">"L'excellence n'est jamais un accident. C'est toujours le résultat d'une haute intention." <span>— Aristotle</span></span><span class="ticker-item">"Chaque client insatisfait est une leçon gratuite." <span>— Unknown</span></span><span class="ticker-item">"La vraie richesse c'est d'avoir le temps de faire ce qu'on aime." <span>— Unknown</span></span><span class="ticker-item">"Construis quelque chose qui mérite d'être trouvé." <span>— Unknown</span></span><span class="ticker-item">"Sans visibilité, le talent ne sert à rien." <span>— LOKALI</span></span><span class="ticker-item">"Votre réputation vous précède ou vous suit. Assurez-vous qu'elle ouvre des portes." <span>— Unknown</span></span><span class="ticker-item">"Le service exceptionnel transforme les clients en ambassadeurs." <span>— Unknown</span></span><span class="ticker-item">"Chaque besoin est une opportunité déguisée." <span>— Unknown</span></span><span class="ticker-item">"Faites de votre passion votre profession et vous n'aurez jamais à travailler." <span>— Confucius</span></span><span class="ticker-item">"Les grands accomplissements commencent toujours par une décision audacieuse." <span>— Unknown</span></span><span class="ticker-item">"Celui qui ose, réussit. Celui qui attend, disparaît." <span>— Unknown</span></span><span class="ticker-item">"Un professionnel visible est un professionnel qui grandit." <span>— LOKALI</span></span><span class="ticker-item">"La confiance se gagne en actes, pas en mots." <span>— Unknown</span></span><span class="ticker-item">"Être visible c'est être vivant dans le monde des affaires." <span>— Unknown</span></span><span class="ticker-item">"L'Afrique a du talent. Il faut juste l'endroit pour le montrer." <span>— LOKALI</span></span><span class="ticker-item">"Le meilleur investissement que vous puissiez faire c'est en vous-même." <span>— Warren Buffett</span></span><span class="ticker-item">"Les petites choses faites avec excellence créent les grandes réussites." <span>— Unknown</span></span><span class="ticker-item">"Chaque expertise mérite d'être reconnue." <span>— LOKALI</span></span><span class="ticker-item">"Votre savoir-faire est votre capital le plus précieux." <span>— Unknown</span></span><span class="ticker-item">"La proximité crée la confiance. La confiance crée le business." <span>— LOKALI</span></span><span class="ticker-item">"Entreprendre c'est transformer ses rêves en réalité." <span>— Unknown</span></span><span class="ticker-item">"Le travail silencieux prépare les succès bruyants." <span>— Unknown</span></span><span class="ticker-item">"Construire sa réputation prend des années. La perdre prend un instant." <span>— Unknown</span></span><span class="ticker-item">"L'artisan qui maîtrise son art ne cherche pas les clients. Les clients viennent à lui." <span>— Proverbe africain</span></span><span class="ticker-item">"Sois tellement bon qu'on ne peut pas t'ignorer." <span>— Steve Martin</span></span><span class="ticker-item">"Connecter les talents, c'est accélérer le développement." <span>— LOKALI</span></span><span class="ticker-item">"La valeur ne se cache pas. Elle se démontre." <span>— Unknown</span></span><span class="ticker-item">"Chaque nouveau client est la preuve que votre travail parle pour vous." <span>— Unknown</span></span><span class="ticker-item">"Dans le monde digital, celui qui n'est pas en ligne n'existe pas." <span>— Unknown</span></span><span class="ticker-item">"Travailler dur en silence. Laisser le succès faire le bruit." <span>— Frank Ocean</span></span><span class="ticker-item">"L'Afrique de demain se construit avec les entrepreneurs d'aujourd'hui." <span>— LOKALI</span></span><span class="ticker-item">"Un service de qualité est le meilleur marketing qui soit." <span>— Unknown</span></span><span class="ticker-item">"Votre expertise a de la valeur. Montrez-la au monde." <span>— LOKALI</span></span><span class="ticker-item">"Qui sème dans la sueur récolte dans la joie." <span>— Proverbe africain</span></span><span class="ticker-item">"L'arbre ne tombe pas au premier coup de hache." <span>— Proverbe africain</span></span><span class="ticker-item">"Si tu veux aller vite, marche seul. Si tu veux aller loin, marche accompagné." <span>— Proverbe africain</span></span><span class="ticker-item">"La patience peut cuire une pierre." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail est un trésor que nul ne peut voler." <span>— Proverbe africain</span></span><span class="ticker-item">"On ne peut pas empêcher les oiseaux de voler au-dessus de ta tête, mais tu peux les empêcher d'y faire un nid." <span>— Proverbe africain</span></span><span class="ticker-item">"La main qui donne est toujours au-dessus de celle qui reçoit." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui cherche un bon arbre cherche d'abord une bonne terre." <span>— Proverbe africain</span></span><span class="ticker-item">"Un client satisfait revient. Un client respecté en amène dix." <span>— Proverbe africain</span></span><span class="ticker-item">"L'union des mains fait la force du panier." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu donnes ta parole, donne aussi ton honneur." <span>— Proverbe africain</span></span><span class="ticker-item">"Petit à petit, l'oiseau fait son nid." <span>— Proverbe africain</span></span><span class="ticker-item">"La rivière ne peut pas oublier sa source." <span>— Proverbe africain</span></span><span class="ticker-item">"Mieux vaut tendre la main que tendre le cou." <span>— Proverbe africain</span></span><span class="ticker-item">"Le fleuve ne grossit pas en restant immobile." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce que la main fait avec amour, le cœur le porte avec fierté." <span>— Proverbe africain</span></span><span class="ticker-item">"Le bois mort ne fait pas de feu, mais il l'alimente." <span>— Proverbe africain</span></span><span class="ticker-item">"Pour connaître la route, demande à celui qui revient." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand on veut tuer son chien, on dit qu'il a la rage. Quand on veut grandir, on cherche les bonnes raisons." <span>— Proverbe africain</span></span><span class="ticker-item">"Le palmier ne pousse pas en un jour, mais il finit par dominer la forêt." <span>— Proverbe africain</span></span><span class="ticker-item">"Un seul doigt ne peut pas ramasser le sable." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail honnête n'a jamais appauvri personne." <span>— Proverbe africain</span></span><span class="ticker-item">"Même la plus longue marche commence par un premier pas." <span>— Proverbe africain</span></span><span class="ticker-item">"Le marché ne reste jamais vide longtemps : il y a toujours quelqu'un qui vient vendre ou acheter." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui plante un baobab ne s'attend pas à s'asseoir sous son ombre." <span>— Proverbe africain</span></span><span class="ticker-item">"La sagesse est comme un baobab : nul ne peut l'embrasser de ses deux bras." <span>— Proverbe africain</span></span><span class="ticker-item">"Une seule main ne peut pas attacher un fagot." <span>— Proverbe africain</span></span><span class="ticker-item">"Le client est un roi qu'on sert avec le sourire, pas avec la peur." <span>— Proverbe africain</span></span><span class="ticker-item">"Ce n'est pas la taille du chien dans le combat qui compte, mais la taille du combat dans le chien." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand les toiles d'araignées s'unissent, elles peuvent immobiliser un lion." <span>— Proverbe africain</span></span><span class="ticker-item">"On ne mesure pas la valeur d'un homme à ses promesses, mais à ses actes." <span>— Proverbe africain</span></span><span class="ticker-item">"Le savoir est comme un jardin : si on ne le cultive pas, on ne peut pas le récolter." <span>— Proverbe africain</span></span><span class="ticker-item">"Le repas se mange en commun, mais le travail aussi se partage." <span>— Proverbe africain</span></span><span class="ticker-item">"Une bonne réputation vaut plus que des richesses cachées." <span>— Proverbe africain</span></span><span class="ticker-item">"Le coq qui chante le premier n'est pas toujours le plus courageux, mais le plus matinal récolte les vers." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu construis ta maison, ne détruis pas celle du voisin." <span>— Proverbe africain</span></span><span class="ticker-item">"Le succès du fermier se voit dans son champ, pas dans ses discours." <span>— Proverbe africain</span></span><span class="ticker-item">"Ne méprise jamais un petit ruisseau : un jour il deviendra un fleuve." <span>— Proverbe africain</span></span><span class="ticker-item">"La confiance se construit en gouttes et se perd en torrents." <span>— Proverbe africain</span></span><span class="ticker-item">"Un bon nom est meilleur qu'une grande richesse." <span>— Proverbe africain</span></span><span class="ticker-item">"Celui qui a faim de progrès ne dort jamais sur ses lauriers." <span>— Proverbe africain</span></span><span class="ticker-item">"L'opportunité ne frappe jamais deux fois à la même porte fermée." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand tu plantes un manguier, n'attends pas des mangues le lendemain." <span>— Proverbe africain</span></span><span class="ticker-item">"Le travail bien fait parle plus fort que mille paroles." <span>— Proverbe africain</span></span><span class="ticker-item">"Les grandes rivières naissent de petites sources." <span>— Proverbe africain</span></span><span class="ticker-item">"L'échec n'est qu'une étape vers la maîtrise, pas une destination." <span>— Proverbe africain</span></span><span class="ticker-item">"Le marchand habile connaît la valeur de chaque sourire offert à son client." <span>— Proverbe africain</span></span><span class="ticker-item">"Aucun fardeau n'est trop lourd pour celui qui croit en sa réussite." <span>— Proverbe africain</span></span><span class="ticker-item">"La main qui travaille aujourd'hui mangera demain." <span>— Proverbe africain</span></span><span class="ticker-item">"Quand la racine est profonde, l'arbre n'a pas à craindre le vent." <span>— Proverbe africain</span></span><span class="ticker-item">"Le secret de la réussite : toujours réinvestir dans ses propres rêves." <span>— Inspiré des entrepreneurs africains</span></span><span class="ticker-item">"Le succès n'est jamais un accident : c'est travail, persévérance et passion réunis." <span>— Sagesse populaire</span></span><span class="ticker-item">"Construisez votre réputation sur la qualité, le reste suivra naturellement." <span>— LOKALI</span></span><span class="ticker-item">"Ne demandez pas pourquoi personne ne vous donne d'opportunités. Créez les vôtres." <span>— LOKALI</span></span><span class="ticker-item">"L'entrepreneuriat africain n'a pas besoin de permission, il a besoin d'audace." <span>— Esprit entrepreneurial africain</span></span>
+    
+    </div>
+  </div>
+
+
+<!-- HERO -->
+<section class="hero">
+  <!-- HERO CAROUSEL -->
+  <div class="hero-carousel" id="heroCarousel">
+    <div class="hero-slide active" id="hslide0"></div>
+    <div class="hero-slide" id="hslide1"></div>
+    <div class="hero-slide" id="hslide2"></div>
+    <div class="hero-slide" id="hslide3"></div>
+    <div class="hero-slide" id="hslide4"></div>
+    <div class="hero-carousel-overlay"></div>
+  </div>
+  <div class="hero-carousel-dots" id="heroDots">
+    <span class="on" onclick="goSlide(0)"></span>
+    <span onclick="goSlide(1)"></span>
+    <span onclick="goSlide(2)"></span>
+    <span onclick="goSlide(3)"></span>
+    <span onclick="goSlide(4)"></span>
+  </div>
+
+  <div class="hero-badge"><span class="hero-dot"></span>🌍 Disponible dans toute l'Afrique francophone</div>
+  <h1>Trouve ton<br><em>prestataire</em><br>en 30 secondes.</h1>
+  <p class="hero-sub">Coiffeur, mécanicien, maçon, médecin… Tous les services de ta ville, localisés en temps réel.</p>
+
+  <div class="urgency-bar" id="urgencyBar" onclick="toggleUrgence()">
+    <div style="display:flex;align-items:center;gap:12px">
+      <span class="urgency-pulse"></span>
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#FF3B30" id="urgencyTxt">🚨 Intervention urgente</div>
+        <div style="font-size:11px;color:var(--gray);margin-top:2px">Afficher uniquement les prestataires disponibles maintenant</div>
+      </div>
+    </div>
+    <span style="font-size:13px;color:var(--orange);font-weight:700" id="urgencyBtn">Activer →</span>
+  </div>
+
+  <div class="geo-bar" onclick="refreshGeo()">
+    <div>
+      <div style="font-size:14px;font-weight:700" id="geoLoc">📍 Détection de ta position...</div>
+      <div style="font-size:11px;color:var(--gray);margin-top:2px" id="geoSub">Active ton GPS pour un résultat précis</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px">
+      <div id="geoWeather" style="font-size:14px;font-weight:700"></div>
+      <span style="font-size:11px;color:var(--orange);font-weight:600">🔄 Actualiser</span>
+    </div>
+  </div>
+
+  <div class="hero-search">
+    <span class="hero-search-ic">🔍</span>
+    <input type="text" id="heroInput" placeholder="Que cherches-tu ? ex: coiffeur, ma voiture est en panne..." oninput="onHeroInput(this.value)" onkeydown="if(event.key==='Enter')doSearch()">
+    <button class="hero-search-btn" onclick="doSearch()">Chercher</button>
+  </div>
+
+  <div class="suggest-box" id="suggestBox">
+    <div class="suggest-lbl">💡 Vous pourriez aussi avoir besoin de...</div>
+    <div class="suggest-tags" id="suggestTags"></div>
+  </div>
+
+  <div class="hero-tags">
+    <span class="htag" onclick="qs('Coiffeur femme')">💇‍♀️ Coiffeur</span>
+    <span class="htag" onclick="qs('Mécanicien auto')">🔧 Mécanicien</span>
+    <span class="htag" onclick="qs('Maçon')">🏗️ Maçon</span>
+    <span class="htag" onclick="qs('Plombier')">🚿 Plombier</span>
+    <span class="htag" onclick="qs('Traiteur')">🍽️ Traiteur</span>
+    <span class="htag" onclick="qs('Médecin généraliste')">🏥 Médecin</span>
+    <span class="htag" onclick="qs('Photographe')">📸 Photo</span>
+    <span class="htag" onclick="qs('Électricien')">⚡ Électricien</span>
+  </div>
+
+  <div class="qbtns">
+    <button class="qbtn qbtn-wa" onclick="window.open('https://wa.me/2250596697054','_blank')">💬 WhatsApp</button>
+    <button class="qbtn qbtn-call" onclick="window.open('tel:+2250596697054')">📞 Appeler</button>
+    <button class="qbtn qbtn-map" onclick="openGoogleMaps()">🗺️ Carte</button>
+    <button class="qbtn qbtn-share" onclick="shareApp()">📤 Partager</button>
+  </div>
+
+  <div class="hero-stats-wrap">
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-val" id="statPrestaCount">0<span>+</span></div><div class="hstat-lbl">Prestataires</div></div>
+      <div class="hstat"><div class="hstat-val" id="statUserCount">0<span>+</span></div><div class="hstat-lbl">Utilisateurs</div></div>
+      <div class="hstat"><div class="hstat-val" id="statAnnonceCount">0<span>+</span></div><div class="hstat-lbl">Annonces</div></div>
+      <div class="hstat"><div class="hstat-val" id="statPaysCount">68<span>+</span></div><div class="hstat-lbl">Pays</div></div>
+    </div>
+    <div class="hstat-free">100<span>%</span> Gratuit</div>
+  </div>
+</section>
+
+<!-- ZONE SPONSORS — bannière premium (Platine/Or) -->
+<div class="sponsor-banner-zone" id="sponsorBannerZone"></div>
+
+<!-- ZONE SPONSORS — bande défilante logos -->
+<div class="sponsor-zone" id="sponsorStripZone" style="display:none">
+  <div class="sponsor-zone-in">
+    <div class="sponsor-zone-lbl">Nos sponsors</div>
+    <div class="sponsor-track-wrap">
+      <div class="sponsor-track" id="sponsorTrack"></div>
+    </div>
+  </div>
+</div>
+
+<!-- COMMENT ÇA MARCHE -->
+<div class=
+<div class="sec">
+  <div class="sec-lbl">Simple & rapide</div>
+  <h2 class="sec-title">Comment ça marche ?</h2>
+  <div class="steps">
+    <div class="step"><div class="step-n">1</div><div class="step-ic">📍</div><div class="step-t">Active ta localisation</div><div class="step-d">LOKALI détecte ta position et affiche les prestataires autour de toi.</div></div>
+    <div class="step"><div class="step-n">2</div><div class="step-ic">🔍</div><div class="step-t">Tape ce dont tu as besoin</div><div class="step-d">Notre recherche intelligente comprend tes besoins, même en langage naturel.</div></div>
+    <div class="step"><div class="step-n">3</div><div class="step-ic">📞</div><div class="step-t">Contacte directement</div><div class="step-d">Appelle ou envoie un WhatsApp. Sans intermédiaire, sans commission.</div></div>
+    <div class="step"><div class="step-n">4</div><div class="step-ic">⭐</div><div class="step-t">Laisse un avis</div><div class="step-d">Aide la communauté à trouver les meilleurs prestataires de ta zone.</div></div>
+  </div>
+</div>
+
+<!-- CARTE INTERACTIVE -->
+<div class="map-section">
+  <div class="map-inner">
+    <div class="sec-lbl">Géolocalisation temps réel</div>
+    <h2 class="sec-title" style="margin-bottom:8px">Prestataires autour de toi</h2>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:18px">Clique sur un marqueur pour voir la fiche du prestataire.</p>
+    <div class="map-controls">
+      <button class="map-ctrl-btn on" onclick="filterMap('',this)">🗺️ Tous</button>
+      <button class="map-ctrl-btn" onclick="filterMap('Mécanicien',this)">🔧 Mécaniciens</button>
+      <button class="map-ctrl-btn" onclick="filterMap('Coiffeur',this)">💇 Coiffeurs</button>
+      <button class="map-ctrl-btn" onclick="filterMap('Médecin',this)">🏥 Médecins</button>
+      <button class="map-ctrl-btn" onclick="filterMap('Maçon',this)">🏗️ Maçons</button>
+    </div>
+    <div class="map-container">
+      <div class="map-loading" id="mapLoading">
+        <div class="loading"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
+        <p style="color:var(--gray);font-size:14px">Chargement de la carte...</p>
+      </div>
+      <div id="lokaliMap"></div>
+    </div>
+  </div>
+</div>
+
+<!-- CLASSEMENTS -->
+<div class="sec">
+  <div class="sec-lbl">Découvrir</div>
+  <h2 class="sec-title" style="margin-bottom:18px">Classements</h2>
+  <div class="rank-tabs">
+    <button class="rank-tab on" onclick="loadRanking('note',this)">⭐ Mieux notés</button>
+    <button class="rank-tab" onclick="loadRanking('vues',this)">🔥 Populaires</button>
+    <button class="rank-tab" onclick="loadRanking('distance',this)">📍 Plus proches</button>
+    <button class="rank-tab" onclick="loadRanking('new',this)">🆕 Nouveaux</button>
+    <button class="rank-tab" onclick="loadRanking('verifie',this)">✅ Vérifiés</button>
+  </div>
+  <div id="rankingGrid" class="presta-grid"></div>
+</div>
+
+<!-- CATÉGORIES — version compacte -->
+<div class="cats-sec">
+  <div class="cats-in" style="text-align:center">
+    <div class="sec-lbl">Plus de 200 métiers</div>
+    <h2 class="sec-title" style="margin-bottom:14px">Un service pour chaque besoin</h2>
+    <p style="color:var(--gray);font-size:14px;max-width:480px;margin:0 auto 24px">Bâtiment, beauté, informatique, santé, transport, événementiel... LOKALI répertorie plus de 200 métiers, classés en 25 secteurs.</p>
+    <button onclick="openAllServicesModal()" style="background:var(--orange);color:#fff;border:none;border-radius:30px;padding:15px 32px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(255,107,44,.3)">🔍 Voir tous les services</button>
+  </div>
+</div>
+
+<!-- PRESTATAIRES -->
+<div class="presta-sec">
+  <div class="sec-lbl">Résultats en temps réel</div>
+  <h2 class="sec-title">Prestataires disponibles</h2>
+  <p style="color:var(--gray);font-size:14px;margin-top:6px" id="prestaInfo">Chargement des prestataires...</p>
+  <div id="prestaGrid" class="presta-grid"></div>
+</div>
+
+<!-- INSCRIPTION -->
+<div class="reg-sec">
+  <div class="sec-lbl" style="text-align:center">Rejoindre LOKALI</div>
+  <h2 class="sec-title" style="text-align:center;margin-bottom:8px">Tu es prestataire ?</h2>
+  <p style="color:var(--gray);font-size:15px;margin-bottom:28px;text-align:center">Inscris-toi gratuitement et sois visible par des milliers de clients.</p>
+  <div style="text-align:center;margin-bottom:24px"><img src="images/hero1.jpg" alt="Prestataire LOKALI" style="width:100px;height:100px;object-fit:cover;border-radius:50%;border:3px solid var(--orange);display:inline-block;"></div>
+  <div class="info-grid">
+    <div class="info-card">
+      <div class="info-icon">🔧</div>
+      <div class="info-title">Tu es prestataire</div>
+      <div class="info-txt">Crée ton profil professionnel gratuit : photos, métier, tarifs, zone d'intervention. Sois visible immédiatement par des milliers de clients potentiels, sans commission ni frais caché.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">🔍</div>
+      <div class="info-title">Tu es utilisateur</div>
+      <div class="info-txt">Trouve le bon professionnel près de chez toi en quelques secondes grâce à la géolocalisation. Contacte-le directement par WhatsApp ou téléphone, consulte les avis, sauvegarde tes favoris.</div>
+    </div>
+    <div class="info-card">
+      <div class="info-icon">📢</div>
+      <div class="info-title">Publie une annonce</div>
+      <div class="info-txt">Tu as une offre, une promotion ou un service ponctuel à proposer ? Publie une annonce détaillée avec photos, visible immédiatement par tous ceux qui cherchent dans ta catégorie et ta région.</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:28px">
+    <button class="rsub" style="max-width:320px;margin:0 auto" onclick="openInscription()">✨ Créer mon compte gratuitement</button>
+  </div>
+</div>
+
+<!-- NOUVEAUTÉS PRÈS DE VOUS -->
+<div class="news-sec">
+  <div class="news-inner">
+    <div class="sec-lbl">Vient d'arriver</div>
+    <h2 class="sec-title" style="margin-bottom:8px">🆕 Nouveaux prestataires près de vous</h2>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:20px" id="newsSubtitle">Découvrez les professionnels qui viennent de rejoindre LOKALI dans votre zone.</p>
+    <div class="news-strip" id="newsStrip">
+      <div style="color:var(--gray);font-size:14px;padding:20px">Chargement...</div>
+    </div>
+  </div>
+</div>
+
+<!-- OPPORTUNITÉS DU JOUR -->
+<div class="sec">
+  <div class="sec-lbl">Chaque jour</div>
+  <h2 class="sec-title" style="margin-bottom:20px">🌟 Opportunités du jour</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px" id="opportunGrid"></div>
+</div>
+
+<!-- DEMANDE DE DEVIS -->
+<div style="background:var(--dark2);padding:70px 16px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-lbl" style="text-align:center">Gratuit & rapide</div>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:8px">📋 Demander un devis</h2>
+    <p style="text-align:center;color:var(--gray);font-size:15px;margin-bottom:32px">Décrivez votre besoin — plusieurs prestataires proches vous répondront directement.</p>
+    <div class="devis-form">
+      <input class="ri" placeholder="Votre prénom *" id="devisNom">
+      <input class="ri" placeholder="Votre numéro WhatsApp *" type="tel" id="devisTel">
+      <input class="ri" placeholder="Votre ville *" id="devisVille">
+      <select class="ri" id="devisCat"><option value="">-- Type de service recherché *--</option></select>
+      <select class="ri" id="devisDispo">
+        <option value="aujourd'hui">📅 Disponible aujourd'hui</option>
+        <option value="demain">📅 Disponible demain</option>
+        <option value="semaine">📅 Cette semaine</option>
+        <option value="flexible">📅 Flexible</option>
+      </select>
+      <textarea class="ri" placeholder="Décrivez votre besoin en détail..." id="devisDesc" rows="4" style="resize:none"></textarea>
+      <button class="rsub" id="devisBtn">📤 Envoyer ma demande aux prestataires proches</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONSEILS PRATIQUES -->
+<div style="padding:70px 16px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-lbl">Informations utiles</div>
+    <h2 class="sec-title" style="margin-bottom:6px">💡 Conseils pratiques</h2>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:0">Astuces pour trouver le bon prestataire et réussir vos projets.</p>
+    <div class="conseil-grid">
+      <div class="conseil-card"><div class="conseil-icon">🔍</div><div class="conseil-title">Comment bien choisir son mécanicien ?</div><div class="conseil-txt">Vérifiez les avis clients, demandez un devis avant tout travail et privilégiez les prestataires avec le badge ✅ Vérifié.</div></div>
+      <div class="conseil-card"><div class="conseil-icon">💇</div><div class="conseil-title">Bien choisir son coiffeur ou sa coiffeuse</div><div class="conseil-txt">Consultez les photos de réalisations, vérifiez la disponibilité et contactez directement par WhatsApp pour un rendez-vous rapide.</div></div>
+      <div class="conseil-card"><div class="conseil-icon">🏗️</div><div class="conseil-title">Travaux de maçonnerie : éviter les arnaques</div><div class="conseil-txt">Demandez toujours un devis écrit, ne payez pas tout à l'avance et vérifiez les réalisations précédentes du prestataire.</div></div>
+      <div class="conseil-card"><div class="conseil-icon">🍽️</div><div class="conseil-title">Organiser un événement réussi</div><div class="conseil-txt">Réservez le traiteur, le photographe et le DJ au moins 2 semaines à l'avance. Utilisez la demande de devis pour comparer facilement.</div></div>
+      <div class="conseil-card"><div class="conseil-icon">⚡</div><div class="conseil-title">Urgence électrique ou plomberie</div><div class="conseil-txt">Activez le Mode Urgence sur LOKALI pour voir uniquement les prestataires disponibles immédiatement dans votre zone.</div></div>
+      <div class="conseil-card"><div class="conseil-icon">📱</div><div class="conseil-title">Prestataire : comment attirer plus de clients ?</div><div class="conseil-txt">Complétez votre profil à 100%, ajoutez des photos de vos réalisations, activez votre statut Disponible et répondez rapidement.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CATÉGORIES — version compacte -->
+<div class="cats-sec">
+  <div class="cats-in" style="text-align:center">
+    <div class="sec-lbl">Plus de 200 métiers</div>
+    <h2 class="sec-title" style="margin-bottom:14px">Un service pour chaque besoin</h2>
+    <p style="color:var(--gray);font-size:14px;max-width:480px;margin:0 auto 24px">Bâtiment, beauté, informatique, santé, transport, événementiel... LOKALI répertorie plus de 200 métiers, classés en 25 secteurs.</p>
+    <button onclick="openAllServicesModal()" style="background:var(--orange);color:#fff;border:none;border-radius:30px;padding:15px 32px;font-size:14px;font-weight:800;cursor:pointer;box-shadow:0 4px 16px rgba(255,107,44,.3)">🔍 Voir tous les services</button>
+  </div>
+</div>
+
+<!-- PRESTATAIRES -->
+<div class="presta-sec">
+  <div class="sec-lbl">Résultats en temps réel</div>
+  <h2 class="sec-title">Prestataires disponibles</h2>
+  <p style="color:var(--gray);font-size:14px;margin-top:6px" id="prestaInfo">Chargement des prestataires...</p>
+  <div id="prestaGrid" class="presta-grid"></div>
+</div>
+
+<!-- SECTION CONFIANCE -->
+<div style="background:var(--dark);padding:70px 16px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-lbl" style="text-align:center">Fiabilité & Qualité</div>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:6px">Pourquoi choisir LOKALI ?</h2>
+    <div class="trust-grid">
+      <div class="trust-card"><div class="trust-icon">✅</div><div class="trust-title">Prestataires vérifiés</div><div class="trust-desc">Chaque prestataire passe par un processus de vérification avant d'être publié.</div></div>
+      <div class="trust-card"><div class="trust-icon">📍</div><div class="trust-title">Géolocalisation précise</div><div class="trust-desc">Trouve le prestataire le plus proche de toi en temps réel, partout en Afrique.</div></div>
+      <div class="trust-card"><div class="trust-icon">🔧</div><div class="trust-title">200+ métiers</div><div class="trust-desc">Coiffeur, maçon, médecin, traiteur... tous les services en un seul endroit.</div></div>
+      <div class="trust-card"><div class="trust-icon">💬</div><div class="trust-title">WhatsApp intégré</div><div class="trust-desc">Contacte directement ton prestataire par WhatsApp en un seul clic.</div></div>
+      <div class="trust-card"><div class="trust-icon">🌍</div><div class="trust-title">Toute l'Afrique</div><div class="trust-desc">Disponible dans 25+ pays africains francophones et la diaspora mondiale.</div></div>
+      <div class="trust-card"><div class="trust-icon">⚡</div><div class="trust-title">Réponse rapide</div><div class="trust-desc">Les prestataires disponibles répondent en moins de 10 minutes en moyenne.</div></div>
+      <div class="trust-card"><div class="trust-icon">🚫</div><div class="trust-title">Sans intermédiaire</div><div class="trust-desc">Tu contactes directement le prestataire. Aucune commission, aucun frais caché.</div></div>
+      <div class="trust-card"><div class="trust-icon">🔓</div><div class="trust-title">100% gratuit</div><div class="trust-desc">Aucun abonnement, aucune limitation. LOKALI est et restera gratuit pour tous.</div></div>
+      <div class="trust-card"><div class="trust-icon">🔒</div><div class="trust-title">Plateforme sécurisée</div><div class="trust-desc">Tes données sont protégées. Signale facilement tout prestataire suspect.</div></div>
+      <div class="trust-card"><div class="trust-icon">🏆</div><div class="trust-title">Avis vérifiés</div><div class="trust-desc">Les avis sont laissés par des clients ayant réellement contacté le prestataire.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION ANNONCES RÉCENTES -->
+<div style="background:var(--dark);padding:70px 16px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-lbl" style="text-align:center">Espace Annonces</div>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:10px">Découvre les dernières annonces</h2>
+    <p style="text-align:center;color:var(--gray);font-size:14px;max-width:560px;margin:0 auto 36px">Les prestataires publient leurs offres, promotions et services. Trouve la bonne affaire ou publie la tienne en quelques secondes.</p>
+
+    <div id="homeAnnoncesPreview" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:32px">
+      <div style="text-align:center;padding:30px;color:var(--gray);grid-column:1/-1">Chargement des annonces...</div>
+    </div>
+
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <button onclick="showAnnoncesPage()" style="background:var(--orange);color:#fff;border:none;border-radius:30px;padding:14px 28px;font-size:14px;font-weight:700;cursor:pointer">📢 Voir toutes les annonces</button>
+      <button onclick="(_currentUser ? openPublierAnnonce() : (showToast('Connecte-toi pour publier'), openModal('login')))" style="background:none;border:1.5px solid rgba(255,255,255,.25);color:var(--white);border-radius:30px;padding:14px 28px;font-size:14px;font-weight:700;cursor:pointer">＋ Publier une annonce</button>
+    </div>
+  </div>
+</div>
+
+<!-- NOUVELLES SECTIONS -->
+<div class="news-sec">
+  <div class="news-inner">
+    <div class="sec-lbl">Vient d'arriver</div>
+    <h2 class="sec-title" style="margin-bottom:8px">🆕 Nouveaux prestataires</h2>
+    <p style="color:var(--gray);font-size:14px;margin-bottom:20px" id="newsSubtitle">Découvrez les professionnels qui viennent de rejoindre LOKALI.</p>
+    <div class="news-strip" id="newsStrip"><div style="color:var(--gray);font-size:14px;padding:20px">Chargement...</div></div>
+  </div>
+</div>
+<div class="sec">
+  <div class="sec-lbl">Chaque jour</div>
+  <h2 class="sec-title" style="margin-bottom:20px">🌟 Opportunités du jour</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px" id="opportunGrid"></div>
+</div>
+<div style="background:var(--dark2);padding:70px 16px">
+  <div style="max-width:1100px;margin:0 auto">
+    <div class="sec-lbl" style="text-align:center">Gratuit & rapide</div>
+    <h2 class="sec-title" style="text-align:center;margin-bottom:8px">📋 Demander un devis</h2>
+    <p style="text-align:center;color:var(--gray);font-size:15px;margin-bottom:32px">Décrivez votre besoin — des prestataires proches vous répondront.</p>
+    <div class="devis-form">
+      <input class="ri" placeholder="Votre prénom *" id="devisNom">
+      <input class="ri" placeholder="Votre WhatsApp *" type="tel" id="devisTel">
+      <input class="ri" placeholder="Votre ville *" id="devisVille">
+      <select class="ri" id="devisCat"><option value="">-- Type de service *--</option></select>
+      <select class="ri" id="devisDispo">
+        <option value="aujourd hui">📅 Disponible aujourd'hui</option>
+        <option value="demain">📅 Disponible demain</option>
+        <option value="semaine">📅 Cette semaine</option>
+        <option value="flexible">📅 Flexible</option>
+      </select>
+      <textarea class="ri" placeholder="Décrivez votre besoin..." id="devisDesc" rows="4" style="resize:none"></textarea>
+      <button class="rsub" id="devisBtn">📤 Envoyer ma demande aux prestataires proches</button>
+    </div>
+  </div>
+</div>
+<div style="padding:70px 16px"><div style="max-width:1100px;margin:0 auto">
+  <div class="sec-lbl">Informations utiles</div>
+  <h2 class="sec-title" style="margin-bottom:6px">💡 Conseils pratiques</h2>
+  <div class="conseil-grid">
+    <div class="conseil-card"><div class="conseil-icon">🔍</div><div class="conseil-title">Bien choisir son mécanicien</div><div class="conseil-txt">Vérifiez les avis, demandez un devis et privilégiez les prestataires avec le badge ✅ Vérifié.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">💇</div><div class="conseil-title">Trouver le bon coiffeur</div><div class="conseil-txt">Consultez les photos de réalisations et contactez directement par WhatsApp pour un rendez-vous rapide.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">🏗️</div><div class="conseil-title">Travaux : éviter les arnaques</div><div class="conseil-txt">Demandez toujours un devis écrit et ne payez pas tout à l'avance.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">🍽️</div><div class="conseil-title">Organiser un événement réussi</div><div class="conseil-txt">Réservez photographe, traiteur et DJ au moins 2 semaines à l'avance.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">⚡</div><div class="conseil-title">Urgence : électricité ou plomberie</div><div class="conseil-txt">Activez le Mode Urgence sur LOKALI pour voir uniquement les prestataires disponibles maintenant.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">📱</div><div class="conseil-title">Prestataire : attirer plus de clients</div><div class="conseil-txt">Complétez votre profil, activez Disponible et répondez rapidement aux messages.</div></div>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+
+</div>
+
+<!-- ════════════════════════════════════════════
+     SECTION ANNONCES LOKALI
+════════════════════════════════════════════ -->
+<div id="annPage" class="ann-page">
+
+  <!-- Hero annonces -->
+  <div class="ann-hero">
+    <div class="ann-hero-in">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px">
+        <div>
+          <h1>📢 Annonces Professionnelles</h1>
+          <p>Découvrez les offres des prestataires près de chez vous · Géolocalisation intelligente</p>
+        </div>
+        <button onclick="showHomeFromAnn()" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.7);border-radius:10px;padding:9px 16px;font-size:13px;cursor:pointer">← Accueil</button>
+      </div>
+      <div class="ann-searchbar" style="margin-top:16px">
+        <input type="text" id="annSearch" placeholder="Rechercher un service, une offre..." oninput="filterAnnonces()">
+        <button onclick="filterAnnonces()">🔍 Rechercher</button>
+      </div>
+      <button onclick="(_currentUser ? openPublierAnnonce() : (showToast('Connecte-toi pour publier'), openModal('login')))" style="width:100%;margin-top:14px;background:var(--orange);border:none;color:#fff;border-radius:12px;padding:14px;font-size:14px;font-weight:800;cursor:pointer">＋ Publier une annonce — c'est gratuit et immédiat</button>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="ann-filters">
+    <div class="ann-filters-in" style="flex-wrap:wrap">
+      <div id="annMetierSearchSlot" style="width:100%;margin-bottom:8px"></div>
+      <select id="annFCat" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Toutes catégories</option>
+      </select>
+      <select id="annFSousCat" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Sous-catégorie</option>
+      </select>
+      <select id="annFPays" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Tous pays</option>
+      </select>
+      <select id="annFVille" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Toutes villes</option>
+      </select>
+      <select id="annFQuartier" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Tous quartiers</option>
+      </select>
+      <select id="annFDist" class="ann-fsel" onchange="filterAnnonces()">
+        <option value="">Distance</option>
+        <option value="5">Moins de 5 km</option>
+        <option value="10">Moins de 10 km</option>
+        <option value="25">Moins de 25 km</option>
+        <option value="50">Moins de 50 km</option>
+      </select>
+      <button class="ann-fclr" onclick="clearAnnFilters()">✕ Effacer</button>
+    </div>
+  </div>
+
+  <!-- Corps -->
+  <div class="ann-body">
+    <!-- Recommandation intelligente -->
+    <div class="ann-reco" id="annRecoBar" style="display:none">
+      <span style="font-size:20px">🎯</span>
+      <div class="ann-reco-txt" id="annRecoTxt">Annonces <strong>près de vous</strong> selon votre position</div>
+    </div>
+
+    <!-- Toolbar -->
+    <div class="ann-toolbar">
+      <div class="ann-count" id="annCount">Chargement...</div>
+      <select class="ann-sort" id="annSort" onchange="filterAnnonces()">
+        <option value="distance">Plus proches</option>
+        <option value="recent">Plus récentes</option>
+        <option value="prix_asc">Prix croissant</option>
+        <option value="prix_desc">Prix décroissant</option>
+      </select>
+    </div>
+
+    <!-- Grille -->
+    <div class="ann-grid" id="annGrid">
+      <div class="ann-empty">
+        <div class="ann-empty-icon">📋</div>
+        <p>Chargement des annonces...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAB publier (prestataires connectés) -->
+  <button class="ann-pub-fab" id="annPubFab" onclick="openPublierAnnonce()">
+    ＋ Publier une annonce
+  </button>
+</div>
+
+<!-- Notif intelligente -->
+<div class="smart-notif" id="smartNotif">
+  <button class="smart-notif-close" onclick="document.getElementById('smartNotif').classList.remove('show')">✕</button>
+  <div class="smart-notif-title">🔔 LOKALI</div>
+  <div class="smart-notif-msg" id="smartNotifMsg"></div>
+</div>
+
+<footer>
+  <div class="ft-in">
+    <div class="partner-strip" id="partnerStripZone" style="display:none"></div>
+    <div class="ft-top">
+      <div class="ft-brand">
+        <div style="font-size:20px;font-weight:900"><b style="color:var(--orange)">L</b>OKALI</div>
+        <p>La plateforme qui connecte clients et prestataires partout en Afrique francophone. 100% gratuit.</p>
+        <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,.45)">
+          📍 Boulevard de la République, Plateau · Abidjan, Côte d'Ivoire<br>
+          <a href="tel:+2250596697054" style="color:rgba(255,255,255,.45);text-decoration:none">📞 +225 05 96 697 054</a>
+          &nbsp;·&nbsp;
+          <a href="tel:+2250161072227" style="color:rgba(255,255,255,.45);text-decoration:none">📞 +225 01 61 072 227</a>
+        </div>
+      </div>
+      <div class="ft-col">
+        <h4>Plateforme</h4>
+        <a onclick="document.querySelector('.cats-sec').scrollIntoView({behavior:'smooth'})">Toutes les catégories</a>
+        <a onclick="openInscription()">Devenir prestataire</a>
+        <a onclick="document.querySelector('.steps').scrollIntoView({behavior:'smooth'})">Comment ça marche</a>
+      </div>
+      <div class="ft-col">
+        <h4>Partenaires</h4>
+        <a onclick="buildSponsorModal('sponsor')">Devenir sponsor</a>
+        <a onclick="buildSponsorModal('partner')">Devenir partenaire</a>
+        <a href="tel:+2250596697054">Nous contacter</a>
+      </div>
+      <div class="ft-col">
+        <h4>Légal</h4>
+        <a href="#">CGU</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
+    <div class="ft-bot">
+      <span class="ft-copy">© 2026 LOKALI · Tous droits réservés · 100% gratuit pour les utilisateurs</span>
+      <div style="display:flex;gap:12px">
+        <a style="font-size:12px;color:rgba(255,255,255,.4);cursor:pointer" onclick="setLang('fr')">🇫🇷 FR</a>
+        <a style="font-size:12px;color:rgba(255,255,255,.4);cursor:pointer" onclick="setLang('en')">🇬🇧 EN</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modalBox">
+    <div class="modal-hd">
+      <div><h2 id="mTitle"></h2><p class="modal-sub" id="mSub"></p></div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div id="mBody"></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<!-- LOKALI EXPRESS — Bannière de demande entrante (côté prestataire) -->
+<div class="express-incoming-banner" id="expressIncomingBanner">
+  <div class="express-incoming-title">⚡ Nouvelle demande LOKALI Express</div>
+  <div class="express-incoming-meta" id="expressIncomingMeta"></div>
+  <div class="express-incoming-btns">
+    <button class="express-refuse-btn" onclick="refuseExpressRequest()">Refuser</button>
+    <button class="express-accept-btn" onclick="acceptExpressRequest()">✅ Accepter</button>
+  </div>
+</div>
+
+<script src="lokali.js"></script>
+
+<!-- Leaflet -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+</body>
+</html>

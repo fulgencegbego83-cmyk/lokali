@@ -1,0 +1,43 @@
+# LOKALI — robots.txt
+# https://thelokali.com
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /?action=delete
+Disallow: /?modal=
+
+# Sitemap
+Sitemap: https://thelokali.com/sitemap.xml
+
+# Crawl-delay pour les bots lents
+User-agent: Slurp
+Crawl-delay: 10
+
+User-agent: Baiduspider
+Crawl-delay: 10
+
+# Autoriser les principaux moteurs
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /

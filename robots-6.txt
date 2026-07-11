@@ -1,0 +1,44 @@
+# LOKALI + KORASSO — robots.txt
+# https://lokali-delta.vercel.app
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+Disallow: /?action=delete
+Disallow: /?modal=
+
+# Sitemap
+Sitemap: https://lokali-delta.vercel.app/sitemap.xml
+
+# Crawl-delay pour les bots lents
+User-agent: Slurp
+Crawl-delay: 10
+
+User-agent: Baiduspider
+Crawl-delay: 10
+
+# Autoriser les principaux moteurs
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Autoriser les aperçus de liens sur réseaux sociaux et messagerie
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI APPELS D'OFFRES — Consultations & marchés</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#1A1A2E;--dark2:#16213E;--dark3:#0F3460;
+  --card:#1E2A45;--border:rgba(255,255,255,.1);
+  --white:#F8FAFC;--gray:#94A3B8;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(13,13,13,.95);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(255,255,255,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 4px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--orange);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(255,255,255,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.item{border-bottom:1px solid var(--border);padding:14px 0}
+.item:last-child{border-bottom:none}
+.item-title{font-weight:700;font-size:15px}
+.item-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(15,52,96,.5);color:#93C5FD}
+.badge-urgent{background:rgba(239,68,68,.15);color:#F87171}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>APPELS D'OFFRES</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Consultations & marchés</h1>
+  <div class="subtitle">Appels d'offres, devis, marchés privés et sous-traitance</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statAO">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="liste">Appels d'offres ouverts</div>
+    <div class="tab" data-tab="publier">Publier un appel d'offres</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour publier ou soumissionner.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="tab-liste" class="tab-content">
+    <div id="liste" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="card">
+      <h3>Publier un appel d'offres</h3>
+      <label>Titre</label>
+      <input id="aTitre" placeholder="Ex: Construction d'un entrepôt à Yamoussoukro">
+      <label>Description / cahier des charges</label>
+      <textarea id="aDescription" placeholder="Détaille les exigences, les livrables attendus..."></textarea>
+      <div class="row2">
+        <div><label>Référence (optionnel)</label><input id="aReference" placeholder="Ex: AO-2026-014"></div>
+        <div><label>Secteur</label><input id="aSecteur" placeholder="Ex: BTP, Informatique..."></div>
+      </div>
+      <div class="row2">
+        <div>
+          <label>Type de marché</label>
+          <select id="aType">
+            <option value="prive">Privé</option>
+            <option value="public">Public</option>
+            <option value="sous_traitance">Sous-traitance</option>
+          </select>
+        </div>
+        <div><label>Ville</label><input id="aVille" placeholder="Abidjan"></div>
+      </div>
+      <div class="row2">
+        <div><label>Budget min (FCFA)</label><input id="aBudgetMin" type="number"></div>
+        <div><label>Budget max (FCFA)</label><input id="aBudgetMax" type="number"></div>
+      </div>
+      <label>Date limite de dépôt</label>
+      <input id="aDateLimite" type="date">
+      <label>Lien vers documents (cahier des charges, optionnel)</label>
+      <input id="aDocuments" placeholder="https://...">
+      <button class="btn" onclick="publier()">Publier l'appel d'offres</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+
+var LABELS_TYPE = { prive: "Privé", public: "Public", sous_traitance: "Sous-traitance" };
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) { _userId = session.user.id; }
+  else { document.getElementById("authGate").style.display = ""; }
+  chargerStats();
+  chargerListe();
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_appels_offres").select("*", { count: "exact", head: true }).eq("statut", "ouvert");
+    document.getElementById("statAO").textContent = (r.count || 0) + " appels d'offres ouverts";
+  } catch(e) {}
+}
+
+async function publier() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("aTitre").value.trim();
+  var description = document.getElementById("aDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  var payload = {
+    auteur_id: _userId,
+    titre: titre,
+    description: description,
+    reference: document.getElementById("aReference").value.trim(),
+    secteur: document.getElementById("aSecteur").value.trim(),
+    type_marche: document.getElementById("aType").value,
+    budget_min: parseInt(document.getElementById("aBudgetMin").value) || null,
+    budget_max: parseInt(document.getElementById("aBudgetMax").value) || null,
+    ville: document.getElementById("aVille").value.trim(),
+    date_limite_depot: document.getElementById("aDateLimite").value || null,
+    documents_url: document.getElementById("aDocuments").value.trim()
+  };
+  var r = await _supabase.from("lokt_appels_offres").insert(payload);
+  if (r.error) { afficherMsg("publierMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("publierMsg", "Appel d'offres publié ✅", true);
+  ["aTitre","aDescription","aReference","aSecteur","aVille","aBudgetMin","aBudgetMax","aDateLimite","aDocuments"].forEach(function(id){ document.getElementById(id).value = ""; });
+  activerOnglet("liste");
+  chargerListe();
+  chargerStats();
+}
+
+async function chargerListe() {
+  var el = document.getElementById("liste");
+  var r = await _supabase.from("lokt_appels_offres").select("*").eq("statut", "ouvert").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucun appel d\'offres ouvert pour le moment.</div>'; return; }
+
+  var aujourdhui = new Date();
+  el.innerHTML = r.data.map(function(a){
+    var budget = (a.budget_min || a.budget_max) ? (a.budget_min || "?") + " - " + (a.budget_max || "?") + " FCFA" : "Budget non précisé";
+    var urgent = false;
+    var dateLimiteTxt = "";
+    if (a.date_limite_depot) {
+      var dl = new Date(a.date_limite_depot);
+      var joursRestants = Math.ceil((dl - aujourdhui) / 86400000);
+      urgent = joursRestants >= 0 && joursRestants <= 5;
+      dateLimiteTxt = " · Dépôt avant le " + dl.toLocaleDateString("fr-FR");
+    }
+    return '<div class="item">' +
+      (urgent ? '<span class="badge badge-urgent">⏰ Clôture proche</span> ' : '') +
+      '<span class="badge">' + (LABELS_TYPE[a.type_marche] || a.type_marche) + '</span> ' +
+      (a.reference ? '<span class="badge">' + a.reference + '</span> ' : '') +
+      (a.secteur ? '<span class="badge">' + a.secteur + '</span> ' : '') +
+      '<div class="item-title">' + a.titre + '</div>' +
+      '<div class="item-meta">' + (a.ville || "Lieu non précisé") + ' · ' + budget + dateLimiteTxt + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + a.description.slice(0, 160) + (a.description.length > 160 ? '…' : '') + '</div>' +
+      (a.documents_url ? '<a href="' + a.documents_url + '" target="_blank" style="font-size:12px;color:var(--orange2)">Cahier des charges →</a><br>' : '') +
+      '<button class="btn btn-sm" onclick="soumissionner(\'' + a.id + '\')">Soumissionner</button>' +
+      '</div>';
+  }).join("");
+}
+
+async function soumissionner(aoId) {
+  if (!_userId) { alert("Connecte-toi d'abord."); return; }
+  var description = prompt("Décris ton offre (moyens, méthodologie, équipe...) :");
+  if (!description) return;
+  var prix = prompt("Prix proposé (FCFA, optionnel) :");
+  var delai = prompt("Délai d'exécution en jours (optionnel) :");
+  var ins = await _supabase.from("lokt_appel_offres_propositions").insert({
+    appel_offres_id: aoId, soumissionnaire_id: _userId, description_offre: description,
+    prix_propose: parseInt(prix) || null, delai_execution_jours: parseInt(delai) || null
+  });
+  if (ins.error) {
+    if (ins.error.message.indexOf("duplicate") !== -1) { alert("Tu as déjà soumissionné à cet appel d'offres ✅"); return; }
+    alert("Erreur : " + ins.error.message); return;
+  }
+  alert("Proposition envoyée ✅");
+}
+
+initSession();
+</script>
+</body>
+</html>

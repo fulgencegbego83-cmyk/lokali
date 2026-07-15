@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Talents & Opportunités</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#1A1A2E;--dark2:#16213E;--dark3:#0F3460;
+  --card:#1E2A45;--border:rgba(255,255,255,.1);
+  --white:#F8FAFC;--gray:#94A3B8;--radius:20px;
+  --gradient:linear-gradient(135deg,#1A1A2E 0%,#16213E 50%,#0F3460 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(13,13,13,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(255,255,255,.14)}
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:24px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#fff,#FDBA74);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--gray);font-size:14px;max-width:420px;margin:0 auto}
+.search-bar{max-width:480px;margin:22px auto 0;padding:0 16px}
+.search-bar input{width:100%;padding:14px 18px;border-radius:30px;border:1.5px solid var(--border);
+  background:rgba(255,255,255,.06);color:var(--white);font-size:14px}
+.search-bar input::placeholder{color:var(--gray)}
+.grid{max-width:640px;margin:28px auto 0;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tile{position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 14px 18px;text-align:center;text-decoration:none;color:var(--white);
+  transition:transform .2s, box-shadow .2s, border-color .2s}
+.tile:active{transform:scale(.97)}
+.tile:hover{border-color:var(--orange);box-shadow:0 10px 30px rgba(249,115,22,.22);transform:translateY(-4px)}
+.tile-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin:0 auto 12px;box-shadow:0 6px 16px rgba(0,0,0,.25)}
+.icon-a{background:linear-gradient(135deg,#F97316,#FB923C)}
+.icon-b{background:linear-gradient(135deg,#059669,#10B981)}
+.icon-c{background:linear-gradient(135deg,#0F3460,#3B82F6)}
+.tile-name{font-weight:800;font-size:14px;margin-bottom:3px}
+.tile-desc{font-size:11px;color:var(--gray);line-height:1.35;margin-bottom:8px}
+.tile-stat{display:inline-block;font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);
+  border-radius:20px;padding:3px 10px}
+.section-title{max-width:640px;margin:30px auto 4px;padding:0 20px;font-size:13px;font-weight:800;
+  color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>OPPORTUNITÉS</b></span>
+  <a class="nav-back" href="/">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1>Quel est votre besoin aujourd'hui ?</h1>
+  <p>Compétences, missions, emplois, entreprises... LOKALI vous connecte à la bonne solution.</p>
+</div>
+
+<div class="search-bar">
+  <input id="searchInput" type="text" placeholder="Décrivez ce que vous recherchez..." onkeydown="if(event.key==='Enter')lancerRecherche()">
+</div>
+
+<div class="section-title">Explorez LOKALI</div>
+<div class="grid" id="grid"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Chaque module n'apparaît ici QUE lorsqu'il est réellement fonctionnel.
+var modules = [
+  { icone: "🧑‍💼", classe: "icon-a", nom: "Talents",  desc: "Profils, compétences, portfolios", url: "/lokali-talents.html",
+    table: "lokt_talents", filtre: { actif: true }, label: "profils" },
+  { icone: "📋",     classe: "icon-b", nom: "Missions", desc: "Publier ou trouver une mission",   url: "/lokali-talents.html#missions",
+    table: "lokt_missions", filtre: { statut: "ouverte" }, label: "missions ouvertes" },
+  { icone: "💼",     classe: "icon-c", nom: "Emplois",  desc: "CDI, CDD, stages, alternance",     url: "/lokali-emplois.html",
+    table: "lokt_emplois", filtre: { statut: "ouverte" }, label: "offres ouvertes" }
+];
+
+function rendreGrille() {
+  document.getElementById("grid").innerHTML = modules.map(function(m, i){
+    return '<a class="tile" href="' + m.url + '">' +
+      '<div class="tile-icon ' + m.classe + '">' + m.icone + '</div>' +
+      '<div class="tile-name">' + m.nom + '</div>' +
+      '<div class="tile-desc">' + m.desc + '</div>' +
+      '<span class="tile-stat" id="stat-' + i + '">…</span>' +
+      '</a>';
+  }).join("");
+}
+rendreGrille();
+
+// Compteurs en direct depuis Supabase (nombre de profils / missions / offres actifs)
+modules.forEach(async function(m, i) {
+  try {
+    var query = _supabase.from(m.table).select("*", { count: "exact", head: true });
+    Object.keys(m.filtre).forEach(function(k){ query = query.eq(k, m.filtre[k]); });
+    var r = await query;
+    var el = document.getElementById("stat-" + i);
+    if (el) el.textContent = (r.count || 0) + " " + m.label;
+  } catch(e) {
+    var el2 = document.getElementById("stat-" + i);
+    if (el2) el2.textContent = "";
+  }
+});
+
+function lancerRecherche() {
+  var q = document.getElementById("searchInput").value.trim();
+  if (!q) return;
+  window.location.href = "/lokali-talents.html?q=" + encodeURIComponent(q);
+}
+</script>
+</body>
+</html>

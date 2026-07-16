@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI PROJETS — Présentez votre projet</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#1A1A2E;--dark2:#16213E;--dark3:#0F3460;
+  --card:#1E2A45;--border:rgba(255,255,255,.1);
+  --white:#F8FAFC;--gray:#94A3B8;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(13,13,13,.95);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(255,255,255,.07);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(255,255,255,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 4px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--orange);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(255,255,255,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.item{border-bottom:1px solid var(--border);padding:14px 0}
+.item:last-child{border-bottom:none}
+.item-title{font-weight:700;font-size:15px}
+.item-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(8,145,178,.2);color:#67E8F9}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>PROJETS</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Présentez votre projet</h1>
+  <div class="subtitle">Trouvez un cofondateur, un expert ou un premier soutien</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statProjets">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="liste">Projets en cours</div>
+    <div class="tab" data-tab="publier">Publier mon projet</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour publier ou répondre.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="tab-liste" class="tab-content">
+    <div id="liste" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="card">
+      <h3>Publier mon projet</h3>
+      <label>Titre du projet</label>
+      <input id="pTitre" placeholder="Ex: Application de livraison locale">
+      <label>Description</label>
+      <textarea id="pDescription" placeholder="Présente ton idée, ton avancement, ta vision..."></textarea>
+      <div class="row2">
+        <div><label>Secteur</label><select id="pSecteur"></select></div>
+        <div>
+          <label>Avancement</label>
+          <select id="pAvancement">
+            <option value="idee">Idée</option>
+            <option value="prototype">Prototype</option>
+            <option value="lance">Lancé</option>
+            <option value="en_croissance">En croissance</option>
+          </select>
+        </div>
+      </div>
+      <label>Ce que vous recherchez</label>
+      <select id="pBesoin">
+        <option value="Cofondateur">Cofondateur</option>
+        <option value="Développeur">Développeur</option>
+        <option value="Designer">Designer</option>
+        <option value="Investisseur">Investisseur</option>
+        <option value="Expert marketing">Expert marketing</option>
+        <option value="Mentor / conseiller">Mentor / conseiller</option>
+        <option value="Partenaire commercial">Partenaire commercial</option>
+        <option value="Employé / premier salarié">Employé / premier salarié</option>
+        <option value="__autre__">Autre (préciser)</option>
+      </select>
+      <div id="pBesoinAutreWrap" style="display:none">
+        <input id="pBesoinAutre" placeholder="Précise ce que tu recherches">
+      </div>
+      <div class="row2">
+        <div><label>Pays</label><select id="pPays"></select></div>
+        <div><label>Ville</label><select id="pVille"></select></div>
+      </div>
+      <div id="pVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="pVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <button class="btn" onclick="publier()">Publier mon projet</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+
+var LABELS_AVANCEMENT = { idee: "Idée", prototype: "Prototype", lance: "Lancé", en_croissance: "En croissance" };
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) { _userId = session.user.id; initDropdownsProjet(); }
+  else {
+    document.getElementById("authGate").style.display = "";
+    document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+    document.querySelectorAll(".tab").forEach(function(t){ t.style.display = "none"; });
+    return;
+  }
+  chargerStats();
+  chargerListe();
+}
+
+function initDropdownsProjet() {
+  fillSecteursSelect(document.getElementById("pSecteur"));
+  fillPaysSelect(document.getElementById("pPays"));
+  document.getElementById("pPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("pVille"));
+  });
+  document.getElementById("pVille").addEventListener("change", function() {
+    document.getElementById("pVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  document.getElementById("pBesoin").addEventListener("change", function() {
+    document.getElementById("pBesoinAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_projets").select("*", { count: "exact", head: true }).eq("statut", "ouvert");
+    document.getElementById("statProjets").textContent = (r.count || 0) + " projets ouverts";
+  } catch(e) {}
+}
+
+async function publier() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("pTitre").value.trim();
+  var description = document.getElementById("pDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  var villeVal = document.getElementById("pVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("pVilleAutre").value.trim();
+  var besoinVal = document.getElementById("pBesoin").value;
+  if (besoinVal === "__autre__") besoinVal = document.getElementById("pBesoinAutre").value.trim();
+  var payload = {
+    auteur_id: _userId,
+    titre: titre,
+    description: description,
+    secteur: document.getElementById("pSecteur").value,
+    avancement: document.getElementById("pAvancement").value,
+    besoin: besoinVal,
+    pays: document.getElementById("pPays").value,
+    ville: villeVal
+  };
+  var r = await _supabase.from("lokt_projets").insert(payload);
+  if (r.error) { afficherMsg("publierMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("publierMsg", "Projet publié ✅", true);
+  ["pTitre","pDescription"].forEach(function(id){ document.getElementById(id).value = ""; });
+  activerOnglet("liste");
+  chargerListe();
+  chargerStats();
+}
+
+async function chargerListe() {
+  var el = document.getElementById("liste");
+  var r = await _supabase.from("lokt_projets").select("*").eq("statut", "ouvert").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucun projet ouvert pour le moment.</div>'; return; }
+
+  el.innerHTML = r.data.map(function(p){
+    return '<div class="item">' +
+      '<span class="badge">' + (LABELS_AVANCEMENT[p.avancement] || p.avancement) + '</span> ' +
+      (p.secteur ? '<span class="badge">' + p.secteur + '</span> ' : '') +
+      '<div class="item-title">' + p.titre + '</div>' +
+      '<div class="item-meta">' + (p.ville || "Lieu non précisé") + (p.besoin ? ' · Recherche : ' + p.besoin : '') + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + p.description.slice(0, 160) + (p.description.length > 160 ? '…' : '') + '</div>' +
+      '<button class="btn btn-sm" onclick="proposerAide(\'' + p.id + '\')">Je peux aider</button>' +
+      '</div>';
+  }).join("");
+}
+
+async function proposerAide(projetId) {
+  if (!_userId) { alert("Connecte-toi d'abord."); return; }
+  var message = prompt("Explique en quoi tu peux contribuer à ce projet :") || "";
+  var ins = await _supabase.from("lokt_projet_candidatures").insert({
+    projet_id: projetId, candidat_id: _userId, message: message
+  });
+  if (ins.error) { alert("Erreur : " + ins.error.message); return; }
+  alert("Message envoyé ✅");
+}
+
+initSession();
+</script>
+</body>
+</html>

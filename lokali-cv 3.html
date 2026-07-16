@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI CV — Créez votre CV professionnel</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  box-shadow:0 2px 12px rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.wrap{max-width:900px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 4px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--orange);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:#fff;color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--white)}
+.item-row{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;background:rgba(15,23,42,.03);
+  border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.item-row-text b{font-size:13px;display:block}
+.item-row-text span{font-size:12px;color:var(--gray)}
+.item-del{background:none;border:none;color:#EF4444;cursor:pointer;font-size:13px;font-weight:700}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:16px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#059669}
+.msg-err{background:rgba(239,68,68,.15);color:#DC2626}
+.photo-preview{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid var(--border);margin-bottom:8px}
+
+#cvApercu{background:#fff;border-radius:var(--radius);box-shadow:0 4px 24px rgba(15,23,42,.08);
+  max-width:760px;margin:0 auto;overflow:hidden;font-family:'Georgia',serif}
+.cv-header{background:linear-gradient(135deg,#1E293B,#334155);color:#fff;padding:32px;display:flex;gap:20px;align-items:center}
+.cv-photo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);flex-shrink:0}
+.cv-photo-vide{width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:32px}
+.cv-nom{font-size:24px;font-weight:900}
+.cv-titre{font-size:14px;opacity:.85;margin-top:2px}
+.cv-contacts{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;opacity:.85}
+.cv-body{padding:28px 32px;color:#1E293B;font-family:'Segoe UI',Arial,sans-serif}
+.cv-section{margin-bottom:22px}
+.cv-section-titre{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#F97316;
+  border-bottom:2px solid #F97316;padding-bottom:4px;margin-bottom:10px}
+.cv-exp-item{margin-bottom:14px}
+.cv-exp-poste{font-size:14px;font-weight:800}
+.cv-exp-meta{font-size:12px;color:#64748B;margin-bottom:4px}
+.cv-exp-desc{font-size:13px;line-height:1.5}
+.cv-chip{display:inline-block;background:#FFF7ED;color:#C2410C;border-radius:20px;padding:4px 12px;font-size:12px;
+  font-weight:700;margin:0 6px 6px 0}
+.cv-portfolio-item{display:inline-block;width:31%;margin:0 1% 12px;vertical-align:top}
+.cv-portfolio-item img{width:100%;border-radius:8px;height:80px;object-fit:cover}
+.cv-portfolio-item div{font-size:11px;text-align:center;margin-top:4px;color:#64748B}
+
+@media print {
+  .nav, .tabs, #tab-editer, .btn, .no-print { display:none !important; }
+  body { background:#fff; padding:0 }
+  #cvApercu { box-shadow:none; max-width:100% }
+  .wrap{padding:0}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>CV</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1 id="pageTitre">Créez votre CV professionnel</h1>
+  <div class="subtitle" id="pageSous">Gratuit, authentique, prêt à télécharger en PDF</div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour créer ton CV.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div class="tabs" id="tabsNav">
+    <div class="tab active" data-tab="editer">✏️ Éditer mon CV</div>
+    <div class="tab" data-tab="apercu">👁️ Aperçu &amp; Télécharger</div>
+  </div>
+
+  <div id="tab-editer" class="tab-content">
+    <div id="cvMsg"></div>
+
+    <div class="card">
+      <h3>Photo de profil</h3>
+      <img id="photoPreview" class="photo-preview" style="display:none">
+      <input type="file" id="photoInput" accept="image/*" onchange="televerserPhoto()">
+    </div>
+
+    <div class="card">
+      <h3>Informations personnelles</h3>
+      <label>Nom complet</label>
+      <input id="cvNom" placeholder="Prénom et nom">
+      <label>Titre professionnel</label>
+      <input id="cvTitrePro" placeholder="Ex: Développeur mobile & Entrepreneur digital">
+      <label>Présentation</label>
+      <textarea id="cvPresentation" placeholder="Quelques lignes sur ton parcours, tes objectifs..."></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="cvPays"></select></div>
+        <div><label>Ville</label><select id="cvVille"></select></div>
+      </div>
+      <div id="cvVilleAutreWrap" style="display:none"><label>Précise ta ville</label><input id="cvVilleAutre"></div>
+      <div class="row3">
+        <div><label>Téléphone</label><input id="cvTelephone" placeholder="+225 07 00 00 00 00"></div>
+        <div><label>WhatsApp</label><input id="cvWhatsapp" placeholder="+225 07 00 00 00 00"></div>
+        <div><label>Email</label><input id="cvEmail" type="email" placeholder="toi@exemple.com"></div>
+      </div>
+      <button class="btn" onclick="sauvegarderInfosPerso()">Enregistrer mes informations</button>
+    </div>
+
+    <div class="card">
+      <h3>Expériences professionnelles</h3>
+      <div id="listeExperiences"></div>
+      <div class="row2">
+        <input id="expPoste" placeholder="Poste occupé">
+        <input id="expStructure" placeholder="Entreprise / structure">
+      </div>
+      <div class="row3">
+        <input id="expDebut" type="month">
+        <input id="expFin" type="month">
+        <label style="display:flex;align-items:center;gap:6px;margin:0"><input type="checkbox" id="expEnCours" style="width:auto"> En cours</label>
+      </div>
+      <textarea id="expDescription" placeholder="Missions, responsabilités..."></textarea>
+      <button class="btn btn-sm" onclick="ajouterExperience()">+ Ajouter cette expérience</button>
+    </div>
+
+    <div class="card">
+      <h3>Formations</h3>
+      <div id="listeFormations"></div>
+      <div class="row2">
+        <input id="formDiplome" placeholder="Diplôme obtenu">
+        <input id="formEtablissement" placeholder="Établissement">
+      </div>
+      <div class="row2">
+        <input id="formDomaine" placeholder="Domaine d'étude">
+        <input id="formAnnee" type="number" placeholder="Année">
+      </div>
+      <button class="btn btn-sm" onclick="ajouterFormation()">+ Ajouter cette formation</button>
+    </div>
+
+    <div class="card">
+      <h3>Compétences</h3>
+      <div id="listeCompetencesCv"></div>
+      <div class="row2">
+        <select id="cvNewCompSecteur"></select>
+        <select id="cvNewCompCompetence"></select>
+      </div>
+      <div id="cvNewCompAutreWrap" style="display:none"><input id="cvNewCompAutre" placeholder="Précise la compétence"></div>
+      <button class="btn btn-sm" onclick="ajouterCompetenceCv()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Langues</h3>
+      <div id="listeLangues"></div>
+      <div class="row2">
+        <input id="langueNom" placeholder="Ex: Anglais">
+        <select id="langueNiveau">
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Courant">Courant</option>
+          <option value="Bilingue">Bilingue</option>
+          <option value="Langue maternelle">Langue maternelle</option>
+        </select>
+      </div>
+      <button class="btn btn-sm" onclick="ajouterLangue()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Certifications & diplômes justificatifs</h3>
+      <div id="listeCertifications"></div>
+      <div class="row2">
+        <input id="certNom" placeholder="Nom de la certification">
+        <input id="certOrganisme" placeholder="Organisme">
+      </div>
+      <div class="row2">
+        <input id="certAnnee" type="number" placeholder="Année">
+        <input type="file" id="certFichier" accept="application/pdf,image/*">
+      </div>
+      <button class="btn btn-sm" onclick="ajouterCertification()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Portfolio / Réalisations</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:8px">Ajoute des photos de tes réalisations ou des liens vers tes projets (vidéo YouTube, site web...).</p>
+      <div id="listePortfolio"></div>
+      <div class="row2">
+        <input id="portTitre" placeholder="Titre du projet">
+        <input id="portLien" placeholder="Lien (optionnel) — site, vidéo...">
+      </div>
+      <input type="file" id="portImage" accept="image/*" style="margin-top:8px">
+      <button class="btn btn-sm" onclick="ajouterPortfolio()">+ Ajouter au portfolio</button>
+    </div>
+  </div>
+
+  <div id="tab-apercu" class="tab-content" style="display:none">
+    <div style="text-align:center;margin-bottom:16px" class="no-print">
+      <div style="margin-bottom:10px">
+        <span style="font-size:12px;color:var(--gray);margin-right:8px">Couleur du CV :</span>
+        <span class="couleur-cv-choix" data-couleur="#F97316" style="background:#F97316" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#0F3460" style="background:#0F3460" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#059669" style="background:#059669" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#1E293B" style="background:#1E293B" onclick="choisirCouleurCv(this)"></span>
+      </div>
+      <button class="btn" onclick="window.print()">🖨️ Télécharger en PDF</button>
+      <button class="btn btn-outline" onclick="copierLienPublic()">🔗 Copier mon lien public</button>
+    </div>
+    <div id="cvApercu"></div>
+  </div>
+</div>
+
+<style>
+.couleur-cv-choix{display:inline-block;width:22px;height:22px;border-radius:50%;cursor:pointer;margin-right:6px;
+  vertical-align:middle;border:2px solid transparent}
+.couleur-cv-choix.selectionnee{border-color:#1E293B}
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _cvId = null;
+var _cvData = {
+  experiences: [], formations: [], competences: [], langues: [], certifications: [], portfolio: []
+};
+var _lectureSeule = false;
+var _idConsulte = null;
+var _cvUpdatedAt = null;
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+  if (nom === "apercu") rendreApercu();
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(texte, ok) {
+  var el = document.getElementById("cvMsg");
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var params = new URLSearchParams(window.location.search);
+  _idConsulte = params.get("voir");
+
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+
+  if (_idConsulte) {
+    if (!session) { document.getElementById("authGate").style.display = ""; document.getElementById("tabsNav").style.display = "none"; return; }
+    _userId = session.user.id;
+    _lectureSeule = true;
+    document.getElementById("pageTitre").textContent = "CV";
+    document.getElementById("pageSous").textContent = "Profil consulté sur LOKALI";
+    document.querySelector('.tab[data-tab="editer"]').style.display = "none";
+    var r = await _supabase.from("lokt_cv").select("*").eq("user_id", _idConsulte).maybeSingle();
+    if (r.data) { _cvData = normaliserCv(r.data); _cvUpdatedAt = r.data.updated_at; }
+    activerOnglet("apercu");
+    return;
+  }
+
+  if (!session) { document.getElementById("authGate").style.display = ""; document.getElementById("tabsNav").style.display = "none"; return; }
+  _userId = session.user.id;
+  initDropdownsCv();
+  await chargerMonCv();
+}
+
+function normaliserCv(data) {
+  return {
+    nom_complet: data.nom_complet, titre_professionnel: data.titre_professionnel, presentation: data.presentation,
+    photo_url: data.photo_url, telephone: data.telephone, whatsapp: data.whatsapp, email_public: data.email_public,
+    pays: data.pays, ville: data.ville,
+    experiences: data.experiences || [], formations: data.formations || [], competences: data.competences || [],
+    langues: data.langues || [], certifications: data.certifications || [], portfolio: data.portfolio || []
+  };
+}
+
+function initDropdownsCv() {
+  fillPaysSelect(document.getElementById("cvPays"));
+  document.getElementById("cvPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("cvVille"));
+  });
+  document.getElementById("cvVille").addEventListener("change", function() {
+    document.getElementById("cvVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  fillSecteursSelect(document.getElementById("cvNewCompSecteur"));
+  document.getElementById("cvNewCompSecteur").addEventListener("change", function() {
+    fillMetiersBySecteur(this.value, document.getElementById("cvNewCompCompetence"));
+  });
+  document.getElementById("cvNewCompCompetence").addEventListener("change", function() {
+    document.getElementById("cvNewCompAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerMonCv() {
+  var r = await _supabase.from("lokt_cv").select("*").eq("user_id", _userId).maybeSingle();
+  if (r.data) {
+    _cvId = r.data.id;
+    _cvData = normaliserCv(r.data);
+    _cvUpdatedAt = r.data.updated_at;
+    document.getElementById("cvNom").value = r.data.nom_complet || "";
+    document.getElementById("cvTitrePro").value = r.data.titre_professionnel || "";
+    document.getElementById("cvPresentation").value = r.data.presentation || "";
+    document.getElementById("cvTelephone").value = r.data.telephone || "";
+    document.getElementById("cvWhatsapp").value = r.data.whatsapp || "";
+    document.getElementById("cvEmail").value = r.data.email_public || "";
+    document.getElementById("cvPays").value = r.data.pays || "Côte d'Ivoire";
+    fillVillesByPays(document.getElementById("cvPays").value, document.getElementById("cvVille"));
+    document.getElementById("cvVille").value = r.data.ville || "";
+    if (r.data.photo_url) {
+      document.getElementById("photoPreview").src = r.data.photo_url;
+      document.getElementById("photoPreview").style.display = "";
+    }
+  }
+  afficherExperiences(); afficherFormations(); afficherCompetencesCv(); afficherLangues(); afficherCertifications(); afficherPortfolio();
+}
+
+async function sauvegarderTout(messageOk) {
+  var villeVal = document.getElementById("cvVille") ? document.getElementById("cvVille").value : (_cvData.ville || "");
+  if (villeVal === "__autre__") villeVal = document.getElementById("cvVilleAutre").value.trim();
+  var payload = {
+    user_id: _userId,
+    nom_complet: document.getElementById("cvNom").value.trim(),
+    titre_professionnel: document.getElementById("cvTitrePro").value.trim(),
+    presentation: document.getElementById("cvPresentation").value.trim(),
+    photo_url: _cvData.photo_url || null,
+    telephone: document.getElementById("cvTelephone").value.trim(),
+    whatsapp: document.getElementById("cvWhatsapp").value.trim(),
+    email_public: document.getElementById("cvEmail").value.trim(),
+    pays: document.getElementById("cvPays").value,
+    ville: villeVal,
+    experiences: _cvData.experiences, formations: _cvData.formations, competences: _cvData.competences,
+    langues: _cvData.langues, certifications: _cvData.certifications, portfolio: _cvData.portfolio,
+    updated_at: new Date().toISOString()
+  };
+  var r = await _supabase.from("lokt_cv").upsert(payload, { onConflict: "user_id" }).select().single();
+  if (r.error) { afficherMsg("Erreur : " + r.error.message, false); return; }
+  _cvId = r.data.id;
+  _cvUpdatedAt = r.data.updated_at;
+  if (messageOk) afficherMsg(messageOk, true);
+}
+
+function sauvegarderInfosPerso() { sauvegarderTout("Informations enregistrées ✅"); }
+
+async function televerserPhoto() {
+  var fichier = document.getElementById("photoInput").files[0];
+  if (!fichier) return;
+  var chemin = _userId + "/photo-" + Date.now() + "-" + fichier.name;
+  var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+  if (up.error) { afficherMsg("Erreur upload : " + up.error.message, false); return; }
+  var url = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  _cvData.photo_url = url;
+  document.getElementById("photoPreview").src = url;
+  document.getElementById("photoPreview").style.display = "";
+  await sauvegarderTout("Photo mise à jour ✅");
+}
+
+function ajouterExperience() {
+  var poste = document.getElementById("expPoste").value.trim();
+  var structure = document.getElementById("expStructure").value.trim();
+  if (!poste) { afficherMsg("Le poste est obligatoire.", false); return; }
+  _cvData.experiences.push({
+    poste: poste, structure: structure,
+    debut: document.getElementById("expDebut").value,
+    fin: document.getElementById("expFin").value,
+    en_cours: document.getElementById("expEnCours").checked,
+    description: document.getElementById("expDescription").value.trim()
+  });
+  ["expPoste","expStructure","expDebut","expFin","expDescription"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("expEnCours").checked = false;
+  afficherExperiences();
+  sauvegarderTout();
+}
+function supprimerExperience(i) { _cvData.experiences.splice(i, 1); afficherExperiences(); sauvegarderTout(); }
+function afficherExperiences() {
+  var el = document.getElementById("listeExperiences");
+  if (!_cvData.experiences.length) { el.innerHTML = '<div class="empty">Aucune expérience ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.experiences.map(function(e, i){
+    var periode = (e.debut || "?") + " → " + (e.en_cours ? "Aujourd'hui" : (e.fin || "?"));
+    return '<div class="item-row"><div class="item-row-text"><b>' + e.poste + (e.structure ? " — " + e.structure : "") + '</b><span>' + periode + '</span></div>' +
+      '<button class="item-del" onclick="supprimerExperience(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+function ajouterFormation() {
+  var diplome = document.getElementById("formDiplome").value.trim();
+  if (!diplome) { afficherMsg("Le diplôme est obligatoire.", false); return; }
+  _cvData.formations.push({
+    diplome: diplome, etablissement: document.getElementById("formEtablissement").value.trim(),
+    domaine: document.getElementById("formDomaine").value.trim(), annee: document.getElementById("formAnnee").value
+  });
+  ["formDiplome","formEtablissement","formDomaine","formAnnee"].forEach(function(id){ document.getElementById(id).value = ""; });
+  afficherFormations();
+  sauvegarderTout();
+}
+function supprimerFormation(i) { _cvData.formations.splice(i, 1); afficherFormations(); sauvegarderTout(); }
+function afficherFormations() {
+  var el = document.getElementById("listeFormations");
+  if (!_cvData.formations.length) { el.innerHTML = '<div class="empty">Aucune formation ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.formations.map(function(f, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + f.diplome + '</b><span>' + (f.etablissement || "") + (f.annee ? " · " + f.annee : "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerFormation(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+function ajouterCompetenceCv() {
+  var val = document.getElementById("cvNewCompCompetence").value;
+  var nom = (val === "__autre__") ? document.getElementById("cvNewCompAutre").value.trim() : val;
+  if (!nom) return;
+  if (_cvData.competences.indexOf(nom) === -1) _cvData.competences.push(nom);
+  document.getElementById("cvNewCompAutre").value = "";
+  afficherCompetencesCv();
+  sauvegarderTout();
+}
+function supprimerCompetenceCv(nom) { _cvData.competences = _cvData.competences.filter(function(c){ return c !== nom; }); afficherCompetencesCv(); sauvegarderTout(); }
+function afficherCompetencesCv() {
+  var el = document.getElementById("listeCompetencesCv");
+  if (!_cvData.competences.length) { el.innerHTML = '<div class="empty">Aucune compétence ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.competences.map(function(c){
+    return '<span class="cv-chip" style="background:rgba(249,115,22,.1);color:#C2410C">' + c + ' <button style="border:none;background:none;color:inherit;cursor:pointer" onclick="supprimerCompetenceCv(\'' + c.replace(/'/g,"\\'") + '\')">✕</button></span>';
+  }).join("");
+}
+
+function ajouterLangue() {
+  var nom = document.getElementById("langueNom").value.trim();
+  if (!nom) return;
+  _cvData.langues.push({ langue: nom, niveau: document.getElementById("langueNiveau").value });
+  document.getElementById("langueNom").value = "";
+  afficherLangues();
+  sauvegarderTout();
+}
+function supprimerLangue(i) { _cvData.langues.splice(i, 1); afficherLangues(); sauvegarderTout(); }
+function afficherLangues() {
+  var el = document.getElementById("listeLangues");
+  if (!_cvData.langues.length) { el.innerHTML = '<div class="empty">Aucune langue ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.langues.map(function(l, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + l.langue + '</b><span>' + l.niveau + '</span></div>' +
+      '<button class="item-del" onclick="supprimerLangue(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+async function ajouterCertification() {
+  var nom = document.getElementById("certNom").value.trim();
+  if (!nom) { afficherMsg("Le nom de la certification est obligatoire.", false); return; }
+  var documentUrl = null;
+  var fichier = document.getElementById("certFichier").files[0];
+  if (fichier) {
+    var chemin = _userId + "/cert-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (!up.error) documentUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+  _cvData.certifications.push({
+    nom: nom, organisme: document.getElementById("certOrganisme").value.trim(),
+    annee: document.getElementById("certAnnee").value, document_url: documentUrl
+  });
+  ["certNom","certOrganisme","certAnnee"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("certFichier").value = "";
+  afficherCertifications();
+  sauvegarderTout("Certification ajoutée ✅");
+}
+function supprimerCertification(i) { _cvData.certifications.splice(i, 1); afficherCertifications(); sauvegarderTout(); }
+function afficherCertifications() {
+  var el = document.getElementById("listeCertifications");
+  if (!_cvData.certifications.length) { el.innerHTML = '<div class="empty">Aucune certification ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.certifications.map(function(c, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + c.nom + '</b><span>' + (c.organisme || "") + (c.annee ? " · " + c.annee : "") + (c.document_url ? " · 📎 document joint" : "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerCertification(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+async function ajouterPortfolio() {
+  var titre = document.getElementById("portTitre").value.trim();
+  if (!titre) { afficherMsg("Le titre du projet est obligatoire.", false); return; }
+  var imageUrl = null;
+  var fichier = document.getElementById("portImage").files[0];
+  if (fichier) {
+    var chemin = _userId + "/portfolio-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (!up.error) imageUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+  _cvData.portfolio.push({ titre: titre, lien_url: document.getElementById("portLien").value.trim(), image_url: imageUrl });
+  document.getElementById("portTitre").value = ""; document.getElementById("portLien").value = ""; document.getElementById("portImage").value = "";
+  afficherPortfolio();
+  sauvegarderTout("Ajouté au portfolio ✅");
+}
+function supprimerPortfolio(i) { _cvData.portfolio.splice(i, 1); afficherPortfolio(); sauvegarderTout(); }
+function afficherPortfolio() {
+  var el = document.getElementById("listePortfolio");
+  if (!_cvData.portfolio.length) { el.innerHTML = '<div class="empty">Aucun élément de portfolio.</div>'; return; }
+  el.innerHTML = _cvData.portfolio.map(function(p, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + p.titre + '</b><span>' + (p.lien_url || "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerPortfolio(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+var _couleurCv = "#F97316";
+function choisirCouleurCv(el) {
+  _couleurCv = el.dataset.couleur;
+  document.querySelectorAll(".couleur-cv-choix").forEach(function(c){ c.classList.remove("selectionnee"); });
+  el.classList.add("selectionnee");
+  rendreApercu();
+}
+
+function rendreApercu() {
+  var d = _cvData;
+  var photo = d.photo_url ? '<img class="cv-photo" src="' + d.photo_url + '">' : '<div class="cv-photo-vide">👤</div>';
+  var contacts = [];
+  if (d.telephone) contacts.push("📞 " + d.telephone);
+  if (d.whatsapp) contacts.push("💬 " + d.whatsapp);
+  if (d.email_public) contacts.push("✉️ " + d.email_public);
+  if (d.ville) contacts.push("📍 " + d.ville + (d.pays ? ", " + d.pays : ""));
+
+  var html = '<style>#cvApercu .cv-section-titre{color:' + _couleurCv + ' !important;border-color:' + _couleurCv + ' !important}' +
+    '#cvApercu .cv-chip{background:' + _couleurCv + '1A !important;color:' + _couleurCv + ' !important}</style>';
+
+  html += '<div class="cv-header">' + photo +
+    '<div><div class="cv-nom">' + (d.nom_complet || "Nom non renseigné") + '</div>' +
+    '<div class="cv-titre">' + (d.titre_professionnel || "") + '</div>' +
+    '<div class="cv-contacts">' + contacts.map(function(c){ return '<span>' + c + '</span>'; }).join("") + '</div></div></div>';
+
+  html += '<div class="cv-body">';
+
+  if (d.presentation) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Présentation</div><div class="cv-exp-desc">' + d.presentation + '</div></div>';
+  }
+  if (d.experiences && d.experiences.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Expériences professionnelles</div>' +
+      d.experiences.map(function(e){
+        var periode = (e.debut || "?") + " → " + (e.en_cours ? "Aujourd'hui" : (e.fin || "?"));
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + e.poste + (e.structure ? " — " + e.structure : "") + '</div>' +
+          '<div class="cv-exp-meta">' + periode + '</div>' +
+          (e.description ? '<div class="cv-exp-desc">' + e.description + '</div>' : '') + '</div>';
+      }).join("") + '</div>';
+  }
+  if (d.formations && d.formations.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Formations</div>' +
+      d.formations.map(function(f){
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + f.diplome + '</div>' +
+          '<div class="cv-exp-meta">' + (f.etablissement || "") + (f.domaine ? " · " + f.domaine : "") + (f.annee ? " · " + f.annee : "") + '</div></div>';
+      }).join("") + '</div>';
+  }
+  if (d.competences && d.competences.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Compétences</div>' +
+      d.competences.map(function(c){ return '<span class="cv-chip">' + c + '</span>'; }).join("") + '</div>';
+  }
+  if (d.langues && d.langues.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Langues</div>' +
+      d.langues.map(function(l){ return '<span class="cv-chip">' + l.langue + " — " + l.niveau + '</span>'; }).join("") + '</div>';
+  }
+  if (d.certifications && d.certifications.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Certifications</div>' +
+      d.certifications.map(function(c){
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + c.nom + '</div><div class="cv-exp-meta">' + (c.organisme || "") + (c.annee ? " · " + c.annee : "") + '</div></div>';
+      }).join("") + '</div>';
+  }
+  if (d.portfolio && d.portfolio.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Portfolio</div>' +
+      d.portfolio.map(function(p){
+        return '<div class="cv-portfolio-item">' + (p.image_url ? '<img src="' + p.image_url + '">' : '') + '<div>' + p.titre + '</div></div>';
+      }).join("") + '</div>';
+  }
+
+  html += '</div>';
+
+  var idPourLien = _lectureSeule ? _idConsulte : _userId;
+  var lienVerif = window.location.origin + "/lokali-cv.html?voir=" + idPourLien;
+  var dateMaj = _cvUpdatedAt ? new Date(_cvUpdatedAt).toLocaleDateString("fr-FR") : new Date().toLocaleDateString("fr-FR");
+  html += '<div style="border-top:1px solid #E2E8F0;padding:14px 32px;font-size:11px;color:#94A3B8;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">' +
+    '<span>Document généré via LOKALI · Vérifiable sur ' + lienVerif + ' · Mis à jour le ' + dateMaj + '</span>' +
+    '<span id="cvScoreConfiance"></span>' +
+    '</div>';
+
+  document.getElementById("cvApercu").innerHTML = html;
+  if (idPourLien) afficherScoreConfiance(_supabase, idPourLien, "cvScoreConfiance");
+}
+
+function copierLienPublic() {
+  var lien = window.location.origin + "/lokali-cv.html?voir=" + _userId;
+  navigator.clipboard.writeText(lien).then(function() {
+    alert("Lien copié ✅\n" + lien);
+  }).catch(function() {
+    prompt("Copie ce lien :", lien);
+  });
+}
+
+initSession();
+</script>
+</body>
+</html>

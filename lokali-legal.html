@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Mentions légales</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#F1F5F9;--card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:40px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  box-shadow:0 2px 12px rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.wrap{max-width:720px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
+.tab{flex-shrink:0;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700;
+  background:rgba(15,23,42,.05);border:1px solid var(--border);color:var(--gray);cursor:pointer;white-space:nowrap}
+.tab.active{background:rgba(249,115,22,.12);border-color:var(--orange);color:var(--orange2)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;line-height:1.6;font-size:14px}
+.card h2{font-size:16px;margin:18px 0 8px}
+.card h2:first-child{margin-top:0}
+.card p{margin-bottom:10px;color:#334155}
+.card ul{margin:8px 0 12px 20px;color:#334155}
+.card li{margin-bottom:4px}
+.a-completer{background:#FFF7ED;color:#C2410C;padding:2px 6px;border-radius:6px;font-weight:700;font-size:12.5px}
+.maj{font-size:12px;color:var(--gray);margin-bottom:14px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>LÉGAL</b></span>
+  <a class="nav-back" href="/">‹ LOKALI</a>
+</nav>
+
+<div class="wrap">
+  <h1>Mentions légales & confiance</h1>
+  <div class="tabs" id="tabsNav">
+    <div class="tab active" data-tab="cgu">CGU</div>
+    <div class="tab" data-tab="confidentialite">Confidentialité</div>
+    <div class="tab" data-tab="regles">Règles</div>
+    <div class="tab" data-tab="signalement">Signalement</div>
+    <div class="tab" data-tab="suppression">Suppression de compte</div>
+    <div class="tab" data-tab="contact">Contact</div>
+  </div>
+
+  <div class="card" id="contenu"></div>
+</div>
+
+<script>
+var maj = "16 juillet 2026";
+
+var CONTENUS = {
+
+cgu: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>1. Objet</h2>
+<p>LOKALI est une plateforme numérique de mise en relation entre particuliers, prestataires, professionnels, entreprises, recruteurs, fournisseurs, partenaires et investisseurs. LOKALI facilite la mise en relation ; elle n'est ni employeur, ni prestataire, ni partie aux transactions ou accords conclus entre utilisateurs.</p>
+
+<h2>2. Éditeur du service</h2>
+<p>Le service LOKALI est édité par <strong>KORANDIS TECH</strong>, domicilié à Abidjan, Plateau, Rue de la République, Côte d'Ivoire, joignable à <strong>contact@lokali.com</strong>.</p>
+
+<h2>3. Inscription et compte</h2>
+<p>L'inscription est gratuite et ouverte à toute personne majeure ou disposant de la capacité juridique de contracter. Chaque utilisateur est responsable de l'exactitude des informations fournies et de la confidentialité de ses identifiants.</p>
+
+<h2>4. Utilisation du service</h2>
+<p>L'utilisateur s'engage à :</p>
+<ul>
+<li>fournir des informations exactes et à jour ;</li>
+<li>ne publier aucun contenu illégal, trompeur, diffamatoire ou portant atteinte aux droits d'autrui ;</li>
+<li>ne pas usurper l'identité d'un tiers ;</li>
+<li>respecter les autres utilisateurs dans ses échanges et transactions.</li>
+</ul>
+
+<h2>5. Responsabilité</h2>
+<p>LOKALI met à disposition un espace de mise en relation mais ne vérifie pas systématiquement l'identité, les compétences ou la solvabilité des utilisateurs, sauf lorsqu'un badge de vérification est explicitement affiché. Les transactions, accords, paiements et prestations conclus entre utilisateurs relèvent de leur seule responsabilité. LOKALI ne saurait être tenue responsable des litiges entre utilisateurs, sans préjudice de son rôle de facilitation du signalement.</p>
+
+<h2>6. Contenus publiés</h2>
+<p>L'utilisateur reste propriétaire des contenus qu'il publie (profils, CV, documents, images, annonces). En les publiant, il autorise LOKALI à les héberger, afficher et transmettre aux autres utilisateurs dans le cadre normal du service.</p>
+
+<h2>7. Suspension et résiliation</h2>
+<p>LOKALI peut suspendre ou supprimer un compte en cas de non-respect des présentes conditions, de comportement frauduleux, ou de signalement fondé. L'utilisateur peut à tout moment demander la suppression de son compte (voir section dédiée).</p>
+
+<h2>8. Modification des CGU</h2>
+<p>LOKALI peut faire évoluer les présentes conditions pour accompagner l'évolution du service. Les utilisateurs seront informés des changements substantiels.</p>
+
+<h2>9. Droit applicable</h2>
+<p>Les présentes conditions sont soumises au droit ivoirien (Côte d'Ivoire).</p>
+`,
+
+confidentialite: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>1. Données collectées</h2>
+<p>Pour fonctionner, LOKALI collecte notamment :</p>
+<ul>
+<li>informations de compte : email, mot de passe (chiffré), nom, téléphone ;</li>
+<li>informations de profil : titre, présentation, compétences, expériences, localisation ;</li>
+<li>documents transmis volontairement : photo de profil, CV, certifications, portfolio ;</li>
+<li>contenu des annonces publiées et des messages échangés dans la messagerie interne ;</li>
+<li>données techniques minimales nécessaires au fonctionnement (ex. horodatage de connexion, pour le statut "en ligne").</li>
+</ul>
+
+<h2>2. Finalités du traitement</h2>
+<p>Ces données servent à :</p>
+<ul>
+<li>créer et afficher les profils, CV et annonces ;</li>
+<li>permettre la recherche et la mise en relation entre utilisateurs ;</li>
+<li>calculer les statistiques publiques agrégées (nombre d'inscrits, en ligne, nouveaux) — jamais de données individuelles ;</li>
+<li>assurer la sécurité du service et prévenir les abus.</li>
+</ul>
+
+<h2>3. Hébergement et sous-traitants techniques</h2>
+<p>Les données sont hébergées via Supabase (base de données et stockage de fichiers) et le site est servi via Vercel. Ces prestataires techniques n'ont pas accès aux données à des fins commerciales propres.</p>
+
+<h2>4. Partage des données</h2>
+<p>LOKALI ne vend aucune donnée personnelle à des tiers. Les informations de profil que l'utilisateur choisit de rendre publiques (profil Talent, page Entreprise, CV partagé) sont visibles par les autres utilisateurs connectés, conformément à l'objet du service.</p>
+
+<h2>5. Sécurité</h2>
+<p>L'accès à la quasi-totalité du contenu de LOKALI est réservé aux utilisateurs connectés. Des règles de sécurité (Row Level Security) empêchent qu'un utilisateur accède aux données privées d'un autre sans autorisation.</p>
+
+<h2>6. Droits de l'utilisateur</h2>
+<p>Chaque utilisateur peut à tout moment :</p>
+<ul>
+<li>consulter et modifier ses informations depuis son profil ou son tableau de bord ;</li>
+<li>demander la suppression de son compte et de ses données (voir section dédiée) ;</li>
+<li>demander une copie de ses données en écrivant au contact support.</li>
+</ul>
+
+<h2>7. Conservation des données</h2>
+<p>Les données sont conservées tant que le compte est actif. En cas de suppression de compte, les données personnelles sont supprimées, sous réserve d'obligations légales de conservation le cas échéant.</p>
+`,
+
+regles: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>Règles de la communauté LOKALI</h2>
+<p>Pour que LOKALI reste un espace utile et sûr pour tous, chaque utilisateur s'engage à :</p>
+<ul>
+<li>publier des informations exactes sur son profil, ses compétences et ses annonces ;</li>
+<li>ne pas publier de contenu frauduleux, trompeur ou illégal ;</li>
+<li>ne pas harceler, menacer ou discriminer un autre utilisateur (origine, religion, sexe, apparence physique, ou toute autre caractéristique personnelle) ;</li>
+<li>ne pas publier de fausses évaluations ni manipuler le système d'avis ;</li>
+<li>ne pas utiliser LOKALI à des fins de collecte de données à l'insu des autres utilisateurs ;</li>
+<li>respecter les échanges commerciaux convenus avec les autres utilisateurs.</li>
+</ul>
+<p>Le non-respect de ces règles peut entraîner un avertissement, une suspension temporaire ou une suppression définitive du compte.</p>
+`,
+
+signalement: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>Signaler un problème</h2>
+<p>Si tu constates un profil suspect, une annonce frauduleuse, un comportement abusif ou un contenu inapproprié, tu peux le signaler :</p>
+<ul>
+<li>en écrivant à <strong>contact@lokali.com</strong> avec un lien ou une capture d'écran du contenu concerné ;</li>
+<li>en précisant le module concerné (Talents, Missions, Emplois, Marchés...) et la date approximative.</li>
+</ul>
+<p>Chaque signalement est examiné. Aucune information sur l'auteur du signalement n'est communiquée à la personne signalée.</p>
+`,
+
+suppression: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>Supprimer mon compte</h2>
+<p>Tu peux demander la suppression complète de ton compte et de tes données à tout moment, en écrivant à <strong>contact@lokali.com</strong> depuis l'adresse email associée à ton compte.</p>
+<p>La suppression entraîne :</p>
+<ul>
+<li>la suppression de ton profil, CV, documents et annonces publiées ;</li>
+<li>la suppression de tes conversations et candidatures ;</li>
+<li>l'anonymisation des avis que tu as laissés à d'autres utilisateurs (pour ne pas fausser leur historique).</li>
+</ul>
+<p>Cette action est irréversible.</p>
+`,
+
+contact: `
+<div class="maj">Dernière mise à jour : ${maj}</div>
+<h2>Nous contacter</h2>
+<p>Pour toute question, suggestion, signalement ou demande relative à tes données personnelles :</p>
+<ul>
+<li>Email : <strong>contact@lokali.com</strong></li>
+<li>WhatsApp : <span class="a-completer">[à compléter, optionnel]</span></li>
+</ul>
+`
+};
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.getElementById("contenu").innerHTML = CONTENUS[nom];
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+var paramsUrl = new URLSearchParams(window.location.search);
+var ongletInitial = paramsUrl.get("onglet");
+activerOnglet(ongletInitial && CONTENUS[ongletInitial] ? ongletInitial : "cgu");
+</script>
+</body>
+</html>

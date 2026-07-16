@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI ENTREPRISES — Pages professionnelles</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 4px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--orange);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.item{border-bottom:1px solid var(--border);padding:14px 0;display:flex;gap:12px;align-items:flex-start}
+.item:last-child{border-bottom:none}
+.item-avatar{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#F97316,#FB923C);
+  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;flex-shrink:0}
+.item-title{font-weight:700;font-size:15px}
+.item-meta{font-size:12px;color:var(--gray);margin:2px 0 6px}
+.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:700;background:rgba(5,150,105,.2);color:#34D399}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>ENTREPRISES</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Pages professionnelles</h1>
+  <div class="subtitle">Découvrez les entreprises présentes sur LOKALI</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statEntreprises">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="liste">Entreprises</div>
+    <div class="tab" data-tab="profil">Ma page entreprise</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour créer ta page.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="tab-liste" class="tab-content">
+    <div id="liste" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="tab-profil" class="tab-content" style="display:none">
+    <div id="profilMsg"></div>
+    <div class="card">
+      <h3>Ma page entreprise</h3>
+      <label>Nom de l'entreprise</label>
+      <input id="eNom" placeholder="Ex: LOKALI SARL">
+      <label>Secteur d'activité</label>
+      <select id="eSecteur"></select>
+      <label>Description</label>
+      <textarea id="eDescription" placeholder="Présente ton entreprise, ses activités, sa mission..."></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="ePays"></select></div>
+        <div><label>Ville</label><select id="eVille"></select></div>
+      </div>
+      <div id="eVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="eVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <div class="row2">
+        <div><label>Année de création</label><input id="eAnnee" type="number" placeholder="2020"></div>
+        <div>
+          <label>Nombre d'employés</label>
+          <select id="eEmployes">
+            <option value="1-10">1 à 10</option>
+            <option value="11-50">11 à 50</option>
+            <option value="50+">Plus de 50</option>
+          </select>
+        </div>
+      </div>
+      <label>Site web (optionnel)</label>
+      <input id="eSite" placeholder="https://...">
+      <label>Document de présentation (PDF, optionnel)</label>
+      <input type="file" id="eDocumentFichier" accept="application/pdf,image/*">
+      <div id="eDocumentActuel" style="font-size:12px;color:var(--gray);margin-top:4px"></div>
+      <button class="btn" onclick="sauvegarder()">Enregistrer ma page</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _entrepriseDocumentUrl = null;
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) {
+    _userId = session.user.id;
+    initDropdownsEntreprise();
+    var r = await _supabase.from("lokt_entreprises").select("*").eq("user_id", _userId).maybeSingle();
+    if (r.data) {
+      document.getElementById("eNom").value = r.data.nom || "";
+      document.getElementById("eSecteur").value = r.data.secteur || "";
+      document.getElementById("eDescription").value = r.data.description || "";
+      document.getElementById("ePays").value = r.data.pays || "Côte d'Ivoire";
+      fillVillesByPays(document.getElementById("ePays").value, document.getElementById("eVille"));
+      var villes = VILLES_PAR_PAYS[document.getElementById("ePays").value] || [];
+      if (r.data.ville && villes.indexOf(r.data.ville) === -1) {
+        document.getElementById("eVille").value = "__autre__";
+        document.getElementById("eVilleAutreWrap").style.display = "";
+        document.getElementById("eVilleAutre").value = r.data.ville || "";
+      } else {
+        document.getElementById("eVille").value = r.data.ville || "";
+      }
+      document.getElementById("eAnnee").value = r.data.annee_creation || "";
+      document.getElementById("eEmployes").value = r.data.nb_employes || "1-10";
+      document.getElementById("eSite").value = r.data.site_web || "";
+      _entrepriseDocumentUrl = r.data.document_url || null;
+      if (_entrepriseDocumentUrl) {
+        document.getElementById("eDocumentActuel").innerHTML = '📎 <a href="' + _entrepriseDocumentUrl + '" target="_blank">Document actuel</a> (choisis un nouveau fichier pour le remplacer)';
+      }
+    }
+  } else {
+    document.getElementById("authGate").style.display = "";
+    document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+    document.querySelectorAll(".tab").forEach(function(t){ t.style.display = "none"; });
+    return;
+  }
+  chargerStats();
+  chargerListe();
+}
+
+function initDropdownsEntreprise() {
+  fillSecteursSelect(document.getElementById("eSecteur"));
+  fillPaysSelect(document.getElementById("ePays"));
+  document.getElementById("ePays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("eVille"));
+  });
+  document.getElementById("eVille").addEventListener("change", function() {
+    document.getElementById("eVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_entreprises").select("*", { count: "exact", head: true }).eq("actif", true);
+    document.getElementById("statEntreprises").textContent = (r.count || 0) + " entreprises inscrites";
+  } catch(e) {}
+}
+
+async function sauvegarder() {
+  if (!_userId) { afficherMsg("profilMsg", "Connecte-toi d'abord.", false); return; }
+  var nom = document.getElementById("eNom").value.trim();
+  if (!nom) { afficherMsg("profilMsg", "Le nom de l'entreprise est obligatoire.", false); return; }
+  var villeVal = document.getElementById("eVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("eVilleAutre").value.trim();
+
+  var documentUrl = _entrepriseDocumentUrl || null;
+  var fichier = document.getElementById("eDocumentFichier").files[0];
+  if (fichier) {
+    var chemin = _userId + "/entreprise-doc-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (up.error) { afficherMsg("profilMsg", "Erreur upload du document : " + up.error.message, false); return; }
+    documentUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+
+  var payload = {
+    user_id: _userId,
+    nom: nom,
+    secteur: document.getElementById("eSecteur").value,
+    description: document.getElementById("eDescription").value.trim(),
+    ville: villeVal,
+    pays: document.getElementById("ePays").value,
+    annee_creation: parseInt(document.getElementById("eAnnee").value) || null,
+    nb_employes: document.getElementById("eEmployes").value,
+    site_web: document.getElementById("eSite").value.trim(),
+    document_url: documentUrl,
+    updated_at: new Date().toISOString()
+  };
+  var r = await _supabase.from("lokt_entreprises").upsert(payload, { onConflict: "user_id" });
+  if (r.error) { afficherMsg("profilMsg", "Erreur : " + r.error.message, false); return; }
+  _entrepriseDocumentUrl = documentUrl;
+  afficherMsg("profilMsg", "Page entreprise enregistrée ✅", true);
+  chargerStats();
+  chargerListe();
+}
+
+async function chargerListe() {
+  var el = document.getElementById("liste");
+  var r = await _supabase.from("lokt_entreprises").select("*").eq("actif", true).order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune entreprise inscrite pour le moment.</div>'; return; }
+
+  el.innerHTML = r.data.map(function(e){
+    var initiale = (e.nom || "?").charAt(0).toUpperCase();
+    return '<div class="item">' +
+      '<div class="item-avatar">' + initiale + '</div>' +
+      '<div>' +
+        (e.verifie ? '<span class="badge">✓ Vérifiée</span><br>' : '') +
+        '<div class="item-title">' + e.nom + '</div>' +
+        '<div class="item-meta">' + (e.secteur || "Secteur non précisé") + (e.ville ? ' · ' + e.ville : '') + (e.nb_employes ? ' · ' + e.nb_employes + ' employés' : '') + '</div>' +
+        '<div style="font-size:13px;color:var(--gray)">' + (e.description ? e.description.slice(0, 140) + (e.description.length > 140 ? '…' : '') : '') + '</div>' +
+        (e.site_web ? '<a href="' + e.site_web + '" target="_blank" style="font-size:12px;color:var(--orange2)">Site web →</a>' : '') +
+      '</div>' +
+      '</div>';
+  }).join("");
+}
+
+initSession();
+</script>
+</body>
+</html>

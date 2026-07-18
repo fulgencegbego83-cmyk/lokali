@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI COMMUNAUTÉ — Vie de l'écosystème</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:10px 4px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent}
+.tab.active{color:var(--orange);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.feed-item{display:flex;gap:12px;border-bottom:1px solid var(--border);padding:14px 0}
+.feed-item:last-child{border-bottom:none}
+.feed-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-size:17px;flex-shrink:0}
+.feed-text b{font-size:13px}
+.feed-text .feed-title{font-size:14px;font-weight:700;margin:2px 0}
+.feed-text .feed-time{font-size:11px;color:var(--gray)}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.star-row{display:flex;gap:6px;margin:8px 0}
+.star{font-size:26px;cursor:pointer;color:var(--gray)}
+.star.active{color:#FACC15}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>COMMUNAUTÉ</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Vie de l'écosystème</h1>
+  <div class="subtitle">Tout ce qui se passe en ce moment sur LOKALI Talents & Opportunités</div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="feed">Activité récente</div>
+    <div class="tab" data-tab="avis">Laisser un avis</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour laisser un avis.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="tab-feed" class="tab-content">
+    <div id="feed" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="tab-avis" class="tab-content" style="display:none">
+    <div id="avisMsg"></div>
+    <div class="card">
+      <h3>Laisser un avis sur une collaboration</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:8px">
+        Après une mission, un emploi, un marché ou toute autre collaboration, tu peux évaluer la personne avec qui tu as travaillé.
+        Il te faut son identifiant utilisateur LOKALI (visible sur son profil).
+      </p>
+      <label>Identifiant de la personne évaluée</label>
+      <input id="vEvalueId" placeholder="Identifiant utilisateur (UUID)">
+      <label>Dans quel contexte ?</label>
+      <input id="vContexte" placeholder="Ex: Mission, Emploi, Marché...">
+      <label>Note</label>
+      <div class="star-row" id="starRow">
+        <span class="star" data-n="1">★</span>
+        <span class="star" data-n="2">★</span>
+        <span class="star" data-n="3">★</span>
+        <span class="star" data-n="4">★</span>
+        <span class="star" data-n="5">★</span>
+      </div>
+      <label>Commentaire (optionnel)</label>
+      <textarea id="vCommentaire" placeholder="Comment s'est passée la collaboration ?"></textarea>
+      <button class="btn" onclick="laisserAvis()">Envoyer l'avis</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _noteChoisie = 0;
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+document.querySelectorAll(".star").forEach(function(s){
+  s.addEventListener("click", function(){
+    _noteChoisie = parseInt(s.dataset.n);
+    document.querySelectorAll(".star").forEach(function(s2){
+      s2.classList.toggle("active", parseInt(s2.dataset.n) <= _noteChoisie);
+    });
+  });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) { _userId = session.user.id; }
+  else { document.getElementById("authGate").style.display = ""; }
+  chargerFeed();
+}
+
+async function laisserAvis() {
+  if (!_userId) { afficherMsg("avisMsg", "Connecte-toi d'abord.", false); return; }
+  var evalueId = document.getElementById("vEvalueId").value.trim();
+  if (!evalueId) { afficherMsg("avisMsg", "L'identifiant de la personne est obligatoire.", false); return; }
+  if (!_noteChoisie) { afficherMsg("avisMsg", "Choisis une note en étoiles.", false); return; }
+  var payload = {
+    evalue_id: evalueId,
+    evaluateur_id: _userId,
+    note: _noteChoisie,
+    commentaire: document.getElementById("vCommentaire").value.trim(),
+    contexte_module: document.getElementById("vContexte").value.trim()
+  };
+  var r = await _supabase.from("lokt_avis_utilisateur").insert(payload);
+  if (r.error) { afficherMsg("avisMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("avisMsg", "Avis envoyé ✅", true);
+  document.getElementById("vEvalueId").value = "";
+  document.getElementById("vContexte").value = "";
+  document.getElementById("vCommentaire").value = "";
+  _noteChoisie = 0;
+  document.querySelectorAll(".star").forEach(function(s){ s.classList.remove("active"); });
+}
+
+var SOURCES = [
+  { table: "lokt_talents",   champTitre: "titre",       icone: "🧑‍💼", couleur: "linear-gradient(135deg,#F97316,#FB923C)", label: "Nouveau profil Talent" },
+  { table: "lokt_missions",  champTitre: "titre",       icone: "📋", couleur: "linear-gradient(135deg,#059669,#10B981)", label: "Nouvelle mission" },
+  { table: "lokt_emplois",   champTitre: "titre_poste", icone: "💼", couleur: "linear-gradient(135deg,#0F3460,#3B82F6)", label: "Nouvelle offre d'emploi" },
+  { table: "lokt_marches",   champTitre: "titre",       icone: "🛒", couleur: "linear-gradient(135deg,#7C3AED,#A78BFA)", label: "Nouveau marché" },
+  { table: "lokt_partenariats", champTitre: "titre",    icone: "🤝", couleur: "linear-gradient(135deg,#DB2777,#F472B6)", label: "Recherche de partenaire" },
+  { table: "lokt_projets",   champTitre: "titre",       icone: "🚀", couleur: "linear-gradient(135deg,#0891B2,#22D3EE)", label: "Nouveau projet" },
+  { table: "lokt_formations", champTitre: "titre",      icone: "🎓", couleur: "linear-gradient(135deg,#CA8A04,#FACC15)", label: "Nouvelle formation" },
+  { table: "lokt_entreprises", champTitre: "nom",       icone: "🏢", couleur: "linear-gradient(135deg,#059669,#10B981)", label: "Nouvelle entreprise" },
+  { table: "lokt_opportunites_investissement", champTitre: "titre", icone: "💰", couleur: "linear-gradient(135deg,#F97316,#FB923C)", label: "Nouvelle opportunité d'investissement" },
+  { table: "lokt_appels_offres", champTitre: "titre",   icone: "📄", couleur: "linear-gradient(135deg,#0F3460,#3B82F6)", label: "Nouvel appel d'offres" }
+];
+
+function tempsEcoule(dateStr) {
+  var diff = Math.floor((Date.now() - new Date(dateStr)) / 60000);
+  if (diff < 60) return "il y a " + diff + " min";
+  if (diff < 1440) return "il y a " + Math.floor(diff / 60) + "h";
+  return "il y a " + Math.floor(diff / 1440) + "j";
+}
+
+async function chargerFeed() {
+  var el = document.getElementById("feed");
+  var tous = [];
+  for (var i = 0; i < SOURCES.length; i++) {
+    var s = SOURCES[i];
+    try {
+      var r = await _supabase.from(s.table).select("*").order("created_at", { ascending: false }).limit(5);
+      if (r.data) {
+        r.data.forEach(function(row) {
+          tous.push({ source: s, row: row });
+        });
+      }
+    } catch(e) {}
+  }
+  tous.sort(function(a, b) { return new Date(b.row.created_at) - new Date(a.row.created_at); });
+  tous = tous.slice(0, 20);
+
+  if (!tous.length) { el.innerHTML = '<div class="empty">Aucune activité pour le moment.</div>'; return; }
+
+  el.innerHTML = tous.map(function(item) {
+    var titre = item.row[item.source.champTitre] || "Sans titre";
+    return '<div class="feed-item">' +
+      '<div class="feed-icon" style="background:' + item.source.couleur + '">' + item.source.icone + '</div>' +
+      '<div class="feed-text"><b>' + item.source.label + '</b>' +
+        '<div class="feed-title">' + titre + '</div>' +
+        '<div class="feed-time">' + tempsEcoule(item.row.created_at) + '</div>' +
+      '</div>' +
+      '</div>';
+  }).join("");
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+</body>
+</html>

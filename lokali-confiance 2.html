@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Avis & Confiance</title>
+<style>
+:root{
+  --orange:#F97316;--green:#059669;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:20px;
+  --gradient:linear-gradient(135deg,#F8FAFC 0%,#F1F5F9 50%,#E2E8F0 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.hero{text-align:center;padding:30px 20px 10px}
+.hero h1{font-size:22px;font-weight:900}
+.confiance-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(5,150,105,.15);
+  color:#34D399;font-weight:800;font-size:12px;border-radius:20px;padding:5px 12px;margin-bottom:8px}
+.confiance-stars{font-size:18px;letter-spacing:3px;color:#FACC15}
+.confiance-note-txt{font-size:12px;color:var(--gray);margin-left:4px;display:block;margin-top:4px}
+.badgeZone{max-width:640px;margin:16px auto;padding:0 16px;text-align:center}
+.avis-liste{max-width:640px;margin:16px auto;padding:0 16px}
+.avis-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.avis-item .auteur{font-weight:800;font-size:13px}
+.avis-item .stars{color:#FACC15;font-size:13px}
+.avis-item .commentaire{font-size:12.5px;color:var(--gray);margin-top:4px;line-height:1.4}
+.avis-form{max-width:640px;margin:20px auto;padding:0 16px}
+.avis-form textarea, .avis-form input{width:100%;padding:12px 16px;border-radius:12px;
+  border:1px solid var(--border);margin-bottom:8px;font-size:13px;background:var(--card);color:var(--white)}
+.avis-form button{background:var(--orange);color:#fff;border:none;padding:12px 20px;
+  border-radius:20px;font-weight:800;font-size:13px;cursor:pointer;width:100%}
+.section-title{max-width:640px;margin:26px auto 4px;padding:0 20px;font-size:13px;font-weight:800;
+  color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+.avis-etoiles-input{font-size:26px;letter-spacing:6px;color:#FACC15;cursor:pointer;text-align:center;margin-bottom:8px}
+.avis-vide{text-align:center;color:var(--gray);font-size:13px;padding:20px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>CONFIANCE</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1 id="titrePage">Avis & Confiance</h1>
+</div>
+
+<div class="badgeZone" id="confianceBadgeZone"></div>
+
+<div class="section-title">Avis des utilisateurs</div>
+<div class="avis-liste" id="avisListe"></div>
+
+<div class="section-title">Laisser un avis</div>
+<div class="avis-form">
+  <input id="avisAuteur" type="text" placeholder="Votre nom">
+  <div id="avisEtoilesInput" class="avis-etoiles-input">★★★★★</div>
+  <textarea id="avisCommentaire" rows="2" placeholder="Votre avis (optionnel)"></textarea>
+  <button onclick="envoyerAvis()">Publier l'avis</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NDIwMDAsImV4cCI6MjA1ODIxODAwMH0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Tout est lu automatiquement depuis l'adresse (URL), aucune ligne à modifier ici.
+// Exemple d'adresse : /lokali-confiance.html?id=123&table=lokt_talents&nom=Jean%20Dupont
+var params = new URLSearchParams(window.location.search);
+var PROFIL_ID = params.get("id") || "demo";
+var PROFIL_TABLE = params.get("table") || "lokt_talents";
+var PROFIL_NOM = params.get("nom") || "";
+var noteChoisie = 5;
+
+if (PROFIL_NOM) {
+  document.getElementById("titrePage").textContent = "Avis — " + PROFIL_NOM;
+}
+
+document.getElementById("avisEtoilesInput").addEventListener("click", function(e){
+  var rect = e.target.getBoundingClientRect();
+  var pos = (e.clientX - rect.left) / rect.width;
+  noteChoisie = Math.max(1, Math.min(5, Math.ceil(pos * 5)));
+  this.textContent = "★".repeat(noteChoisie) + "☆".repeat(5 - noteChoisie);
+});
+
+async function chargerConfiance() {
+  var badgeHtml = "";
+  try {
+    var prof = await _supabase.from(PROFIL_TABLE).select("verifie").eq("id", PROFIL_ID).single();
+    if (prof.data && prof.data.verifie) {
+      badgeHtml += '<div class="confiance-badge">✅ Profil vérifié</div><br>';
+    }
+  } catch(e) {}
+
+  try {
+    var avis = await _supabase.from("lokt_avis").select("*")
+      .eq("profil_id", PROFIL_ID).eq("profil_table", PROFIL_TABLE)
+      .order("created_at", { ascending: false });
+
+    var liste = avis.data || [];
+    var moyenne = liste.length ? (liste.reduce(function(s,a){return s+a.note;},0) / liste.length) : 0;
+    var moyArrondie = Math.round(moyenne);
+
+    badgeHtml += '<div><span class="confiance-stars">' + "★".repeat(moyArrondie) + "☆".repeat(5-moyArrondie) + '</span>' +
+      '<span class="confiance-note-txt">' + (liste.length ? moyenne.toFixed(1) + '/5 · ' + liste.length + ' avis' : 'Aucun avis pour le moment') + '</span></div>';
+
+    document.getElementById("confianceBadgeZone").innerHTML = badgeHtml;
+
+    document.getElementById("avisListe").innerHTML = liste.length ? liste.map(function(a){
+      return '<div class="avis-item">' +
+        '<span class="auteur">' + a.auteur_nom + '</span> ' +
+        '<span class="stars">' + "★".repeat(a.note) + "☆".repeat(5-a.note) + '</span>' +
+        (a.commentaire ? '<div class="commentaire">' + a.commentaire + '</div>' : '') +
+      '</div>';
+    }).join("") : '<div class="avis-vide">Sois le premier à laisser un avis 👇</div>';
+  } catch(e) {
+    document.getElementById("confianceBadgeZone").innerHTML = badgeHtml;
+    document.getElementById("avisListe").innerHTML = '<div class="avis-vide">Impossible de charger les avis pour le moment.</div>';
+  }
+}
+
+async function envoyerAvis() {
+  var nom = document.getElementById("avisAuteur").value.trim();
+  var commentaire = document.getElementById("avisCommentaire").value.trim();
+  if (!nom) { alert("Merci d'indiquer votre nom."); return; }
+  try {
+    await _supabase.from("lokt_avis").insert({
+      profil_id: PROFIL_ID,
+      profil_table: PROFIL_TABLE,
+      auteur_nom: nom,
+      note: noteChoisie,
+      commentaire: commentaire
+    });
+    document.getElementById("avisAuteur").value = "";
+    document.getElementById("avisCommentaire").value = "";
+    chargerConfiance();
+  } catch(e) {
+    alert("Erreur lors de l'envoi de l'avis.");
+  }
+}
+
+chargerConfiance();
+</script>
+</body>
+</html>

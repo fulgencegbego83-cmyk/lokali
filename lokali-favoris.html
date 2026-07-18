@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Mes Favoris</title>
+<style>
+:root{
+  --orange:#F97316;--green:#059669;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:20px;
+  --gradient:linear-gradient(135deg,#F8FAFC 0%,#F1F5F9 50%,#E2E8F0 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.hero{text-align:center;padding:30px 20px 10px}
+.hero h1{font-size:22px;font-weight:900}
+.hero p{color:var(--gray);font-size:13px;margin-top:6px}
+.wrap{max-width:640px;margin:20px auto 0;padding:0 16px}
+.fav-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px 16px;
+  margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px;text-decoration:none;color:var(--white)}
+.fav-titre{font-weight:800;font-size:14px}
+.fav-date{font-size:11px;color:var(--gray);margin-top:2px}
+.fav-supprimer{background:rgba(220,38,38,.12);color:#DC2626;border:none;border-radius:20px;
+  padding:8px 14px;font-weight:800;font-size:12px;cursor:pointer;flex-shrink:0}
+.vide{text-align:center;color:var(--gray);font-size:13.5px;padding:40px 20px;line-height:1.6}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LOKALI <b>FAVORIS</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1>⭐ Mes Favoris</h1>
+  <p>Retrouvez ici tout ce que vous avez enregistré sur cet appareil.</p>
+</div>
+
+<div class="wrap" id="favorisZone"></div>
+
+<script>
+var STORAGE_KEY = "lokali_favoris";
+
+function getFavoris() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e) { return []; }
+}
+function setFavoris(liste) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(liste));
+}
+function formatDate(iso) {
+  var d = new Date(iso);
+  return d.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function rendreFavoris() {
+  var liste = getFavoris();
+  var zone = document.getElementById("favorisZone");
+  if (!liste.length) {
+    zone.innerHTML = '<div class="vide">Vous n\'avez encore aucun favori.<br>Touchez le bouton ☆ sur n\'importe quelle page LOKALI pour l\'ajouter ici.</div>';
+    return;
+  }
+  zone.innerHTML = liste.map(function(f, i){
+    return '<div class="fav-item">' +
+      '<a href="' + f.url + '" style="text-decoration:none;color:inherit;flex:1">' +
+        '<div class="fav-titre">' + f.titre + '</div>' +
+        '<div class="fav-date">Ajouté le ' + formatDate(f.date) + '</div>' +
+      '</a>' +
+      '<button class="fav-supprimer" onclick="supprimerFavori(' + i + ')">Retirer</button>' +
+    '</div>';
+  }).join("");
+}
+
+function supprimerFavori(i) {
+  var liste = getFavoris();
+  liste.splice(i, 1);
+  setFavoris(liste);
+  rendreFavoris();
+}
+
+rendreFavoris();
+</script>
+</body>
+</html>

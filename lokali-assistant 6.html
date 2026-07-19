@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Décrivez votre besoin</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px;text-align:center}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:20px;text-align:center}
+.search-box{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:8px;margin-bottom:22px;
+  display:flex;gap:8px;align-items:flex-end}
+.search-box textarea{flex:1;border:none;background:transparent;color:var(--white);font-size:15px;
+  padding:10px;resize:none;min-height:48px;font-family:inherit}
+.search-box textarea:focus{outline:none}
+.search-box button{background:var(--orange);border:none;color:#fff;border-radius:16px;padding:12px 18px;
+  font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.search-box button:hover{background:var(--orange2)}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;justify-content:center}
+.example-chip{font-size:12px;background:rgba(15,23,42,.06);border:1px solid var(--border);
+  color:var(--gray);border-radius:20px;padding:6px 12px;cursor:pointer}
+.example-chip:hover{border-color:var(--orange);color:var(--white)}
+.section-title{font-size:13px;font-weight:800;color:var(--gray);text-transform:uppercase;
+  letter-spacing:1px;margin:20px 0 10px}
+.suggestion{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px;margin-bottom:10px;text-decoration:none;color:var(--white)}
+.suggestion:hover{border-color:var(--orange)}
+.suggestion-icon{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:20px;flex-shrink:0}
+.suggestion-text b{display:block;font-size:14px}
+.suggestion-text span{font-size:12px;color:var(--gray)}
+.result-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:10px}
+.result-badge{display:inline-block;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;
+  background:rgba(249,115,22,.15);color:var(--orange2);margin-bottom:6px}
+.result-title{font-weight:700;font-size:14px;margin-bottom:4px}
+.result-desc{font-size:13px;color:var(--gray);margin-bottom:8px}
+.result-link{font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:20px 0}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><img src="/lokali-logo-nav.svg" alt="LOKALI" style="height:26px;margin-right:6px"><b>ASSISTANT</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Quel est votre besoin ?</h1>
+  <div class="subtitle">Décrivez-le avec vos mots, LOKALI cherche pour vous dans tout l'écosystème</div>
+
+  <div class="search-box">
+    <textarea id="besoin" placeholder="Ex: Je cherche un développeur pour créer mon application mobile à Abidjan..."></textarea>
+    <button onclick="analyser()">Chercher</button>
+  </div>
+
+  <div class="examples">
+    <span class="example-chip" onclick="essai(this)">Je cherche un développeur mobile</span>
+    <span class="example-chip" onclick="essai(this)">Je veux organiser un mariage</span>
+    <span class="example-chip" onclick="essai(this)">Je cherche un investisseur</span>
+    <span class="example-chip" onclick="essai(this)">Je veux apprendre à coder</span>
+  </div>
+
+  <div id="resultats"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// ── Dictionnaire de compréhension : mots-clés → module LOKALI ──
+var MODULES = {
+  talents: {
+    nom: "Talents", icone: "🧑‍💼", couleur: "linear-gradient(135deg,#F97316,#FB923C)", url: "/lokali-talents.html",
+    table: "lokt_talents", champRecherche: "titre,bio",
+    motsCles: ["développeur","designer","graphiste","photographe","competence","compétence","profil","expert","freelance","specialiste","spécialiste","talent","professionnel"]
+  },
+  missions: {
+    nom: "Missions", icone: "📋", couleur: "linear-gradient(135deg,#059669,#10B981)", url: "/lokali-talents.html#missions",
+    table: "lokt_missions", champRecherche: "titre,description",
+    motsCles: ["mission","tache","tâche","besoin de quelqu'un","créer une application","créer un site","projet ponctuel","logo","video","vidéo","montage"]
+  },
+  emplois: {
+    nom: "Emplois", icone: "💼", couleur: "linear-gradient(135deg,#0F3460,#3B82F6)", url: "/lokali-emplois.html",
+    table: "lokt_emplois", champRecherche: "titre_poste,description",
+    motsCles: ["emploi","travail","job","cdi","cdd","stage","alternance","embauche","recrutement","poste","salaire","carriere","carrière"]
+  },
+  marches: {
+    nom: "Marchés", icone: "🛒", couleur: "linear-gradient(135deg,#7C3AED,#A78BFA)", url: "/lokali-marches.html",
+    table: "lokt_marches", champRecherche: "titre,description",
+    motsCles: ["fournisseur","fournir","grossiste","producteur","quantite","quantité","materiaux","matériaux","stock","approvisionnement","distributeur"]
+  },
+  partenaires: {
+    nom: "Partenaires", icone: "🤝", couleur: "linear-gradient(135deg,#DB2777,#F472B6)", url: "/lokali-partenaires.html",
+    table: "lokt_partenariats", champRecherche: "titre,description",
+    motsCles: ["partenaire","associe","associé","cofondateur","distributeur commercial","collaboration","alliance"]
+  },
+  projets: {
+    nom: "Projets", icone: "🚀", couleur: "linear-gradient(135deg,#0891B2,#22D3EE)", url: "/lokali-projets.html",
+    table: "lokt_projets", champRecherche: "titre,description",
+    motsCles: ["projet","idee","idée","startup","lancer une entreprise","creer une entreprise","créer une entreprise","cofondateur technique"]
+  },
+  formations: {
+    nom: "Formations", icone: "🎓", couleur: "linear-gradient(135deg,#CA8A04,#FACC15)", url: "/lokali-formations.html",
+    table: "lokt_formations", champRecherche: "titre,description",
+    motsCles: ["apprendre","formation","cours","certification","apprentissage","monter en competence","monter en compétence","atelier","coder","programmer"]
+  },
+  entreprises: {
+    nom: "Entreprises", icone: "🏢", couleur: "linear-gradient(135deg,#059669,#10B981)", url: "/lokali-entreprises.html",
+    table: "lokt_entreprises", champRecherche: "nom,description",
+    motsCles: ["entreprise","societe","société","compagnie","structure professionnelle"]
+  },
+  invest: {
+    nom: "Invest", icone: "💰", couleur: "linear-gradient(135deg,#F97316,#FB923C)", url: "/lokali-invest.html",
+    table: "lokt_opportunites_investissement", champRecherche: "titre,description",
+    motsCles: ["investisseur","investissement","financement","lever des fonds","capital","fonds"]
+  },
+  appelsOffres: {
+    nom: "Appels d'offres", icone: "📄", couleur: "linear-gradient(135deg,#0F3460,#3B82F6)", url: "/lokali-appels-offres.html",
+    table: "lokt_appels_offres", champRecherche: "titre,description",
+    motsCles: ["appel d'offres","appel doffres","consultation","cahier des charges","marche public","marché public","soumission","devis"]
+  }
+};
+
+// ── Cas particuliers : besoins complexes qui mobilisent plusieurs métiers (comme "organiser un mariage") ──
+var SCENARIOS = [
+  { motsCles: ["mariage"], modules: ["talents","missions","marches"], note: "Un mariage mobilise souvent plusieurs prestataires : traiteur, décorateur, photographe, DJ." },
+  { motsCles: ["restaurant","ouvrir un restaurant","lancer un restaurant"], modules: ["projets","talents","marches","formations"], note: "Lancer un restaurant implique souvent : un local, des fournisseurs, du personnel, et parfois une formation." },
+  { motsCles: ["application mobile","site web","site internet"], modules: ["talents","missions","emplois"], note: "Pour un développement, tu peux trouver un profil (Talents), poster une mission ponctuelle, ou recruter (Emplois)." }
+];
+
+function essai(el) {
+  document.getElementById("besoin").value = el.textContent;
+  analyser();
+}
+
+function normaliser(txt) {
+  return txt.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function analyser() {
+  var texte = document.getElementById("besoin").value.trim();
+  if (!texte) return;
+  var texteNorm = normaliser(texte);
+
+  // 1) Vérifier les scénarios composés d'abord
+  var scenarioTrouve = null;
+  for (var i = 0; i < SCENARIOS.length; i++) {
+    var s = SCENARIOS[i];
+    if (s.motsCles.some(function(m){ return texteNorm.indexOf(normaliser(m)) !== -1; })) {
+      scenarioTrouve = s;
+      break;
+    }
+  }
+
+  // 2) Sinon, scorer chaque module selon les mots-clés trouvés
+  var scores = {};
+  Object.keys(MODULES).forEach(function(key) {
+    var m = MODULES[key];
+    var score = m.motsCles.filter(function(mc){ return texteNorm.indexOf(normaliser(mc)) !== -1; }).length;
+    if (score > 0) scores[key] = score;
+  });
+
+  var modulesRetenus = scenarioTrouve ? scenarioTrouve.modules : Object.keys(scores).sort(function(a,b){ return scores[b]-scores[a]; }).slice(0,3);
+
+  if (!modulesRetenus.length) {
+    // Rien de reconnu : proposer le Hub complet plutôt que rien
+    modulesRetenus = ["talents","missions","emplois"];
+  }
+
+  afficherSuggestions(modulesRetenus, scenarioTrouve ? scenarioTrouve.note : null);
+  chercherAnnonces(texte, modulesRetenus);
+}
+
+function afficherSuggestions(cles, note) {
+  var html = '<div class="section-title">Modules qui peuvent répondre à votre besoin</div>';
+  if (note) html += '<div style="font-size:13px;color:var(--gray);margin-bottom:12px">' + note + '</div>';
+  cles.forEach(function(key) {
+    var m = MODULES[key];
+    html += '<a class="suggestion" href="' + m.url + '">' +
+      '<div class="suggestion-icon" style="background:' + m.couleur + '">' + m.icone + '</div>' +
+      '<div class="suggestion-text"><b>' + m.nom + '</b><span>Voir les annonces de ce module →</span></div>' +
+      '</a>';
+  });
+  html += '<div class="section-title" id="titreResultats" style="display:none">Annonces trouvées</div><div id="listeResultats"></div>';
+  document.getElementById("resultats").innerHTML = html;
+}
+
+async function chercherAnnonces(texte, cles) {
+  var motCherche = texte.split(" ").filter(function(w){ return w.length > 3; })[0] || texte;
+  var tousResultats = [];
+
+  for (var i = 0; i < cles.length; i++) {
+    var m = MODULES[cles[i]];
+    var champs = m.champRecherche.split(",");
+    try {
+      var orFilter = champs.map(function(c){ return c + ".ilike.%" + motCherche + "%"; }).join(",");
+      var r = await _supabase.from(m.table).select("*").or(orFilter).limit(3);
+      if (r.data && r.data.length) {
+        r.data.forEach(function(row) {
+          tousResultats.push({ module: m, row: row });
+        });
+      }
+    } catch(e) {}
+  }
+
+  if (tousResultats.length) {
+    document.getElementById("titreResultats").style.display = "";
+    document.getElementById("listeResultats").innerHTML = tousResultats.map(function(item){
+      var titre = item.row.titre || item.row.titre_poste || item.row.nom || "Sans titre";
+      var desc = item.row.description || item.row.bio || "";
+      return '<div class="result-item">' +
+        '<span class="result-badge">' + item.module.icone + ' ' + item.module.nom + '</span>' +
+        '<div class="result-title">' + titre + '</div>' +
+        '<div class="result-desc">' + desc.slice(0, 120) + (desc.length > 120 ? '…' : '') + '</div>' +
+        '<a class="result-link" href="' + item.module.url + '">Voir dans ' + item.module.nom + ' →</a>' +
+        '</div>';
+    }).join("");
+  }
+}
+
+// Arrivée depuis le Hub avec une recherche déjà tapée
+async function initSessionAssistant() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) {
+    document.body.innerHTML = '<div style="padding:100px 20px;text-align:center;font-family:Segoe UI,Arial,sans-serif"><h2>Connexion requise</h2><p style="color:#64748B;margin-top:10px">Connecte-toi depuis LOKALI pour utiliser l\'assistant.</p><a href="/" style="display:inline-block;margin-top:16px;background:#F97316;color:#fff;padding:10px 20px;border-radius:30px;text-decoration:none;font-weight:700">Aller me connecter</a></div>';
+    return;
+  }
+  var paramsUrl = new URLSearchParams(window.location.search);
+  var rechercheInitiale = paramsUrl.get("q");
+  if (rechercheInitiale) {
+    document.getElementById("besoin").value = rechercheInitiale;
+    analyser();
+  }
+}
+initSessionAssistant();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Devenir Sponsor</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:20px;
+  --gradient:linear-gradient(135deg,#F8FAFC 0%,#F1F5F9 50%,#E2E8F0 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.hero{text-align:center;padding:32px 20px 16px}
+.hero h1{font-size:23px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#1E293B,#EA580C);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--gray);font-size:14px;max-width:440px;margin:0 auto}
+.section-title{max-width:640px;margin:26px auto 4px;padding:0 20px;font-size:13px;font-weight:800;
+  color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+.formules{max-width:640px;margin:12px auto 0;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.formule-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;padding:16px 14px;text-align:center;
+  cursor:pointer;transition:border-color .2s, transform .2s}
+.formule-card.selected{border-color:var(--orange);box-shadow:0 8px 22px rgba(249,115,22,.2);transform:translateY(-2px)}
+.formule-card .nom{font-weight:800;font-size:14px;margin-bottom:4px}
+.formule-card .desc{font-size:11px;color:var(--gray);line-height:1.35}
+.form-wrap{max-width:640px;margin:26px auto 0;padding:0 16px}
+.form-wrap label{font-size:12px;font-weight:700;color:var(--gray);display:block;margin:12px 0 5px}
+.form-wrap input, .form-wrap textarea{width:100%;padding:12px 16px;border-radius:12px;
+  border:1px solid var(--border);font-size:14px;background:var(--card);color:var(--white)}
+.form-wrap textarea{resize:vertical}
+.btn-envoyer{margin-top:20px;width:100%;background:linear-gradient(135deg,var(--orange),var(--orange2));
+  color:#fff;border:none;padding:15px;border-radius:30px;font-weight:800;font-size:15px;cursor:pointer}
+.msg-confirmation{max-width:640px;margin:20px auto;padding:16px;text-align:center;color:var(--green);
+  font-weight:800;font-size:14px;display:none}
+.msg-erreur{max-width:640px;margin:20px auto;padding:16px;text-align:center;color:#DC2626;
+  font-weight:800;font-size:14px;display:none}
+.duree-choix{display:flex;gap:8px;margin-top:8px}
+.duree-btn{flex:1;padding:10px;border-radius:12px;border:1.5px solid var(--border);background:var(--card);
+  font-weight:700;font-size:13px;cursor:pointer;color:var(--white);text-align:center}
+.duree-btn.selected{border-color:var(--orange);color:var(--orange2);background:rgba(249,115,22,.06)}
+</style>
+</head>
+<body>
+<script src="/lokali-gate-sponsors.js"></script>
+
+<nav class="nav">
+  <span class="nav-logo"><img src="/lokali-logo-nav.svg" alt="LOKALI" style="height:26px;margin-right:6px"><b>SPONSORS</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1>Devenir Sponsor ou Partenaire</h1>
+  <p>Gagnez en visibilité auprès de milliers d'utilisateurs actifs en Afrique francophone, tout en soutenant une plateforme 100% gratuite.</p>
+  <p style="margin-top:10px"><a href="/lokali-tarifs-sponsors.html" style="color:var(--orange);font-weight:800;font-size:13px;text-decoration:none">💰 Voir la grille tarifaire complète →</a></p>
+</div>
+
+<div class="section-title">Choisissez votre formule</div>
+<div class="formules" id="formulesZone"></div>
+
+<div class="section-title">Durée d'engagement</div>
+<div class="form-wrap" style="margin-top:0">
+  <div class="duree-choix" id="dureeZone">
+    <div class="duree-btn" data-duree="1">1 mois</div>
+    <div class="duree-btn" data-duree="3">3 mois</div>
+    <div class="duree-btn" data-duree="6">6 mois</div>
+  </div>
+</div>
+
+<div class="section-title">Votre logo / bannière</div>
+<div class="form-wrap" style="margin-top:0" id="logoZone"></div>
+
+<div class="section-title">Vos informations</div>
+<div class="form-wrap">
+  <label>Nom de l'entreprise *</label>
+  <input id="fEntreprise" type="text" placeholder="Ex: Banque Atlantique">
+
+  <label>Secteur d'activité</label>
+  <input id="fSecteur" type="text" placeholder="Ex: Banque, Télécom, ONG...">
+
+  <div style="display:flex;gap:10px">
+    <div style="flex:1">
+      <label>Pays</label>
+      <input id="fPays" type="text" placeholder="Ex: Côte d'Ivoire">
+    </div>
+    <div style="flex:1">
+      <label>Ville</label>
+      <input id="fVille" type="text" placeholder="Ex: Abidjan">
+    </div>
+  </div>
+
+  <label>Nom du contact *</label>
+  <input id="fContact" type="text" placeholder="Personne à contacter">
+
+  <div style="display:flex;gap:10px">
+    <div style="flex:1">
+      <label>Téléphone *</label>
+      <input id="fTelephone" type="text" placeholder="+225 ...">
+    </div>
+    <div style="flex:1">
+      <label>Email *</label>
+      <input id="fEmail" type="email" placeholder="contact@entreprise.com">
+    </div>
+  </div>
+
+  <label>Site internet</label>
+  <input id="fSite" type="text" placeholder="https://...">
+
+  <label>Lien vidéo (optionnel, YouTube/TikTok)</label>
+  <input id="fVideo" type="text" placeholder="https://...">
+
+  <label>Budget envisagé (optionnel)</label>
+  <input id="fBudget" type="text" placeholder="Ex: 500 000 FCFA / mois">
+
+  <label>Message</label>
+  <textarea id="fMessage" rows="4" placeholder="Parlez-nous de votre projet de partenariat..."></textarea>
+
+  <button class="btn-envoyer" onclick="envoyerCandidature()">Envoyer ma candidature</button>
+
+  <div class="msg-confirmation" id="msgOk">✅ Merci ! Votre candidature a bien été envoyée. Notre équipe vous recontacte rapidement.</div>
+  <div class="msg-erreur" id="msgErreur">❌ Une erreur est survenue. Merci de réessayer.</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+var formules = [
+  { nom: "Bronze", desc: "Première visibilité ciblée" },
+  { nom: "Argent", desc: "Présence renforcée" },
+  { nom: "Or", desc: "Visibilité large et continue" },
+  { nom: "Diamant", desc: "Visibilité quasi totale" },
+  { nom: "Officiel", desc: "Exclusivité totale — 1 place" }
+];
+var formuleChoisie = null;
+var dureeChoisie = null;
+var _logo = null;
+
+var GRILLE_SPONSOR = {
+  paliers: [0, 100, 500, 1000, 5000, 20000, 50000],
+  prix: {
+    "Bronze":[5000,8000,12000,20000,35000,60000,100000],
+    "Argent":[10000,15000,25000,40000,70000,120000,200000],
+    "Or":[20000,30000,50000,80000,140000,250000,400000],
+    "Diamant":[40000,60000,100000,160000,280000,500000,800000],
+    "Officiel":[80000,120000,200000,320000,560000,1000000,1600000]
+  }
+};
+async function getNbUtilisateurs() {
+  var sources = ["profiles","users","lokt_talents"];
+  for (var i=0;i<sources.length;i++) {
+    try {
+      var r = await _supabase.from(sources[i]).select("*",{count:"exact",head:true});
+      if (r && typeof r.count === "number" && r.count > 0) return r.count;
+    } catch(e){}
+  }
+  return 11;
+}
+function formatFCFA(n) { return n.toLocaleString('fr-FR').replace(/,/g,' ') + " FCFA"; }
+
+async function rendreFormules() {
+  var nb = await getNbUtilisateurs();
+  var idx = 0;
+  for (var i=0;i<GRILLE_SPONSOR.paliers.length;i++) { if (nb >= GRILLE_SPONSOR.paliers[i]) idx = i; }
+
+  document.getElementById("formulesZone").innerHTML = formules.map(function(f, i){
+    var prix = GRILLE_SPONSOR.prix[f.nom][idx];
+    return '<div class="formule-card" id="formule-' + i + '" onclick="choisirFormule(' + i + ')">' +
+      '<div class="nom">' + f.nom + '</div>' +
+      '<div class="desc">' + f.desc + '</div>' +
+      '<div style="font-weight:800;color:#F97316;font-size:15px;margin-top:6px">' + formatFCFA(prix) + '<span style="font-size:10px;color:#94A3B8;font-weight:400"> /mois</span></div>' +
+    '</div>';
+  }).join("");
+}
+rendreFormules();
+
+function choisirFormule(i) {
+  formuleChoisie = formules[i].nom;
+  formules.forEach(function(f, j){
+    document.getElementById("formule-" + j).classList.toggle("selected", j === i);
+  });
+}
+
+document.querySelectorAll(".duree-btn").forEach(function(b){
+  b.addEventListener("click", function(){
+    dureeChoisie = b.dataset.duree;
+    document.querySelectorAll(".duree-btn").forEach(function(b2){ b2.classList.remove("selected"); });
+    b.classList.add("selected");
+  });
+});
+
+if (window.LokaliPhotos) {
+  _logo = LokaliPhotos.creerUploader("sponsorLogo", 3);
+  document.getElementById("logoZone").appendChild(_logo.element);
+}
+
+async function envoyerCandidature() {
+  var entreprise = document.getElementById("fEntreprise").value.trim();
+  var contact = document.getElementById("fContact").value.trim();
+  var telephone = document.getElementById("fTelephone").value.trim();
+  var email = document.getElementById("fEmail").value.trim();
+
+  document.getElementById("msgOk").style.display = "none";
+  document.getElementById("msgErreur").style.display = "none";
+
+  if (!entreprise || !contact || !telephone || !email) {
+    alert("Merci de remplir au minimum : entreprise, contact, téléphone et email.");
+    return;
+  }
+
+  try {
+    var codeUtilise = sessionStorage.getItem("lokaliSponsorCodeUsed");
+    await _supabase.from("lokt_sponsors").insert({
+      entreprise: entreprise,
+      secteur: document.getElementById("fSecteur").value.trim(),
+      pays: document.getElementById("fPays").value.trim(),
+      ville: document.getElementById("fVille").value.trim(),
+      contact_nom: contact,
+      telephone: telephone,
+      email: email,
+      site_web: document.getElementById("fSite").value.trim(),
+      lien_video: document.getElementById("fVideo").value.trim(),
+      formule: formuleChoisie || "Non précisée",
+      duree_mois: dureeChoisie || "1",
+      budget: document.getElementById("fBudget").value.trim(),
+      message: document.getElementById("fMessage").value.trim(),
+      photos: _logo ? _logo.getPhotos() : [],
+      code_acces: codeUtilise || null
+    });
+
+    if (codeUtilise) {
+      await _supabase.from("lokt_codes_sponsors").update({
+        statut: "utilise", utilise_at: new Date().toISOString()
+      }).eq("code", codeUtilise);
+      sessionStorage.removeItem("lokaliSponsorCodeUsed");
+    }
+
+    document.getElementById("msgOk").style.display = "block";
+    document.querySelectorAll(".form-wrap input, .form-wrap textarea").forEach(function(el){ el.value = ""; });
+    formuleChoisie = null;
+    dureeChoisie = null;
+    formules.forEach(function(f, j){ document.getElementById("formule-" + j).classList.remove("selected"); });
+    document.querySelectorAll(".duree-btn").forEach(function(b){ b.classList.remove("selected"); });
+  } catch(e) {
+    document.getElementById("msgErreur").style.display = "block";
+  }
+}
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

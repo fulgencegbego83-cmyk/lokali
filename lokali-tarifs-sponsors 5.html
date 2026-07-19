@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Tarifs Sponsors</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--green:#059669;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:20px;
+  --gradient:linear-gradient(135deg,#F8FAFC 0%,#F1F5F9 50%,#E2E8F0 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.hero{text-align:center;padding:30px 20px 10px}
+.hero h1{font-size:22px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#1E293B,#EA580C);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--gray);font-size:13.5px;max-width:440px;margin:0 auto}
+.wrap{max-width:640px;margin:20px auto 0;padding:0 16px}
+.plan{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:20px;margin-bottom:16px;position:relative;overflow:hidden}
+.plan.top{border-color:var(--orange);box-shadow:0 12px 30px rgba(249,115,22,.18)}
+.plan-badge{position:absolute;top:0;right:0;background:var(--orange);color:#fff;font-size:10px;font-weight:800;
+  padding:4px 12px;border-radius:0 0 0 12px}
+.plan-nom{font-size:17px;font-weight:900;display:flex;align-items:center;gap:8px}
+.plan-prix{font-size:24px;font-weight:900;margin:10px 0 2px;color:var(--orange)}
+.plan-prix span{font-size:12px;color:var(--gray);font-weight:600}
+.plan-quota{display:inline-block;background:rgba(5,150,105,.15);color:#34D399;font-weight:800;font-size:11px;
+  border-radius:20px;padding:4px 10px;margin:8px 0}
+.plan-desc{font-size:12.5px;color:var(--gray);line-height:1.5;margin:8px 0}
+.plan-liste{list-style:none;margin-top:10px}
+.plan-liste li{font-size:12.5px;color:var(--white);padding:4px 0;padding-left:20px;position:relative}
+.plan-liste li:before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:900}
+.plan-slots{font-size:11px;color:var(--gray);margin-top:10px;font-style:italic}
+.cta{display:block;text-align:center;margin-top:14px;background:var(--orange);color:#fff;text-decoration:none;
+  padding:12px;border-radius:20px;font-weight:800;font-size:13px}
+.note{max-width:640px;margin:20px auto;padding:0 16px;font-size:11.5px;color:var(--gray);text-align:center;line-height:1.5}
+.section-title{max-width:640px;margin:26px auto 4px;padding:0 20px;font-size:13px;font-weight:800;
+  color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+</style>
+</head>
+<body>
+<script src="/lokali-gate-sponsors.js"></script>
+
+<nav class="nav">
+  <span class="nav-logo"><img src="/lokali-logo-nav.svg" alt="LOKALI" style="height:26px;margin-right:6px"><b>TARIFS</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1>Grille tarifaire Sponsors</h1>
+  <p>Des formules de visibilité adaptées à votre ambition, sur l'ensemble de l'écosystème LOKALI. Facturation mensuelle, sans engagement long terme.</p>
+</div>
+
+<div class="wrap" id="plansZone"></div>
+
+<div class="note">Tarifs indicatifs, ajustés automatiquement selon l'audience réelle de la plateforme. Places limitées par formule pour garantir une visibilité optimale à chaque sponsor.</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NDIwMDAsImV4cCI6MjA1ODIxODAwMH0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Nombre approximatif total de pages sur l'écosystème LOKALI (mis à jour au fil des ajouts)
+var TOTAL_PAGES = 30;
+
+// Définition des 5 formules. Le prix se lit dans la grille en paliers plus bas,
+// selon le nombre réel d'utilisateurs — jamais un calcul caché.
+var plans = [
+  {
+    nom: "Bronze", icone: "🥉", classe: "",
+    pourcentagePages: 0.10, slots: 12,
+    desc: "Une première visibilité ciblée, idéale pour tester la plateforme.",
+    avantages: ["Logo sur les pages sélectionnées", "Mention dans la page Sponsors", "Rapport de visibilité mensuel"]
+  },
+  {
+    nom: "Argent", icone: "🥈", classe: "",
+    pourcentagePages: 0.25, slots: 6,
+    desc: "Une présence renforcée sur les pages à forte affluence.",
+    avantages: ["Logo sur un quart des pages du site", "Bannière sur la page d'accueil des opportunités", "Mention prioritaire page Sponsors", "Rapport de visibilité mensuel"]
+  },
+  {
+    nom: "Or", icone: "🥇", classe: "top",
+    pourcentagePages: 0.50, slots: 3,
+    desc: "La formule la plus populaire : une visibilité large et continue.",
+    avantages: ["Logo sur la moitié des pages du site", "Bannière page d'accueil + FAQ", "Badge « Sponsor Or » sur votre profil", "Priorité de contact utilisateurs", "Rapport de visibilité mensuel détaillé"],
+    badge: "Populaire"
+  },
+  {
+    nom: "Diamant", icone: "💎", classe: "top",
+    pourcentagePages: 0.80, slots: 2,
+    desc: "Une visibilité quasi totale sur l'ensemble des pages LOKALI.",
+    avantages: ["Logo sur la quasi-totalité des pages", "Bannière en tête de page d'accueil", "Mise en avant dans les résultats de recherche", "Badge « Sponsor Diamant »", "Rapport de visibilité hebdomadaire"]
+  },
+  {
+    nom: "Officiel", icone: "👑", classe: "top",
+    pourcentagePages: 1.0, slots: 1,
+    desc: "Le partenaire exclusif de LOKALI. Une seule entreprise à la fois, sur toutes les pages, sans exception.",
+    avantages: ["Logo sur 100% des pages du site", "Statut « Sponsor Officiel LOKALI »", "Présence sur la page d'accueil principale", "Communication dédiée auprès des utilisateurs", "Rapport de visibilité en temps réel", "Exclusivité totale — 1 seule place disponible"],
+    badge: "Exclusif"
+  }
+];
+
+// Grille en paliers, validée avec Fulgence — même logique pour tous les plans :
+// [seuil_min_utilisateurs, prix Bronze, Argent, Or, Diamant, Officiel]
+var GRILLE = [
+  [0,     5000,  10000,  20000,  40000,  80000],
+  [100,   8000,  15000,  30000,  60000,  120000],
+  [500,   12000, 25000,  50000,  100000, 200000],
+  [1000,  20000, 40000,  80000,  160000, 320000],
+  [5000,  35000, 70000,  140000, 280000, 560000],
+  [20000, 60000, 120000, 250000, 500000, 1000000],
+  [50000, 100000,200000, 400000, 800000, 1600000]
+];
+
+function formatFCFA(n) {
+  return n.toLocaleString('fr-FR').replace(/,/g, ' ') + " FCFA";
+}
+
+function trouverPalier(nbUtilisateurs) {
+  var palier = GRILLE[0];
+  for (var i = 0; i < GRILLE.length; i++) {
+    if (nbUtilisateurs >= GRILLE[i][0]) palier = GRILLE[i];
+  }
+  return palier;
+}
+
+function calculerPrix(planIndex, nbUtilisateurs) {
+  var palier = trouverPalier(nbUtilisateurs);
+  return palier[planIndex + 1];
+}
+
+async function getNombreUtilisateurs() {
+  // Essaie plusieurs sources possibles, la première qui répond est utilisée.
+  var sources = [
+    { table: "profiles", filtre: {} },
+    { table: "users", filtre: {} },
+    { table: "lokt_talents", filtre: {} }
+  ];
+  for (var i = 0; i < sources.length; i++) {
+    try {
+      var q = _supabase.from(sources[i].table).select("*", { count: "exact", head: true });
+      var r = await q;
+      if (r && typeof r.count === "number" && r.count > 0) return r.count;
+    } catch(e) {}
+  }
+  return 11; // valeur de base si aucune source n'est accessible
+}
+
+async function afficherPlans() {
+  var nbUtilisateurs = await getNombreUtilisateurs();
+
+  document.getElementById("plansZone").innerHTML = plans.map(function(p, idx){
+    var prix = calculerPrix(idx, nbUtilisateurs);
+    var nbPages = Math.max(1, Math.round(TOTAL_PAGES * p.pourcentagePages));
+    return '<div class="plan ' + p.classe + '">' +
+      (p.badge ? '<div class="plan-badge">' + p.badge + '</div>' : '') +
+      '<div class="plan-nom">' + p.icone + ' Sponsor ' + p.nom + '</div>' +
+      '<div class="plan-prix">' + formatFCFA(prix) + ' <span>/ mois</span></div>' +
+      '<div class="plan-quota">📄 ' + nbPages + ' pages / emplacements réservés</div>' +
+      '<div class="plan-desc">' + p.desc + '</div>' +
+      '<ul class="plan-liste">' + p.avantages.map(function(a){ return '<li>' + a + '</li>'; }).join("") + '</ul>' +
+      '<div class="plan-slots">' + p.slots + (p.slots > 1 ? ' places disponibles ce mois-ci' : ' place disponible — exclusivité totale') + '</div>' +
+      '<a class="cta" href="/lokali-devenir-sponsor.html">Devenir Sponsor ' + p.nom + '</a>' +
+    '</div>';
+  }).join("");
+}
+
+afficherPlans();
+</script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

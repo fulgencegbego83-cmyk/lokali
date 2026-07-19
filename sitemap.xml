@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://lokali-delta.vercel.app/</loc><priority>1.0</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-hub.html</loc><priority>0.9</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-talents.html</loc><priority>0.8</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-emplois.html</loc><priority>0.8</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-marches.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-entreprises.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-formations.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-projets.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-invest.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-appels-offres.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-faq.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-sponsors.html</loc><priority>0.7</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-tarifs-sponsors.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-devenir-sponsor.html</loc><priority>0.6</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-presse.html</loc><priority>0.5</priority></url>
+  <url><loc>https://lokali-delta.vercel.app/lokali-communaute.html</loc><priority>0.5</priority></url>
+</urlset>

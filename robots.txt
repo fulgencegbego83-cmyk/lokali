@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://lokali-delta.vercel.app/sitemap.xml

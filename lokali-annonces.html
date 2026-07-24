@@ -407,6 +407,16 @@ async function appliquerPremiumEnAttenteSurNouvelleAnnonce(nouvelleAnnonceId) {
   } catch(e) {}
 }
 
+// Badge de fraîcheur visible (benchmark CoinAfrique) — distinct du filtre
+// fraîcheur déjà présent : ici, c'est l'affichage, pas le tri.
+function formaterFraicheur(dateStr) {
+  var diffHeures = (new Date() - new Date(dateStr)) / 3600000;
+  if (diffHeures < 24) return { texte: "🟢 Nouveau", nouveau: true };
+  var jours = Math.floor(diffHeures / 24);
+  if (jours < 30) return { texte: "il y a " + jours + " j", nouveau: false };
+  return { texte: "il y a " + Math.floor(jours / 30) + " mois", nouveau: false };
+}
+
 async function chargerAnnonces() {
   var el = document.getElementById("annoncesList");
   var r = await _supabase.from("lokt_annonces").select("*").eq("statut", "active")
@@ -417,13 +427,15 @@ async function chargerAnnonces() {
     var prixTxt = a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
     var lieu = a.ville || "Lieu non précisé";
     var estPremiumActif = a.est_premium && a.date_fin_premium && new Date(a.date_fin_premium) > new Date();
+    var fraicheur = formaterFraicheur(a.created_at);
     return '<div class="annonce-item" data-categorie="' + (a.categorie || "") + '" data-prix="' + (a.prix || "") + '" data-date="' + a.created_at + '"' + (estPremiumActif ? ' style="background:linear-gradient(135deg,rgba(249,115,22,.05),rgba(251,146,60,.02));border-radius:12px;padding:14px;margin-bottom:8px;border:1px solid rgba(249,115,22,.2)"' : '') + '>' +
       (estPremiumActif ? '<span class="badge" style="background:linear-gradient(135deg,#F97316,#FB923C);color:#fff">⭐ Premium</span> ' : '') +
+      (fraicheur.nouveau ? '<span class="badge" style="background:rgba(5,150,105,.15);color:#059669">' + fraicheur.texte + '</span> ' : '') +
       (a.etat === "neuf" ? '<span class="badge badge-neuf">Neuf</span> ' : '<span class="badge">' + (LABELS_ETAT[a.etat] || "Occasion") + '</span> ') +
       (a.categorie ? '<span class="badge">' + a.categorie + '</span> ' : '') +
       '<div class="annonce-title">' + a.titre + '</div>' +
       '<div class="annonce-prix">' + prixTxt + '</div>' +
-      '<div class="annonce-meta">' + lieu + '</div>' +
+      '<div class="annonce-meta">' + lieu + (fraicheur.nouveau ? '' : ' · ' + fraicheur.texte) + '</div>' +
       '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + a.description.slice(0, 160) + (a.description.length > 160 ? '…' : '') + '</div>' +
       (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(a.photos) : '') +
       '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'annonce\', \'' + a.id + '\', \'' + a.auteur_id + '\', \'' + a.titre.replace(/'/g,"\\'") + '\')">💬 Contacter le vendeur</button>' +

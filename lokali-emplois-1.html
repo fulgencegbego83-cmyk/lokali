@@ -403,6 +403,14 @@ function calculerScore(competencesRequises) {
 
 var LABELS_TYPE = { cdi: "CDI", cdd: "CDD", stage: "Stage", alternance: "Alternance", temporaire: "Temporaire", saisonnier: "Saisonnier" };
 
+function formaterFraicheur(dateStr) {
+  var diffHeures = (new Date() - new Date(dateStr)) / 3600000;
+  if (diffHeures < 24) return { texte: "🟢 Nouveau", nouveau: true };
+  var jours = Math.floor(diffHeures / 24);
+  if (jours < 30) return { texte: "il y a " + jours + " j", nouveau: false };
+  return { texte: "il y a " + Math.floor(jours / 30) + " mois", nouveau: false };
+}
+
 async function chargerOffres() {
   var el = document.getElementById("offresList");
   var r = await _supabase.from("lokt_emplois").select("*").eq("statut", "ouverte").order("created_at", { ascending: false }).limit(30);
@@ -413,10 +421,12 @@ async function chargerOffres() {
     var scoreHtml = (score !== null) ? '<span class="badge badge-score">' + score + '% compatible</span> ' : "";
     var lieu = j.remote_ok ? (j.ville ? j.ville + " · Télétravail OK" : "Télétravail OK") : (j.ville || "Lieu non précisé");
     var salaire = (j.salaire_min || j.salaire_max) ? (j.salaire_min || "?") + " - " + (j.salaire_max || "?") + " FCFA" : "Salaire non précisé";
+    var fraicheur = formaterFraicheur(j.created_at);
     return '<div class="job-item" data-secteur="' + (j.secteur || "") + '" data-salairemin="' + (j.salaire_min || "") + '" data-salairemax="' + (j.salaire_max || "") + '" data-date="' + j.created_at + '">' +
       '<span class="badge badge-type">' + (LABELS_TYPE[j.type_contrat] || j.type_contrat) + '</span> ' +
+      (fraicheur.nouveau ? '<span class="badge" style="background:rgba(5,150,105,.15);color:#059669">' + fraicheur.texte + '</span> ' : '') +
       '<div class="job-title">' + j.titre_poste + (j.entreprise_nom ? ' — ' + j.entreprise_nom : '') + '</div>' +
-      '<div class="job-meta">' + lieu + ' · ' + salaire + '</div>' +
+      '<div class="job-meta">' + lieu + ' · ' + salaire + (fraicheur.nouveau ? '' : ' · ' + fraicheur.texte) + '</div>' +
       '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + j.description.slice(0, 160) + (j.description.length > 160 ? '…' : '') + '</div>' +
       (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(j.photos) : '') +
       (j.competences_requises && j.competences_requises.length ? '<div style="margin-bottom:8px">' + j.competences_requises.map(function(c){ return '<span class="chip" style="margin-top:0">' + c + '</span>'; }).join("") + '</div>' : '') +

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Opportunités — Talents, Missions, Emplois, Marchés et plus</title>
+<meta name="description" content="Explorez tout l'écosystème LOKALI : talents, missions, emplois, marchés, formations, investissement et appels d'offres, en un seul endroit, gratuitement.">
+<link rel="canonical" href="https://mylokali.com/lokali-hub.html">
+<meta property="og:title" content="LOKALI Opportunités — Talents, Missions, Emplois, Marchés et plus">
+<meta property="og:description" content="Explorez tout l'écosystème LOKALI : talents, missions, emplois, marchés, formations, investissement et appels d'offres, en un seul endroit, gratuitement.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mylokali.com/lokali-hub.html">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:20px;
+  --gradient:linear-gradient(135deg,#F8FAFC 0%,#F1F5F9 50%,#E2E8F0 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--gradient);background-attachment:fixed;
+  color:var(--white);min-height:100vh;padding-bottom:40px}
+.nav{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:12px 16px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:6px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.hero{text-align:center;padding:36px 20px 24px}
+.hero h1{font-size:24px;font-weight:900;margin-bottom:8px;background:linear-gradient(135deg,#1E293B,#EA580C);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{color:var(--gray);font-size:14px;max-width:420px;margin:0 auto}
+.search-bar{max-width:480px;margin:22px auto 0;padding:0 16px}
+.search-bar input{width:100%;padding:14px 18px;border-radius:30px;border:1.5px solid var(--border);
+  background:rgba(15,23,42,.06);color:var(--white);font-size:14px}
+.search-bar input::placeholder{color:var(--gray)}
+.suggestions{max-width:480px;margin:8px auto 0;padding:0 16px}
+.sugg-titre{font-size:11px;font-weight:800;color:var(--gray);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 6px}
+.sugg-liste{display:flex;flex-wrap:wrap;gap:8px}
+.sugg-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:7px 14px;cursor:pointer;text-decoration:none;display:inline-block}
+.sugg-chip:active{transform:scale(.96)}
+.sugg-chip.populaire{background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);color:var(--orange-txt)}
+.grid{max-width:640px;margin:14px auto 0;padding:0 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tile{position:relative;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px 14px 18px;text-align:center;text-decoration:none;color:var(--white);
+  transition:transform .2s, box-shadow .2s, border-color .2s}
+.tile.entree{opacity:0;animation:lokaliFadeUp .5s ease forwards}
+@keyframes lokaliFadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.tile:active{transform:scale(.97)}
+.tile:hover{border-color:var(--orange);box-shadow:0 10px 30px rgba(249,115,22,.16);transform:translateY(-4px)}
+.tile-icon{width:58px;height:58px;border-radius:18px;display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin:0 auto 12px;box-shadow:0 6px 16px rgba(0,0,0,.18)}
+/* Palette de 6 teintes coordonnées, qui varient tuile par tuile pour plus de vie visuelle,
+   tout en restant harmonieuses entre elles (pas les 7 couleurs disparates d'origine). */
+.icon-1{background:linear-gradient(135deg,#F97316,#FB923C)}
+.icon-2{background:linear-gradient(135deg,#0891B2,#22D3EE)}
+.icon-3{background:linear-gradient(135deg,#059669,#10B981)}
+.icon-4{background:linear-gradient(135deg,#7C3AED,#A78BFA)}
+.icon-5{background:linear-gradient(135deg,#DB2777,#F472B6)}
+.icon-6{background:linear-gradient(135deg,#CA8A04,#FACC15)}
+
+.tile-name{font-weight:800;font-size:14px;margin-bottom:3px}
+.tile-desc{font-size:11px;color:var(--gray);line-height:1.35;margin-bottom:8px}
+.tile-stat{display:inline-block;font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);
+  border-radius:20px;padding:3px 10px}
+.section-title{max-width:640px;margin:30px auto 4px;padding:0 20px;font-size:13px;font-weight:800;
+  color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+.banner{max-width:640px;margin:16px auto 0;padding:0 16px}
+.banner-inner{background:linear-gradient(135deg,rgba(5,150,105,.12),rgba(16,185,129,.06));
+  border:1.5px solid rgba(5,150,105,.35);border-radius:var(--radius);padding:14px 18px;
+  text-align:center;font-weight:800;font-size:13px;color:var(--green)}
+/* Assistant IA — mis en avant, différenciateur de LOKALI */
+.assistant-vedette{max-width:640px;margin:22px auto 0;padding:0 16px}
+.assistant-vedette-inner{display:flex;align-items:center;gap:16px;background:linear-gradient(135deg,#1E293B,#0F3460);
+  border-radius:var(--radius);padding:20px;text-decoration:none;box-shadow:0 10px 30px rgba(15,23,42,.18)}
+.assistant-vedette-icon{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#F97316,#FB923C);
+  display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;box-shadow:0 6px 16px rgba(249,115,22,.35)}
+.assistant-vedette-txt{flex:1;min-width:0}
+.assistant-vedette-eyebrow{font-size:10px;font-weight:800;color:#FB923C;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.assistant-vedette-titre{font-weight:900;font-size:15.5px;color:#fff;margin-bottom:2px}
+.assistant-vedette-desc{font-size:12px;color:rgba(255,255,255,.6)}
+.assistant-vedette-arrow{font-size:20px;color:#FB923C;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>OPPORTUNITÉS</b></span>
+  <a class="nav-back" href="/">‹ LOKALI</a>
+</nav>
+
+<div class="hero">
+  <h1>Quel est votre besoin aujourd'hui ?</h1>
+  <p>Compétences, missions, emplois, entreprises... LOKALI vous connecte à la bonne solution.</p>
+</div>
+
+<div class="banner">
+  <div class="banner-inner">✅ LOKALI est et restera 100% gratuit pour tous — aucun abonnement, aucune commission.</div>
+</div>
+
+<div class="search-bar">
+  <input id="searchInput" type="text" placeholder="Décrivez ce que vous recherchez..." onkeydown="if(event.key==='Enter')lancerRecherche()">
+</div>
+<div class="suggestions" id="suggestionsZone"></div>
+
+<div class="assistant-vedette">
+  <a class="assistant-vedette-inner" href="/lokali-assistant.html">
+    <div class="assistant-vedette-icon">💬</div>
+    <div class="assistant-vedette-txt">
+      <div class="assistant-vedette-eyebrow">Assistant LOKALI</div>
+      <div class="assistant-vedette-titre">Décrivez votre besoin, on cherche pour vous</div>
+      <div class="assistant-vedette-desc">Une recherche en langage naturel qui comprend ce que vous cherchez</div>
+    </div>
+    <div class="assistant-vedette-arrow">→</div>
+  </a>
+</div>
+
+<div class="section-title">Opportunités</div>
+<div class="grid" id="gridOpp"></div>
+
+<div class="section-title">Mon espace</div>
+<div class="grid" id="gridEspace"></div>
+
+<div class="section-title">Communauté & infos</div>
+<div class="grid" id="gridComm"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NDIwMDAsImV4cCI6MjA1ODIxODAwMH0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+// Chaque module n'apparaît ici QUE lorsqu'il est réellement fonctionnel.
+// Regroupés en 3 catégories pour donner un vrai chemin de lecture, au lieu
+// d'un mur de 21 tuiles toutes identiques visuellement.
+var groupes = {
+  opp: {
+    id: "gridOpp",
+    classeIcone: "icon-opp",
+    modules: [
+      { icone: "🧑‍💼", nom: "Talents",  url: "/lokali-talents.html", desc: "Profils, compétences, portfolios",
+        table: "lokt_talents", filtre: { actif: true }, label: "profils" },
+      { icone: "💼", nom: "Emplois",  desc: "CDI, CDD, stages, alternance", url: "/lokali-emplois.html",
+        table: "lokt_emplois", filtre: { statut: "ouverte" }, label: "offres ouvertes" },
+      { icone: "🛒", nom: "Marchés",  desc: "Fournisseurs & opportunités B2B", url: "/lokali-marches.html",
+        table: "lokt_marches", filtre: { statut: "ouvert" }, label: "marchés ouverts" },
+      { icone: "🤝", nom: "Partenaires", desc: "Associés, techniques, financiers", url: "/lokali-partenaires.html",
+        table: "lokt_partenariats", filtre: { statut: "ouvert" }, label: "recherches ouvertes" },
+      { icone: "🚀", nom: "Projets",  desc: "Présenter une idée, trouver une équipe", url: "/lokali-projets.html",
+        table: "lokt_projets", filtre: { statut: "ouvert" }, label: "projets ouverts" },
+      { icone: "🎓", nom: "Formations", desc: "Monter en compétence, se certifier", url: "/lokali-formations.html",
+        table: "lokt_formations", filtre: { statut: "ouverte" }, label: "formations ouvertes" },
+      { icone: "🏢", nom: "Entreprises", desc: "Pages professionnelles vérifiées", url: "/lokali-entreprises.html",
+        table: "lokt_entreprises", filtre: { actif: true }, label: "entreprises inscrites" },
+      { icone: "💰", nom: "Invest",   desc: "Connecter projets et investisseurs", url: "/lokali-invest.html",
+        table: "lokt_opportunites_investissement", filtre: { statut: "ouvert" }, label: "opportunités ouvertes" },
+      { icone: "📜", nom: "Appels d'offres", desc: "Consultations & marchés", url: "/lokali-appels-offres.html",
+        table: "lokt_appels_offres", filtre: { statut: "ouvert" }, label: "appels d'offres ouverts" }
+    ]
+  },
+  espace: {
+    id: "gridEspace",
+    classeIcone: "icon-espace",
+    modules: [
+      { icone: "📄", nom: "Mon CV", desc: "Crée ton CV professionnel gratuitement", url: "/lokali-cv.html" },
+      { icone: "🧾", nom: "Devis", desc: "Crée un devis professionnel téléchargeable", url: "/lokali-devis-facture.html" },
+      { icone: "📊", nom: "Business Plan", desc: "Structure ton projet, gratuitement", url: "/lokali-business-plan.html" },
+      { icone: "📊", nom: "Tableau de bord", desc: "Vue d'ensemble de toute ton activité", url: "/lokali-tableau-bord.html" },
+      { icone: "🔔", nom: "Notifications", desc: "Messages, candidatures, avis reçus", url: "/lokali-notifications.html" },
+      { icone: "⭐", nom: "Mes Favoris", desc: "Tout ce que vous avez enregistré", url: "/lokali-favoris.html" },
+      { icone: "💬", nom: "Messagerie", desc: "Toutes tes conversations au même endroit", url: "/lokali-messagerie.html" }
+    ]
+  },
+  comm: {
+    id: "gridComm",
+    classeIcone: "icon-comm",
+    modules: [
+      { icone: "🌍", nom: "Communauté", desc: "Activité récente & avis de confiance", url: "/lokali-communaute.html" },
+      { icone: "🗺️", nom: "Carte", desc: "Concentration des inscrits en temps réel", url: "/lokali-carte.html" },
+      { icone: "❓", nom: "FAQ", desc: "Toutes les réponses, en toute transparence", url: "/lokali-faq.html" },
+      { icone: "📰", nom: "Presse", desc: "Actualités, conseils, succès des utilisateurs", url: "/lokali-presse.html" }
+    ]
+  }
+};
+
+// Liste à plat, pour les compteurs Supabase (qui référencent chaque module par un id unique)
+var modules = [];
+Object.keys(groupes).forEach(function(g){ groupes[g].modules.forEach(function(m){ modules.push(m); }); });
+
+function rendreGrille() {
+  var compteurGlobal = 0;
+  Object.keys(groupes).forEach(function(g) {
+    var groupe = groupes[g];
+    document.getElementById(groupe.id).innerHTML = groupe.modules.map(function(m){
+      var i = compteurGlobal++;
+      m._id = i;
+      // Seule la toute première rangée (les 2 premières tuiles de chaque groupe)
+      // a l'animation d'entrée — le reste apparaît directement, sans cascade.
+      var estPremiereRangee = groupe.modules.indexOf(m) < 2;
+      var classeCouleur = "icon-" + ((i % 6) + 1);
+      return '<a class="tile' + (estPremiereRangee ? ' entree' : '') + '" style="animation-delay:' + (groupe.modules.indexOf(m) * 0.05) + 's" href="' + m.url + '">' +
+        '<div class="tile-icon ' + classeCouleur + '">' + m.icone + '</div>' +
+        '<div class="tile-name">' + m.nom + '</div>' +
+        '<div class="tile-desc">' + m.desc + '</div>' +
+        '<span class="tile-stat" id="stat-' + i + '">…</span>' +
+        '</a>';
+    }).join("");
+  });
+}
+rendreGrille();
+
+// Compteurs en direct depuis Supabase (nombre de profils / missions / offres actifs)
+modules.forEach(async function(m, i) {
+  if (!m.table) { var elSkip = document.getElementById("stat-" + i); if (elSkip) elSkip.style.display = "none"; return; }
+  try {
+    var query = _supabase.from(m.table).select("*", { count: "exact", head: true });
+    Object.keys(m.filtre).forEach(function(k){ query = query.eq(k, m.filtre[k]); });
+    var r = await query;
+    var el = document.getElementById("stat-" + i);
+    if (el) el.textContent = (r.count || 0) + " " + m.label;
+  } catch(e) {
+    var el2 = document.getElementById("stat-" + i);
+    if (el2) el2.textContent = "";
+  }
+});
+
+function lancerRecherche(requeteManuelle) {
+  var q = requeteManuelle || document.getElementById("searchInput").value.trim();
+  if (!q) return;
+  enregistrerRechercheRecente(q);
+  try { _supabase.from("lokt_recherches").insert({ requete: q }); } catch(e) {}
+  window.location.href = "/lokali-assistant.html?q=" + encodeURIComponent(q);
+}
+
+// --- Suggestions : recherches récentes (locales) + recherches populaires (Supabase) ---
+var RECENTES_KEY = "lokali_recherches_recentes";
+
+function getRecherchesRecentes() {
+  try { return JSON.parse(localStorage.getItem(RECENTES_KEY)) || []; }
+  catch(e) { return []; }
+}
+function enregistrerRechercheRecente(q) {
+  var liste = getRecherchesRecentes().filter(function(r){ return r.toLowerCase() !== q.toLowerCase(); });
+  liste.unshift(q);
+  liste = liste.slice(0, 5);
+  localStorage.setItem(RECENTES_KEY, JSON.stringify(liste));
+}
+
+async function chargerSuggestions() {
+  var html = "";
+  var recentes = getRecherchesRecentes();
+  if (recentes.length) {
+    html += '<div class="sugg-titre">🕓 Vos recherches récentes</div><div class="sugg-liste">' +
+      recentes.map(function(r){ return '<span class="sugg-chip" onclick="lancerRecherche(\'' + r.replace(/'/g, "\\'") + '\')">' + r + '</span>'; }).join("") +
+      '</div>';
+  }
+
+  try {
+    var r = await _supabase.from("lokt_recherches").select("requete").order("created_at", { ascending: false }).limit(50);
+    var lignes = (r.data || []).map(function(x){ return x.requete; });
+    var compte = {};
+    lignes.forEach(function(q){ var k = q.toLowerCase(); compte[k] = (compte[k] || 0) + 1; });
+    var top = Object.keys(compte).sort(function(a,b){ return compte[b] - compte[a]; }).slice(0, 5);
+    if (top.length) {
+      html += '<div class="sugg-titre">🔥 Recherches populaires</div><div class="sugg-liste">' +
+        top.map(function(q){ return '<span class="sugg-chip populaire" onclick="lancerRecherche(\'' + q.replace(/'/g, "\\'") + '\')">' + q + '</span>'; }).join("") +
+        '</div>';
+    }
+  } catch(e) {}
+
+  document.getElementById("suggestionsZone").innerHTML = html;
+}
+chargerSuggestions();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

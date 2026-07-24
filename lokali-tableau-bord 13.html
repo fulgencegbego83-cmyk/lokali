@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI — Mon tableau de bord</title>
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:40px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  box-shadow:0 2px 12px rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.wrap{max-width:720px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:20px}
+
+.score-card{background:linear-gradient(135deg,#1E293B,#334155);color:#fff;border-radius:var(--radius);
+  padding:20px;margin-bottom:16px;display:flex;align-items:center;gap:16px}
+.score-cercle{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;
+  align-items:center;justify-content:center;font-size:20px;font-weight:900;flex-shrink:0}
+.score-detail{font-size:12px;opacity:.85;margin-top:4px}
+
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.stat-val{font-size:22px;font-weight:900;color:var(--orange-txt)}
+.stat-lbl{font-size:11px;color:var(--gray);margin-top:2px}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.card h3 a{font-size:12px;color:var(--orange2);text-decoration:none;font-weight:700}
+.item-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.item-row:last-child{border-bottom:none}
+.item-row b{font-size:13px;display:block}
+.item-row span{font-size:11px;color:var(--gray)}
+.badge{font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px}
+.badge-ouverte{background:rgba(5,150,105,.15);color:#059669}
+.badge-envoyee{background:rgba(202,138,4,.15);color:#CA8A04}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:16px 0}
+.raccourcis{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.raccourci{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:14px;text-decoration:none;color:var(--white);font-size:13px;font-weight:700}
+.raccourci:hover{border-color:var(--orange)}
+.profil-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.profil-item:last-child{border-bottom:none}
+.profil-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.profil-text{flex:1}
+.profil-text b{font-size:13px;display:block}
+.profil-text span{font-size:11px;color:var(--gray)}
+.profil-statut{font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px}
+.profil-actif{background:rgba(5,150,105,.15);color:#059669}
+.profil-inactif{background:rgba(15,23,42,.06);color:var(--gray)}
+.parrainage-lien{display:flex;gap:8px;align-items:center;background:rgba(15,23,42,.04);border:1px solid var(--border);
+  border-radius:12px;padding:10px 12px;margin-bottom:12px;font-size:12.5px;word-break:break-all}
+.parrainage-btns{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.parrainage-btn{flex:1;min-width:130px;text-align:center;border:none;border-radius:12px;padding:10px;
+  font-weight:700;font-size:12.5px;cursor:pointer;text-decoration:none;display:inline-block}
+.parrainage-btn-copier{background:rgba(15,23,42,.08);color:var(--white)}
+.parrainage-btn-wa{background:#25D366;color:#fff}
+.parrainage-progress-wrap{margin-bottom:6px}
+.parrainage-progress-bar{height:10px;background:rgba(15,23,42,.08);border-radius:20px;overflow:hidden}
+.parrainage-progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange2));border-radius:20px;transition:width .4s}
+.parrainage-progress-txt{font-size:11.5px;color:var(--gray);margin-top:6px;text-align:center}
+.parrainage-debloque{background:rgba(5,150,105,.1);border:1.5px solid rgba(5,150,105,.3);border-radius:12px;
+  padding:14px;text-align:center;font-weight:800;color:#059669;font-size:13px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>TABLEAU DE BORD</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Mon tableau de bord</h1>
+  <div class="subtitle" id="sousTitre">Chargement...</div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour voir ton tableau de bord.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="contenuDashboard" style="display:none">
+    <div class="score-card">
+      <div class="score-cercle" id="scoreCercle">…</div>
+      <div>
+        <div style="font-weight:800;font-size:15px">Score de confiance</div>
+        <div class="score-detail" id="scoreDetail">Calcul en cours...</div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box"><div class="stat-val" id="statAnnonces">…</div><div class="stat-lbl">Annonces publiées</div></div>
+      <div class="stat-box"><div class="stat-val" id="statCandidatures">…</div><div class="stat-lbl">Candidatures envoyées</div></div>
+      <div class="stat-box"><div class="stat-val" id="statConversations">…</div><div class="stat-lbl">Conversations</div></div>
+    </div>
+
+    <div class="card" id="parrainageCard">
+      <h3>🎁 Parrainage → Annonce Premium gratuite</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:12px">
+        Invite 6 personnes à créer un compte LOKALI et débloque 2 semaines de mise en avant Premium sur une de tes annonces — gratuitement, sans rien payer.
+      </p>
+      <div id="parrainageContenu"><div class="empty">Chargement...</div></div>
+    </div>
+
+    <div class="raccourcis">
+      <a class="raccourci" href="/lokali-notifications.html">🔔 Notifications</a>
+      <a class="raccourci" href="/lokali-cv.html">📄 Mon CV</a>
+      <a class="raccourci" href="/lokali-devis-facture.html">🧾 Devis & Facture</a>
+      <a class="raccourci" href="/lokali-business-plan.html">📊 Business Plan</a>
+      <a class="raccourci" href="/lokali-messagerie.html">💬 Mes messages</a>
+      <a class="raccourci" href="/lokali-talents.html">🧑‍💼 Mon profil Talent</a>
+      <a class="raccourci" href="/lokali-annonces.html">🛍️ Petites annonces</a>
+      <a class="raccourci" href="/lokali-hub.html">🚀 Tout l'écosystème</a>
+    </div>
+
+    <div class="card">
+      <h3>Mes profils LOKALI</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Un seul compte, plusieurs casquettes possibles — active celles dont tu as besoin.</p>
+      <div id="listeProfils"><div class="empty">Chargement...</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Mes annonces publiées <a href="/lokali-hub.html">Publier →</a></h3>
+      <div id="listeAnnonces"><div class="empty">Chargement...</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Mes candidatures récentes</h3>
+      <div id="listeCandidatures"><div class="empty">Chargement...</div></div>
+    </div>
+
+    <div class="card">
+      <h3>Mes conversations récentes <a href="/lokali-messagerie.html">Voir tout →</a></h3>
+      <div id="listeConversationsDash"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+
+var TABLES_ANNONCES = [
+  { table: "lokt_missions", champTitre: "titre", statutCol: "statut", statutOuvert: "ouverte", icone: "📋", label: "Mission" },
+  { table: "lokt_emplois", champTitre: "titre_poste", statutCol: "statut", statutOuvert: "ouverte", icone: "💼", label: "Emploi" },
+  { table: "lokt_marches", champTitre: "titre", statutCol: "statut", statutOuvert: "ouvert", icone: "🛒", label: "Marché" },
+  { table: "lokt_partenariats", champTitre: "titre", statutCol: "statut", statutOuvert: "ouvert", icone: "🤝", label: "Partenariat" },
+  { table: "lokt_projets", champTitre: "titre", statutCol: "statut", statutOuvert: "ouvert", icone: "🚀", label: "Projet" },
+  { table: "lokt_appels_offres", champTitre: "titre", statutCol: "statut", statutOuvert: "ouvert", icone: "📄", label: "Appel d'offres" },
+  { table: "lokt_opportunites_investissement", champTitre: "titre", statutCol: "statut", statutOuvert: "ouvert", icone: "💰", label: "Invest" },
+  { table: "lokt_formations", champTitre: "titre", statutCol: "statut", statutOuvert: "ouverte", icone: "🎓", label: "Formation" }
+];
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) { document.getElementById("authGate").style.display = ""; return; }
+  _userId = session.user.id;
+  document.getElementById("contenuDashboard").style.display = "";
+  document.getElementById("sousTitre").textContent = "Vue d'ensemble de ton activité sur LOKALI";
+
+  chargerScore();
+  chargerProfils();
+  chargerParrainage();
+  chargerAnnonces();
+  chargerCandidatures();
+  chargerConversations();
+}
+
+async function chargerProfils() {
+  var el = document.getElementById("listeProfils");
+  var definitions = [
+    { table: "lokt_talents", icone: "🧑‍💼", couleur: "linear-gradient(135deg,#F97316,#FB923C)", nom: "Talent", url: "/lokali-talents.html", desc: "Propose tes compétences" },
+    { table: "lokt_cv", icone: "📄", couleur: "linear-gradient(135deg,#0891B2,#22D3EE)", nom: "CV", url: "/lokali-cv.html", desc: "Ton CV téléchargeable" },
+    { table: "lokt_fournisseurs", icone: "🛒", couleur: "linear-gradient(135deg,#7C3AED,#A78BFA)", nom: "Fournisseur", url: "/lokali-marches.html", desc: "Réponds aux marchés" },
+    { table: "lokt_entreprises", icone: "🏢", couleur: "linear-gradient(135deg,#059669,#10B981)", nom: "Entreprise", url: "/lokali-entreprises.html", desc: "Page professionnelle" }
+  ];
+
+  var html = "";
+  for (var i = 0; i < definitions.length; i++) {
+    var d = definitions[i];
+    var r = await _supabase.from(d.table).select("id").eq("user_id", _userId).maybeSingle();
+    var actif = !!(r && r.data);
+    html += '<div class="profil-item">' +
+      '<div class="profil-icon" style="background:' + d.couleur + '">' + d.icone + '</div>' +
+      '<div class="profil-text"><b>' + d.nom + '</b><span>' + d.desc + '</span></div>' +
+      '<a href="' + d.url + '" class="profil-statut ' + (actif ? "profil-actif" : "profil-inactif") + '" style="text-decoration:none">' +
+      (actif ? "✓ Actif" : "+ Créer") + '</a>' +
+      '</div>';
+  }
+  el.innerHTML = html;
+}
+
+// ── Parrainage → Annonce Premium gratuite (feuille de route section 5) ──
+var SEUIL_PARRAINAGE = 6;
+
+function genererCodeParrainage() {
+  return "LK" + Math.random().toString(36).slice(2, 8).toUpperCase();
+}
+
+async function chargerParrainage() {
+  var el = document.getElementById("parrainageContenu");
+  var r = await _supabase.from("lokt_parrainages").select("*").eq("user_id", _userId).maybeSingle();
+  var parrainage = r.data;
+
+  if (!parrainage) {
+    var code = genererCodeParrainage();
+    var ins = await _supabase.from("lokt_parrainages").insert({ user_id: _userId, code_unique: code }).select().single();
+    if (ins.error) { el.innerHTML = '<div class="empty">Impossible de générer ton lien pour le moment.</div>'; return; }
+    parrainage = ins.data;
+  }
+
+  var nb = await _supabase.from("lokt_parrainage_inscriptions").select("*", { count: "exact", head: true }).eq("parrainage_id", parrainage.id);
+  var nbInscrits = nb.count || 0;
+  var lien = window.location.origin + "/?ref=" + parrainage.code_unique;
+  var messagePartage = "Rejoins-moi sur LOKALI, la plateforme 100% gratuite pour trouver des prestataires, publier des annonces et des opportunités en Afrique francophone : " + lien;
+
+  var html = '<div class="parrainage-lien">🔗 ' + lien + '</div>' +
+    '<div class="parrainage-btns">' +
+      '<button class="parrainage-btn parrainage-btn-copier" onclick="copierLienParrainage(\'' + lien + '\')">📋 Copier le lien</button>' +
+      '<a class="parrainage-btn parrainage-btn-wa" href="https://wa.me/?text=' + encodeURIComponent(messagePartage) + '" target="_blank">💬 Partager sur WhatsApp</a>' +
+    '</div>';
+
+  if (parrainage.statut === "PREMIUM_DEBLOQUE") {
+    html += '<div class="parrainage-debloque">✅ Premium débloqué ! ' +
+      (parrainage.premium_applique ? "Une de tes annonces est mise en avant pendant 2 semaines." : "Ta prochaine annonce publiée sera automatiquement mise en avant pendant 2 semaines.") +
+      '</div>';
+  } else {
+    var pourcentage = Math.min(100, Math.round((nbInscrits / SEUIL_PARRAINAGE) * 100));
+    html += '<div class="parrainage-progress-wrap">' +
+      '<div class="parrainage-progress-bar"><div class="parrainage-progress-fill" style="width:' + pourcentage + '%"></div></div>' +
+      '<div class="parrainage-progress-txt">' + nbInscrits + '/' + SEUIL_PARRAINAGE + ' filleuls inscrits</div>' +
+      '</div>';
+  }
+
+  el.innerHTML = html;
+}
+
+function copierLienParrainage(lien) {
+  navigator.clipboard.writeText(lien).then(function(){ alert("Lien copié ✅"); });
+}
+
+async function chargerScore() {
+  var r = await _supabase.rpc("lokali_score_confiance", { p_user_id: _userId });
+  if (!r.data) return;
+  var s = r.data.score;
+  document.getElementById("scoreCercle").textContent = s;
+  document.getElementById("scoreDetail").textContent =
+    "Profil " + r.data.profil + "/20 · CV " + r.data.cv + "/20 · Avis " + r.data.avis + "/20 · Badges " + r.data.badges + "/20 · Ancienneté " + r.data.anciennete + "/20";
+}
+
+async function chargerAnnonces() {
+  var el = document.getElementById("listeAnnonces");
+  var toutes = [];
+  var total = 0;
+  for (var i = 0; i < TABLES_ANNONCES.length; i++) {
+    var t = TABLES_ANNONCES[i];
+    try {
+      var r = await _supabase.from(t.table).select("*").eq("auteur_id", _userId).order("created_at", { ascending: false }).limit(5);
+      if (r.data) {
+        r.data.forEach(function(row) { toutes.push({ source: t, row: row }); });
+        total += r.data.length;
+      }
+    } catch(e) {}
+  }
+  document.getElementById("statAnnonces").textContent = total;
+  toutes.sort(function(a, b) { return new Date(b.row.created_at) - new Date(a.row.created_at); });
+  toutes = toutes.slice(0, 8);
+  if (!toutes.length) { el.innerHTML = '<div class="empty">Aucune annonce publiée pour le moment.</div>'; return; }
+  el.innerHTML = toutes.map(function(item) {
+    var titre = item.row[item.source.champTitre] || "Sans titre";
+    var ouverte = item.row[item.source.statutCol] === item.source.statutOuvert;
+    return '<div class="item-row"><div><b>' + item.source.icone + ' ' + titre + '</b><span>' + item.source.label + '</span></div>' +
+      '<span class="badge ' + (ouverte ? "badge-ouverte" : "badge-envoyee") + '">' + (ouverte ? "Ouverte" : item.row[item.source.statutCol]) + '</span></div>';
+  }).join("");
+}
+
+async function chargerCandidatures() {
+  var el = document.getElementById("listeCandidatures");
+  var toutes = [];
+
+  try {
+    var talentRes = await _supabase.from("lokt_talents").select("id").eq("user_id", _userId).maybeSingle();
+    if (talentRes.data) {
+      var talentId = talentRes.data.id;
+      var cm = await _supabase.from("lokt_mission_candidatures").select("*, lokt_missions(titre)").eq("talent_id", talentId).order("created_at", { ascending: false }).limit(5);
+      if (cm.data) cm.data.forEach(function(c){ toutes.push({ titre: c.lokt_missions ? c.lokt_missions.titre : "Mission", statut: c.statut, type: "Mission", date: c.created_at }); });
+
+      var ce = await _supabase.from("lokt_candidatures_emploi").select("*, lokt_emplois(titre_poste)").eq("talent_id", talentId).order("created_at", { ascending: false }).limit(5);
+      if (ce.data) ce.data.forEach(function(c){ toutes.push({ titre: c.lokt_emplois ? c.lokt_emplois.titre_poste : "Emploi", statut: c.statut, type: "Emploi", date: c.created_at }); });
+    }
+  } catch(e) {}
+
+  document.getElementById("statCandidatures").textContent = toutes.length;
+  toutes.sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+  if (!toutes.length) { el.innerHTML = '<div class="empty">Aucune candidature envoyée pour le moment.</div>'; return; }
+  el.innerHTML = toutes.slice(0, 8).map(function(c) {
+    return '<div class="item-row"><div><b>' + c.titre + '</b><span>' + c.type + '</span></div>' +
+      '<span class="badge badge-envoyee">' + c.statut + '</span></div>';
+  }).join("");
+}
+
+async function chargerConversations() {
+  var el = document.getElementById("listeConversationsDash");
+  var r = await _supabase.from("lokt_conversations").select("*")
+    .or("participant_1.eq." + _userId + ",participant_2.eq." + _userId)
+    .order("created_at", { ascending: false }).limit(5);
+  document.getElementById("statConversations").textContent = (r.data || []).length;
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune conversation pour le moment.</div>'; return; }
+  el.innerHTML = r.data.map(function(c) {
+    return '<a href="/lokali-messagerie.html?conversation=' + c.id + '" style="text-decoration:none;color:inherit">' +
+      '<div class="item-row"><div><b>' + (c.contexte_titre || "Discussion") + '</b><span>' + c.contexte_module + '</span></div></div></a>';
+  }).join("");
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

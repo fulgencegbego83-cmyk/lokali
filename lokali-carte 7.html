@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI CARTE — Concentration en temps réel</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:720px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:16px}
+.module-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
+.module-tab{flex-shrink:0;padding:8px 14px;border-radius:20px;font-size:13px;font-weight:700;
+  background:rgba(15,23,42,.05);border:1px solid var(--border);color:var(--gray);cursor:pointer;white-space:nowrap}
+.module-tab.active{background:rgba(249,115,22,.12);border-color:var(--orange);color:var(--orange2)}
+#mapContainer{width:100%;height:380px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+.classement-item{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}
+.classement-item:last-child{border-bottom:none}
+.classement-rang{font-weight:900;color:var(--orange2);width:24px}
+.classement-pays{flex:1;font-size:14px}
+.classement-total{font-weight:800;font-size:14px;background:rgba(5,150,105,.15);color:#34D399;padding:2px 10px;border-radius:20px}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.leaflet-popup-content{color:#1a1a1a;font-weight:700}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>CARTE</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1>Concentration en temps réel</h1>
+  <div class="subtitle">Où se trouvent les inscrits sur LOKALI, module par module</div>
+
+  <div class="module-tabs" id="moduleTabs"></div>
+
+  <div id="mapContainer"></div>
+
+  <div class="card">
+    <h3>Classement par pays</h3>
+    <div id="classement"><div class="empty">Chargement...</div></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _map = null;
+var _cercles = [];
+var _moduleActif = "talents";
+
+var MODULES = [
+  { cle: "talents", nom: "🧑‍💼 Talents" },
+  { cle: "missions", nom: "📋 Missions" },
+  { cle: "emplois", nom: "💼 Emplois" },
+  { cle: "marches", nom: "🛒 Fournisseurs" },
+  { cle: "entreprises", nom: "🏢 Entreprises" },
+  { cle: "formations", nom: "🎓 Formations" },
+  { cle: "projets", nom: "🚀 Projets" }
+];
+
+function initTabs() {
+  var el = document.getElementById("moduleTabs");
+  el.innerHTML = MODULES.map(function(m){
+    return '<div class="module-tab' + (m.cle === _moduleActif ? " active" : "") + '" data-cle="' + m.cle + '">' + m.nom + '</div>';
+  }).join("");
+  el.querySelectorAll(".module-tab").forEach(function(t){
+    t.addEventListener("click", function() {
+      _moduleActif = t.dataset.cle;
+      el.querySelectorAll(".module-tab").forEach(function(t2){ t2.classList.remove("active"); });
+      t.classList.add("active");
+      chargerConcentration();
+    });
+  });
+}
+
+function initMap() {
+  _map = L.map("mapContainer", { worldCopyJump: true }).setView([10, 5], 2);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: '&copy; OpenStreetMap',
+    maxZoom: 8
+  }).addTo(_map);
+}
+
+async function chargerConcentration() {
+  document.getElementById("classement").innerHTML = '<div class="empty">Chargement...</div>';
+  _cercles.forEach(function(c){ _map.removeLayer(c); });
+  _cercles = [];
+
+  var r = await _supabase.rpc("lokali_concentration_par_pays", { p_module: _moduleActif });
+  if (r.error || !r.data || !r.data.length) {
+    document.getElementById("classement").innerHTML = '<div class="empty">Aucune donnée pour ce module pour le moment.</div>';
+    return;
+  }
+
+  var maxTotal = Math.max.apply(null, r.data.map(function(d){ return parseInt(d.total); }));
+
+  r.data.forEach(function(d) {
+    var coords = COORDS_PAYS[d.pays];
+    if (!coords) return;
+    var total = parseInt(d.total);
+    var rayon = 20000 + (total / maxTotal) * 180000;
+    var cercle = L.circle(coords, {
+      radius: rayon,
+      color: "#F97316",
+      fillColor: "#FB923C",
+      fillOpacity: 0.45,
+      weight: 1.5
+    }).addTo(_map);
+    cercle.bindPopup("<b>" + d.pays + "</b><br>" + total + " inscrit" + (total > 1 ? "s" : ""));
+    _cercles.push(cercle);
+  });
+
+  document.getElementById("classement").innerHTML = r.data.map(function(d, i){
+    return '<div class="classement-item">' +
+      '<span class="classement-rang">#' + (i+1) + '</span>' +
+      '<span class="classement-pays">' + d.pays + '</span>' +
+      '<span class="classement-total">' + d.total + '</span>' +
+      '</div>';
+  }).join("");
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) {
+    document.body.innerHTML = '<div style="padding:100px 20px;text-align:center"><h2>Connexion requise</h2><p style="color:#64748B;margin-top:10px">Connecte-toi depuis LOKALI pour voir la carte de concentration.</p><a href="/" style="display:inline-block;margin-top:16px;background:#F97316;color:#fff;padding:10px 20px;border-radius:30px;text-decoration:none;font-weight:700">Aller me connecter</a></div>';
+    return;
+  }
+  initTabs();
+  initMap();
+  chargerConcentration();
+  setInterval(chargerConcentration, 60000);
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

@@ -51,6 +51,14 @@
     {
       "source": "/",
       "destination": "/index.html"
+    },
+    {
+      "source": "/robots.txt",
+      "destination": "/robots-7.txt"
+    },
+    {
+      "source": "/sitemap.xml",
+      "destination": "/sitemap-9.xml"
     }
   ]
 }

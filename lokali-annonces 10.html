@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Annonces — Petites annonces gratuites en Afrique francophone</title>
+<meta name="description" content="Achetez et vendez gratuitement sur LOKALI : véhicules, immobilier, électronique, mode, maison et bien plus, partout en Afrique francophone.">
+<link rel="canonical" href="https://mylokali.com/lokali-annonces.html">
+<meta property="og:title" content="LOKALI Annonces — Petites annonces gratuites en Afrique francophone">
+<meta property="og:description" content="Achetez et vendez gratuitement sur LOKALI : véhicules, immobilier, électronique, mode, maison et bien plus, partout en Afrique francophone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mylokali.com/lokali-annonces.html">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:12px 10px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+.tab.active{color:var(--orange-txt);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.annonce-item{border-bottom:1px solid var(--border);padding:14px 0}
+.annonce-item:last-child{border-bottom:none}
+.annonce-title{font-weight:700;font-size:15px}
+.annonce-prix{font-weight:900;font-size:16px;color:var(--orange2)}
+.annonce-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(15,52,96,.5);color:#93C5FD}
+.badge-neuf{background:rgba(5,150,105,.2);color:#34D399}
+.badge-vendue{background:rgba(220,38,38,.15);color:#F87171}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.filtre-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filtre-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:12px 16px;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.filtre-chip.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.filtres-avances{margin-bottom:14px}
+.filtres-avances-toggle{font-size:12.5px;font-weight:700;color:var(--gray);cursor:pointer;padding:8px 2px;user-select:none}
+.filtres-avances-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:6px}
+.fraicheur-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.fraicheur-btn{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;
+  background:rgba(15,23,42,.04);border:1px solid var(--border);color:var(--gray);min-height:36px;display:inline-flex;align-items:center}
+.fraicheur-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.qr-modal-overlay{position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:9998;display:none;
+  align-items:center;justify-content:center;padding:20px}
+.qr-modal{background:var(--card);border-radius:20px;padding:20px;max-width:320px;width:100%;text-align:center;position:relative}
+.qr-modal-close{position:absolute;top:10px;right:14px;background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray)}
+.qr-modal h3{font-size:15px;margin-bottom:12px}
+.boost-panel{background:rgba(249,115,22,.05);border:1.5px solid rgba(249,115,22,.25);border-radius:14px;padding:14px;margin-top:10px}
+.boost-panel select, .boost-panel input{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#fff;color:var(--white);font-size:13px;margin-bottom:8px}
+.badge-boost-attente{background:rgba(202,138,4,.15);color:#CA8A04}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>ANNONCES</b></span>
+  <a class="nav-back" href="/">‹ LOKALI</a>
+</nav>
+
+<div class="wrap">
+  <h1>Petites annonces</h1>
+  <div class="subtitle">Achetez et vendez librement, partout en Afrique francophone — 100% gratuit</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statAnnonces">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="annonces">Annonces</div>
+    <div class="tab" data-tab="publier">Publier une annonce</div>
+    <div class="tab" data-tab="mesannonces">Mes annonces</div>
+  </div>
+
+  <!-- Vue annonce individuelle — activée via ?annonce=ID, c'est la page vers
+       laquelle pointe le lien direct et le QR Code d'une annonce précise. -->
+  <div id="vueAnnonceUnique" class="card" style="display:none"></div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour publier ou gérer tes annonces.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <!-- ANNONCES -->
+  <div id="tab-annonces" class="tab-content">
+    <div class="filtre-chips" id="annoncesChips"></div>
+
+    <div class="filtres-avances">
+      <div class="filtres-avances-toggle" onclick="toggleFiltresAvances()">🔎 Filtres avancés (prix, fraîcheur) <span id="filtresAvancesFleche">▾</span></div>
+      <div class="filtres-avances-panel" id="filtresAvancesPanel" style="display:none">
+        <div class="row2">
+          <div><label>Prix minimum (FCFA)</label><input type="number" id="filtrePrixMin" placeholder="0"></div>
+          <div><label>Prix maximum (FCFA)</label><input type="number" id="filtrePrixMax" placeholder="Aucun maximum"></div>
+        </div>
+        <label>Fraîcheur de l'annonce</label>
+        <div class="fraicheur-btns" id="fraicheurBtns">
+          <span class="fraicheur-btn active" data-val="">Tous</span>
+          <span class="fraicheur-btn" data-val="24h">24h</span>
+          <span class="fraicheur-btn" data-val="7j">7 jours</span>
+          <span class="fraicheur-btn" data-val="30j">30 jours</span>
+        </div>
+        <button class="btn btn-sm" style="width:100%;margin-top:10px" onclick="appliquerFiltresAnnonces()">Appliquer les filtres</button>
+        <button class="btn btn-sm" style="width:100%;margin-top:6px;background:rgba(15,23,42,.08);color:var(--white)" onclick="reinitialiserFiltresAnnonces()">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div id="annoncesList" class="card"><div class="empty">Chargement des annonces...</div></div>
+  </div>
+
+  <!-- PUBLIER -->
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="card">
+      <h3>Publier une annonce</h3>
+      <label>Titre</label>
+      <input id="aTitre" placeholder="Ex: Chaussures Nike homme, taille 42, neuves">
+      <label>Description</label>
+      <textarea id="aDescription" placeholder="Décris ton article : état, caractéristiques, raison de la vente..."></textarea>
+      <div class="row2">
+        <div>
+          <label>Catégorie</label>
+          <select id="aCategorie"></select>
+        </div>
+        <div>
+          <label>État</label>
+          <select id="aEtat">
+            <option value="neuf">Neuf</option>
+            <option value="occasion">Occasion, bon état</option>
+            <option value="a_reparer">Occasion, à réparer</option>
+          </select>
+        </div>
+      </div>
+      <label>Prix (FCFA, laisser vide si "prix à discuter")</label>
+      <input id="aPrix" type="number" placeholder="Ex: 15000">
+      <div class="row2">
+        <div><label>Pays</label><select id="aPays"></select></div>
+        <div><label>Ville</label><select id="aVille"></select></div>
+      </div>
+      <div id="aVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="aVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <label>Photos (au moins une recommandée)</label>
+      <div id="aPhotosZone"></div>
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Comment veux-tu être contacté ? (optionnel, choisis librement)</label>
+      <label>WhatsApp</label>
+      <input id="aContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label>
+      <input id="aContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label>
+      <input id="aContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <button class="btn" onclick="publierAnnonce()">Publier l'annonce</button>
+    </div>
+  </div>
+
+  <!-- MES ANNONCES -->
+  <div id="tab-mesannonces" class="tab-content" style="display:none">
+    <div id="mesAnnoncesMsg"></div>
+    <div id="mesAnnoncesList" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+</div>
+
+<div class="qr-modal-overlay" id="qrModalOverlay">
+  <div class="qr-modal">
+    <button class="qr-modal-close" onclick="fermerModalQR()" aria-label="Fermer">✕</button>
+    <h3>📇 Carte de visite de l'annonce</h3>
+    <div id="qrModalZone"></div>
+  </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script src="/lokali-qrcode-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _aPhotos = null;
+var _editionId = null;
+var _mesAnnoncesCache = {};
+
+// Catégories dédiées aux petites annonces (distinctes des secteurs professionnels
+// de lokali-referentiel.js, qui concernent les prestataires de services).
+// Volontairement AUCUNE rubrique "rencontre" — ce module vend des objets, pas
+// des mises en relation entre personnes (déjà couvert, en plus sécurisé, par ÉRÉNIK).
+var CATEGORIES_ANNONCES = [
+  "Véhicules (voitures, motos, pièces)",
+  "Immobilier (vente, location)",
+  "Électronique & High-tech",
+  "Téléphones & Accessoires",
+  "Mode & Beauté",
+  "Maison, Meubles & Électroménager",
+  "Jardin & Bricolage",
+  "Loisirs, Sport & Hobbies",
+  "Matériel professionnel & Agricole",
+  "Enfants & Bébé",
+  "Animaux",
+  "Livres & Fournitures scolaires",
+  "Autres"
+];
+
+var LABELS_ETAT = { neuf: "Neuf", occasion: "Occasion, bon état", a_reparer: "Occasion, à réparer" };
+
+function fillCategoriesAnnonces(sel) {
+  if (!sel) return;
+  sel.innerHTML = "<option value=''>-- Choisir une catégorie --</option>";
+  CATEGORIES_ANNONCES.forEach(function(c) {
+    var o = document.createElement("option");
+    o.value = c; o.textContent = c;
+    sel.appendChild(o);
+  });
+}
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+  if (nom === "mesannonces") chargerMesAnnonces();
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  initDropdownsAnnonces();
+  if (session) {
+    _userId = session.user.id;
+    if (window.LokaliPhotos) {
+      _aPhotos = LokaliPhotos.creerUploader("aPhotos", 6);
+      document.getElementById("aPhotosZone").appendChild(_aPhotos.element);
+    }
+  } else {
+    document.querySelectorAll('.tab[data-tab="publier"], .tab[data-tab="mesannonces"]').forEach(function(t){ t.style.display = "none"; });
+  }
+  chargerStats();
+  chargerAnnonces();
+
+  // Route "carte de visite" : ?annonce=ID affiche uniquement cette annonce,
+  // exactement ce vers quoi pointent le lien direct et le QR Code.
+  var paramsAnnonce = new URLSearchParams(window.location.search);
+  var annonceCible = paramsAnnonce.get("annonce");
+  if (annonceCible) afficherAnnonceUnique(annonceCible);
+}
+
+async function afficherAnnonceUnique(annonceId) {
+  var r = await _supabase.from("lokt_annonces").select("*").eq("id", annonceId).maybeSingle();
+  var zone = document.getElementById("vueAnnonceUnique");
+  if (!r.data) {
+    zone.innerHTML = '<div class="empty">Cette annonce n\'existe plus.</div>';
+  } else {
+    var a = r.data;
+    var prixTxt = a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+    zone.innerHTML =
+      (a.etat === "neuf" ? '<span class="badge badge-neuf">Neuf</span> ' : '<span class="badge">' + (LABELS_ETAT[a.etat] || "Occasion") + '</span> ') +
+      (a.categorie ? '<span class="badge">' + a.categorie + '</span> ' : '') +
+      '<h1 style="margin-top:8px">' + a.titre + '</h1>' +
+      '<div class="annonce-prix" style="font-size:20px">' + prixTxt + '</div>' +
+      '<div class="subtitle">' + (a.ville || "Lieu non précisé") + '</div>' +
+      '<p style="font-size:14px;color:var(--gray);line-height:1.6;margin:10px 0">' + a.description + '</p>' +
+      (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(a.photos) : '') +
+      '<button class="btn" style="margin-top:14px" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'annonce\', \'' + a.id + '\', \'' + a.auteur_id + '\', \'' + a.titre.replace(/'/g,"\\'") + '\')">💬 Contacter le vendeur</button>';
+    injecterJsonLdAnnonce(a);
+  }
+  zone.style.display = "";
+  document.querySelector(".tabs").style.display = "none";
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+}
+
+// Données structurées Product/Offer (feuille de route section 2) — injectées
+// dynamiquement uniquement sur la vue d'une annonce précise, jamais dupliquées.
+function injecterJsonLdAnnonce(a) {
+  var ancien = document.getElementById("jsonLdAnnonce");
+  if (ancien) ancien.remove();
+  var data = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": a.titre,
+    "description": a.description,
+    "category": a.categorie || undefined,
+    "itemCondition": a.etat === "neuf" ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
+    "image": (a.photos && a.photos.length) ? a.photos[0] : undefined,
+    "offers": {
+      "@type": "Offer",
+      "price": a.prix || undefined,
+      "priceCurrency": "XOF",
+      "availability": "https://schema.org/InStock",
+      "areaServed": a.ville || undefined
+    }
+  };
+  var script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.id = "jsonLdAnnonce";
+  script.textContent = JSON.stringify(data);
+  document.head.appendChild(script);
+}
+
+function initDropdownsAnnonces() {
+  fillCategoriesAnnonces(document.getElementById("aCategorie"));
+  fillPaysSelect(document.getElementById("aPays"));
+  document.getElementById("aPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("aVille"));
+  });
+  document.getElementById("aVille").addEventListener("change", function() {
+    document.getElementById("aVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_annonces").select("*", { count: "exact", head: true }).eq("statut", "active");
+    document.getElementById("statAnnonces").textContent = (r.count || 0) + " annonces actives";
+  } catch(e) {}
+}
+
+async function publierAnnonce() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("aTitre").value.trim();
+  var description = document.getElementById("aDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  var villeVal = document.getElementById("aVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("aVilleAutre").value.trim();
+
+  var payload = {
+    auteur_id: _userId,
+    titre: titre,
+    description: description,
+    categorie: document.getElementById("aCategorie").value,
+    etat: document.getElementById("aEtat").value,
+    prix: parseInt(document.getElementById("aPrix").value) || null,
+    pays: document.getElementById("aPays").value,
+    ville: villeVal,
+    photos: _aPhotos ? _aPhotos.getPhotos() : [],
+    contact_whatsapp: document.getElementById("aContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("aContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("aContactEmail").value.trim() || null
+  };
+  if (_editionId) {
+    var upd = await _supabase.from("lokt_annonces").update(payload).eq("id", _editionId);
+    if (upd.error) { afficherMsg("publierMsg", "Erreur : " + upd.error.message, false); return; }
+    afficherMsg("publierMsg", "Modifications enregistrées ✅", true);
+    annulerEdition();
+    activerOnglet("mesAnnonces");
+    chargerMesAnnonces();
+    chargerAnnonces();
+    return;
+  }
+  payload.statut = "active";
+  var r = await _supabase.from("lokt_annonces").insert(payload).select().single();
+  if (r.error) { afficherMsg("publierMsg", "Erreur : " + r.error.message, false); return; }
+  await appliquerPremiumEnAttenteSurNouvelleAnnonce(r.data.id);
+  afficherMsg("publierMsg", "Annonce publiée ✅", true);
+  ["aTitre","aDescription","aPrix"].forEach(function(id){ document.getElementById(id).value = ""; });
+  activerOnglet("annonces");
+  chargerAnnonces();
+  chargerStats();
+}
+
+function modifierAnnonce(a) {
+  activerOnglet("publier");
+  _editionId = a.id;
+  document.getElementById("aTitre").value = a.titre || "";
+  document.getElementById("aDescription").value = a.description || "";
+  document.getElementById("aCategorie").value = a.categorie || "";
+  document.getElementById("aEtat").value = a.etat || "";
+  document.getElementById("aPrix").value = a.prix || "";
+  document.getElementById("aPays").value = a.pays || "";
+  fillVillesByPays(a.pays, document.getElementById("aVille"));
+  setTimeout(function(){ document.getElementById("aVille").value = a.ville || ""; }, 300);
+  document.getElementById("aContactWhatsapp").value = a.contact_whatsapp || "";
+  document.getElementById("aContactTelephone").value = a.contact_telephone || "";
+  document.getElementById("aContactEmail").value = a.contact_email || "";
+  var btn = document.querySelector('button[onclick="publierAnnonce()"]');
+  if (btn) btn.textContent = "Enregistrer les modifications";
+}
+
+function annulerEdition() {
+  _editionId = null;
+  ["aTitre","aDescription","aPrix"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("aContactWhatsapp").value = "";
+  document.getElementById("aContactTelephone").value = "";
+  document.getElementById("aContactEmail").value = "";
+  var btn = document.querySelector('button[onclick="publierAnnonce()"]');
+  if (btn) btn.textContent = "Publier l'annonce";
+}
+
+// Si l'utilisateur a débloqué le Premium par parrainage mais n'avait encore
+// aucune annonce active au moment du déblocage, on l'applique automatiquement
+// à la toute prochaine annonce qu'il publie (comme prévu dans la feuille de route).
+async function appliquerPremiumEnAttenteSurNouvelleAnnonce(nouvelleAnnonceId) {
+  try {
+    var p = await _supabase.from("lokt_parrainages").select("*").eq("user_id", _userId).eq("statut", "PREMIUM_DEBLOQUE").eq("premium_applique", false).maybeSingle();
+    if (!p.data) return;
+    var finPremium = new Date(Date.now() + 14 * 86400000).toISOString();
+    await _supabase.from("lokt_annonces").update({ est_premium: true, date_fin_premium: finPremium, boost_source: "PARRAINAGE" }).eq("id", nouvelleAnnonceId);
+    await _supabase.from("lokt_parrainages").update({ premium_applique: true }).eq("id", p.data.id);
+  } catch(e) {}
+}
+
+// Badge de fraîcheur visible (benchmark CoinAfrique) — distinct du filtre
+// fraîcheur déjà présent : ici, c'est l'affichage, pas le tri.
+function formaterFraicheur(dateStr) {
+  var diffHeures = (new Date() - new Date(dateStr)) / 3600000;
+  if (diffHeures < 24) return { texte: "🟢 Nouveau", nouveau: true };
+  var jours = Math.floor(diffHeures / 24);
+  if (jours < 30) return { texte: "il y a " + jours + " j", nouveau: false };
+  return { texte: "il y a " + Math.floor(jours / 30) + " mois", nouveau: false };
+}
+
+function formaterNumeroWa(numero) {
+  return (numero || "").replace(/[^0-9]/g, "");
+}
+
+function boutonsContactDirect(item) {
+  var boutons = "";
+  if (item.contact_whatsapp) boutons += '<a href="https://wa.me/' + formaterNumeroWa(item.contact_whatsapp) + '" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff">💬 WhatsApp</a> ';
+  if (item.contact_telephone) boutons += '<a href="tel:' + item.contact_telephone + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">📞 Appeler</a> ';
+  if (item.contact_email) boutons += '<a href="mailto:' + item.contact_email + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">✉️ Email</a> ';
+  return boutons;
+}
+
+async function chargerAnnonces() {
+  var el = document.getElementById("annoncesList");
+  var r = await _supabase.from("lokt_annonces").select("*").eq("statut", "active")
+    .order("est_premium", { ascending: false }).order("created_at", { ascending: false }).limit(40);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune annonce active pour le moment.</div>'; return; }
+
+  el.innerHTML = r.data.map(function(a){
+    var prixTxt = a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+    var lieu = a.ville || "Lieu non précisé";
+    var estPremiumActif = a.est_premium && a.date_fin_premium && new Date(a.date_fin_premium) > new Date();
+    var fraicheur = formaterFraicheur(a.created_at);
+    return '<div class="annonce-item" data-categorie="' + (a.categorie || "") + '" data-prix="' + (a.prix || "") + '" data-date="' + a.created_at + '"' + (estPremiumActif ? ' style="background:linear-gradient(135deg,rgba(249,115,22,.05),rgba(251,146,60,.02));border-radius:12px;padding:14px;margin-bottom:8px;border:1px solid rgba(249,115,22,.2)"' : '') + '>' +
+      (estPremiumActif ? '<span class="badge" style="background:linear-gradient(135deg,#F97316,#FB923C);color:#fff">⭐ Premium</span> ' : '') +
+      (fraicheur.nouveau ? '<span class="badge" style="background:rgba(5,150,105,.15);color:#059669">' + fraicheur.texte + '</span> ' : '') +
+      (a.etat === "neuf" ? '<span class="badge badge-neuf">Neuf</span> ' : '<span class="badge">' + (LABELS_ETAT[a.etat] || "Occasion") + '</span> ') +
+      (a.categorie ? '<span class="badge">' + a.categorie + '</span> ' : '') +
+      '<div class="annonce-title">' + a.titre + '</div>' +
+      '<div class="annonce-prix">' + prixTxt + '</div>' +
+      '<div class="annonce-meta">' + lieu + (fraicheur.nouveau ? '' : ' · ' + fraicheur.texte) + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + a.description.slice(0, 160) + (a.description.length > 160 ? '…' : '') + '</div>' +
+      (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(a.photos) : '') +
+      boutonsContactDirect(a) +
+      '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'annonce\', \'' + a.id + '\', \'' + a.auteur_id + '\', \'' + a.titre.replace(/'/g,"\\'") + '\')">💬 Contacter le vendeur</button>' +
+      '</div>';
+  }).join("");
+  construireChipsAnnonces();
+}
+
+function construireChipsAnnonces() {
+  var chipsWrap = document.getElementById("annoncesChips");
+  var options = CATEGORIES_ANNONCES.slice(0, 12);
+  chipsWrap.innerHTML = '<span class="filtre-chip active" data-val="">Tous</span>' +
+    options.map(function(c){ return '<span class="filtre-chip" data-val="' + c.replace(/"/g,'&quot;') + '">' + c + '</span>'; }).join("");
+  chipsWrap.querySelectorAll(".filtre-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      chipsWrap.querySelectorAll(".filtre-chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      _filtreCategorieAnnonces = chip.dataset.val;
+      appliquerFiltresAnnonces();
+    });
+  });
+
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      _filtreFraicheurAnnonces = btn.dataset.val;
+      appliquerFiltresAnnonces();
+    });
+  });
+}
+
+// ── Filtres avancés : prix min/max + fraîcheur (feuille de route, benchmark
+// CoinAfrique) — combinés avec le filtre de catégorie, tous appliqués ensemble. ──
+var _filtreCategorieAnnonces = "";
+var _filtreFraicheurAnnonces = "";
+
+function toggleFiltresAvances() {
+  var panel = document.getElementById("filtresAvancesPanel");
+  var fleche = document.getElementById("filtresAvancesFleche");
+  var ouvert = panel.style.display !== "none";
+  panel.style.display = ouvert ? "none" : "";
+  fleche.textContent = ouvert ? "▾" : "▴";
+}
+
+function appliquerFiltresAnnonces() {
+  var prixMin = parseFloat(document.getElementById("filtrePrixMin").value);
+  var prixMax = parseFloat(document.getElementById("filtrePrixMax").value);
+  var maintenant = new Date();
+  var seuilsHeures = { "24h": 24, "7j": 24 * 7, "30j": 24 * 30 };
+
+  var aucunVisible = true;
+  document.querySelectorAll("#annoncesList .annonce-item").forEach(function(it){
+    var visible = true;
+
+    if (_filtreCategorieAnnonces && it.dataset.categorie !== _filtreCategorieAnnonces) visible = false;
+
+    var prix = it.dataset.prix ? parseFloat(it.dataset.prix) : null;
+    if (!isNaN(prixMin) && (prix === null || prix < prixMin)) visible = false;
+    if (!isNaN(prixMax) && (prix === null || prix > prixMax)) visible = false;
+
+    if (_filtreFraicheurAnnonces && it.dataset.date) {
+      var diffHeures = (maintenant - new Date(it.dataset.date)) / 3600000;
+      if (diffHeures > seuilsHeures[_filtreFraicheurAnnonces]) visible = false;
+    }
+
+    it.style.display = visible ? "" : "none";
+    if (visible) aucunVisible = false;
+  });
+
+  var elVide = document.getElementById("annoncesVideFiltre");
+  if (elVide) elVide.remove();
+  if (aucunVisible) {
+    document.getElementById("annoncesList").insertAdjacentHTML("beforeend", '<div class="empty" id="annoncesVideFiltre">Aucune annonce ne correspond à ces filtres.</div>');
+  }
+}
+
+function reinitialiserFiltresAnnonces() {
+  document.getElementById("filtrePrixMin").value = "";
+  document.getElementById("filtrePrixMax").value = "";
+  _filtreFraicheurAnnonces = "";
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b, i){ b.classList.toggle("active", i === 0); });
+  appliquerFiltresAnnonces();
+}
+
+// ── Mes annonces : modifier le statut ou supprimer définitivement ──
+async function chargerMesAnnonces() {
+  if (!_userId) return;
+  var el = document.getElementById("mesAnnoncesList");
+  var r = await _supabase.from("lokt_annonces").select("*").eq("auteur_id", _userId).order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Tu n\'as encore publié aucune annonce.</div>'; return; }
+  _mesAnnoncesCache = {};
+  r.data.forEach(function(a){ _mesAnnoncesCache[a.id] = a; });
+
+  el.innerHTML = r.data.map(function(a){
+    var prixTxt = a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+    var estVendue = a.statut === "vendue";
+    var estRetiree = a.statut === "retiree";
+    var estPremiumActif = a.est_premium && a.date_fin_premium && new Date(a.date_fin_premium) > new Date();
+    return '<div class="annonce-item">' +
+      (estVendue ? '<span class="badge badge-vendue">Vendue</span> ' : (estRetiree ? '<span class="badge">Retirée</span> ' : '<span class="badge badge-neuf">Active</span> ')) +
+      (estPremiumActif ? '<span class="badge" style="background:linear-gradient(135deg,#F97316,#FB923C);color:#fff">⭐ Premium jusqu\'au ' + new Date(a.date_fin_premium).toLocaleDateString("fr-FR") + '</span> ' : '') +
+      '<div class="annonce-title">' + a.titre + '</div>' +
+      '<div class="annonce-prix">' + prixTxt + '</div>' +
+      '<div style="margin-top:8px">' +
+        '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="modifierAnnonce(_mesAnnoncesCache[\'' + a.id + '\'])">✏️ Modifier</button> ' +
+        (!estVendue ? '<button class="btn btn-sm" onclick="changerStatutAnnonce(\'' + a.id + '\',\'vendue\')">Marquer vendue</button> ' : '') +
+        (!estRetiree && !estVendue ? '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="changerStatutAnnonce(\'' + a.id + '\',\'retiree\')">Retirer</button> ' : '') +
+        (estRetiree ? '<button class="btn btn-sm" style="background:rgba(5,150,105,.15);color:#34D399" onclick="changerStatutAnnonce(\'' + a.id + '\',\'active\')">Republier</button> ' : '') +
+        '<button class="btn btn-sm" style="background:rgba(249,115,22,.1);color:var(--orange-txt)" onclick="ouvrirModalQR(\'' + a.id + '\',\'' + a.titre.replace(/'/g,"\\'") + '\')">📇 QR Code</button> ' +
+        (!estVendue && !estRetiree && !estPremiumActif ? '<button class="btn btn-sm" style="background:linear-gradient(135deg,#F97316,#FB923C);color:#fff" onclick="toggleBoostPanel(\'' + a.id + '\')">🚀 Booster (1000 FCFA/7j)</button> ' : '') +
+        '<button class="btn btn-sm" style="background:rgba(220,38,38,.1);color:#DC2626" onclick="supprimerAnnonce(\'' + a.id + '\')">Supprimer définitivement</button>' +
+      '</div>' +
+      '<div id="boostPanel-' + a.id + '"></div>' +
+      '</div>';
+  }).join("");
+}
+
+function ouvrirModalQR(annonceId, titre) {
+  document.getElementById("qrModalOverlay").style.display = "flex";
+  var url = window.location.origin + "/lokali-annonces.html?annonce=" + annonceId;
+  if (window.LokaliQR) {
+    LokaliQR.genererDansElement("qrModalZone", url, {
+      label: titre,
+      nomFichier: "lokali-annonce-" + annonceId.slice(0, 8)
+    });
+  }
+}
+
+function fermerModalQR() {
+  document.getElementById("qrModalOverlay").style.display = "none";
+}
+
+async function changerStatutAnnonce(id, statut) {
+  var r = await _supabase.from("lokt_annonces").update({ statut: statut }).eq("id", id);
+  if (r.error) { afficherMsg("mesAnnoncesMsg", "Erreur : " + r.error.message, false); return; }
+  chargerMesAnnonces();
+  chargerAnnonces();
+  chargerStats();
+}
+
+async function supprimerAnnonce(id) {
+  if (!confirm("Supprimer définitivement cette annonce ? Cette action est irréversible.")) return;
+  var r = await _supabase.from("lokt_annonces").delete().eq("id", id);
+  if (r.error) { afficherMsg("mesAnnoncesMsg", "Erreur : " + r.error.message, false); return; }
+  chargerMesAnnonces();
+  chargerAnnonces();
+  chargerStats();
+}
+
+// ── Monétisation : boost payant "À la Une" (feuille de route section 9) ──
+// Complémentaire au parrainage (section 5), jamais concurrent : deux voies
+// séparées vers le même badge Premium, l'une gratuite mais exigeante, l'autre
+// payante et immédiate — cumulables, jamais confondues dans les données
+// (boost_source distingue "PARRAINAGE" de "PAIEMENT").
+function toggleBoostPanel(annonceId) {
+  var zone = document.getElementById("boostPanel-" + annonceId);
+  if (zone.innerHTML) { zone.innerHTML = ""; return; }
+  zone.innerHTML =
+    '<div class="boost-panel">' +
+      '<div style="font-size:12.5px;font-weight:700;margin-bottom:8px">🚀 Mettre cette annonce À la Une — 1 000 FCFA pour 7 jours</div>' +
+      '<div style="font-size:11.5px;color:var(--gray);margin-bottom:10px">Étape 1 — Envoie exactement <b>1 000 FCFA</b> vers l\'un de ces numéros, puis indique la référence reçue :</div>' +
+      '<div style="font-size:12px;background:rgba(15,23,42,.04);border-radius:8px;padding:8px 10px;margin-bottom:10px;line-height:1.6">' +
+        '📱 Wave : <b>+225 07 07 86 91 78</b><br>' +
+        '📱 Orange Money : <b>+225 07 07 86 91 78</b><br>' +
+        '📱 MTN Mobile Money : <b>+225 05 74 12 55 36</b>' +
+      '</div>' +
+      '<select id="boostMoyen-' + annonceId + '">' +
+        '<option value="Wave">Wave</option>' +
+        '<option value="Orange Money">Orange Money</option>' +
+        '<option value="MTN Mobile Money">MTN Mobile Money</option>' +
+        '<option value="Moov Money">Moov Money</option>' +
+      '</select>' +
+      '<input id="boostRef-' + annonceId + '" placeholder="Référence / ID de la transaction reçu par SMS">' +
+      '<button class="btn btn-sm" style="width:100%;margin:0" onclick="soumettreBoost(\'' + annonceId + '\')">Envoyer ma preuve de paiement</button>' +
+    '</div>';
+}
+
+async function soumettreBoost(annonceId) {
+  var moyen = document.getElementById("boostMoyen-" + annonceId).value;
+  var ref = document.getElementById("boostRef-" + annonceId).value.trim();
+  if (!ref) { alert("Merci d'indiquer la référence de la transaction."); return; }
+  var r = await _supabase.from("lokt_boosts_annonces").insert({
+    annonce_id: annonceId, auteur_id: _userId, operateur: moyen, reference_paiement: ref, montant: 1000, statut: "en_attente"
+  });
+  if (r.error) { alert("Erreur : " + r.error.message); return; }
+  document.getElementById("boostPanel-" + annonceId).innerHTML =
+    '<div class="msg msg-ok">⏳ Preuve envoyée. Ton annonce sera mise en avant dès validation (généralement sous quelques heures).</div>';
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

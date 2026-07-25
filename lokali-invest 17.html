@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Invest — Connecter projets et investisseurs</title>
+<meta name="description" content="Présentez votre projet à des investisseurs ou découvrez des opportunités d'investissement en Afrique francophone, gratuitement sur LOKALI.">
+<link rel="canonical" href="https://mylokali.com/lokali-invest.html">
+<meta property="og:title" content="LOKALI Invest — Connecter projets et investisseurs">
+<meta property="og:description" content="Présentez votre projet à des investisseurs ou découvrez des opportunités d'investissement en Afrique francophone, gratuitement sur LOKALI.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mylokali.com/lokali-invest.html">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.disclaimer{font-size:11px;color:var(--gray);background:rgba(15,23,42,.05);border:1px solid var(--border);
+  border-radius:10px;padding:10px 12px;margin-bottom:16px;line-height:1.4}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:12px 10px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+.tab.active{color:var(--orange-txt);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.item{border-bottom:1px solid var(--border);padding:14px 0}
+.item:last-child{border-bottom:none}
+.item-title{font-weight:700;font-size:15px}
+.item-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(202,138,4,.2);color:#FACC15}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.filtre-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filtre-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:12px 16px;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.filtre-chip.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.filtres-avances{margin-bottom:14px}
+.filtres-avances-toggle{font-size:12.5px;font-weight:700;color:var(--gray);cursor:pointer;padding:8px 2px;user-select:none}
+.filtres-avances-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:6px}
+.fraicheur-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.fraicheur-btn{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;
+  background:rgba(15,23,42,.04);border:1px solid var(--border);color:var(--gray);min-height:36px;display:inline-flex;align-items:center}
+.fraicheur-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.mode-switch{display:flex;gap:8px;background:var(--dark3);border-radius:14px;padding:4px;margin-bottom:18px}
+.mode-btn{flex:1;text-align:center;padding:12px 8px;border-radius:10px;font-size:13.5px;font-weight:800;color:var(--gray);cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px}
+.mode-btn.active{background:var(--card);color:var(--orange-txt);box-shadow:0 2px 8px rgba(15,23,42,.08)}
+.besoin-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:10px 14px;cursor:pointer;white-space:nowrap;min-height:40px;display:inline-flex;align-items:center;gap:4px}
+.besoin-chip.selected{background:var(--orange);border-color:var(--orange);color:#fff}
+.besoins-picker{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.badge-besoin{display:inline-block;font-size:10.5px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(5,150,105,.15);color:#059669;margin:2px 4px 2px 0}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>INVEST</b></span>
+  <a class="nav-back" href="/lokali-hub.html">‹ Opportunités</a>
+</nav>
+
+<div class="wrap">
+  <h1 id="pageTitle">Projets & investisseurs</h1>
+  <div class="subtitle" id="pageSubtitle">Mise en relation entre porteurs de projets et investisseurs</div>
+  <div class="disclaimer" id="pageDisclaimer">ℹ️ LOKALI met en relation les porteurs de projets et les investisseurs intéressés. LOKALI n'intervient pas dans les transactions financières et ne garantit aucun investissement.</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statInvest">…</span>
+    <span class="stat-pill" id="statStartups" style="display:none">…</span>
+  </div>
+
+  <div class="mode-switch" id="modeSwitch">
+    <div class="mode-btn active" data-mode="investissement">💰 Investissement</div>
+    <div class="mode-btn" data-mode="startups">🚀 Startups</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour publier ou manifester un intérêt.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="mode-investissement" class="mode-content">
+
+  <div class="tabs">
+    <div class="tab active" data-tab="liste">Opportunités</div>
+    <div class="tab" data-tab="publier">Publier mon projet</div>
+  </div>
+
+  <div id="tab-liste" class="tab-content">
+    <div class="filtre-chips" id="listeChips"></div>
+
+    <div class="filtres-avances">
+      <div class="filtres-avances-toggle" onclick="toggleFiltresAvances()">🔎 Filtres avancés (montant, fraîcheur) <span id="filtresAvancesFleche">▾</span></div>
+      <div class="filtres-avances-panel" id="filtresAvancesPanel" style="display:none">
+        <div class="row2">
+          <div><label>Montant recherché min (FCFA)</label><input type="number" id="filtrePrixMin" placeholder="0"></div>
+          <div><label>Montant recherché max (FCFA)</label><input type="number" id="filtrePrixMax" placeholder="Aucun maximum"></div>
+        </div>
+        <label>Fraîcheur de l'opportunité</label>
+        <div class="fraicheur-btns" id="fraicheurBtns">
+          <span class="fraicheur-btn active" data-val="">Tous</span>
+          <span class="fraicheur-btn" data-val="24h">24h</span>
+          <span class="fraicheur-btn" data-val="7j">7 jours</span>
+          <span class="fraicheur-btn" data-val="30j">30 jours</span>
+        </div>
+        <button class="btn btn-sm" style="width:100%;margin-top:10px" onclick="appliquerFiltresInvest()">Appliquer les filtres</button>
+        <button class="btn btn-sm" style="width:100%;margin-top:6px;background:rgba(15,23,42,.08);color:var(--white)" onclick="reinitialiserFiltresInvest()">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div id="liste" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="card">
+      <h3>Publier mon projet</h3>
+      <label>Titre</label>
+      <input id="iTitre" placeholder="Ex: Plateforme agricole connectée">
+      <label>Description</label>
+      <textarea id="iDescription" placeholder="Présente ton projet, ta vision, ton équipe..."></textarea>
+      <div class="row2">
+        <div><label>Secteur</label><select id="iSecteur"></select></div>
+        <div>
+          <label>Avancement</label>
+          <select id="iAvancement">
+            <option value="idee">Idée</option>
+            <option value="prototype">Prototype</option>
+            <option value="lance">Lancé</option>
+            <option value="en_croissance">En croissance</option>
+          </select>
+        </div>
+      </div>
+      <label>Montant recherché (FCFA)</label>
+      <input id="iMontant" type="number" placeholder="Ex: 5000000">
+      <label>Modèle économique</label>
+      <textarea id="iModele" placeholder="Comment le projet génère-t-il des revenus ?"></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="iPays"></select></div>
+        <div><label>Ville</label><select id="iVille"></select></div>
+      </div>
+      <div id="iVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="iVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <label>Business plan / pitch deck (PDF, optionnel)</label>
+      <input type="file" id="iDocumentFichier" accept="application/pdf,image/*">
+      <div id="iPhotosZone"></div>
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Comment veux-tu être contacté ? (optionnel, choisis librement)</label>
+      <label>WhatsApp</label>
+      <input id="iContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label>
+      <input id="iContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label>
+      <input id="iContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <button class="btn" onclick="publier()">Publier mon projet</button>
+    </div>
+  </div>
+
+  </div>
+  <!-- fin #mode-investissement -->
+
+  <div id="mode-startups" class="mode-content" style="display:none">
+
+  <div class="tabs">
+    <div class="tab active" data-stab="liste">Startups</div>
+    <div class="tab" data-stab="publier">Présenter ma startup</div>
+  </div>
+
+  <div id="stab-liste" class="tab-content">
+    <div class="filtre-chips" id="startupsChips"></div>
+    <div id="listeStartups" class="card"><div class="empty">Chargement...</div></div>
+  </div>
+
+  <div id="stab-publier" class="tab-content" style="display:none">
+    <div id="publierStartupMsg"></div>
+    <div class="card">
+      <h3>Présenter ma startup</h3>
+      <label>Nom du projet</label>
+      <input id="sNom" placeholder="Ex: AgroConnect">
+      <label>Porteur(s) du projet</label>
+      <input id="sPorteur" placeholder="Ton nom ou celui de l'équipe">
+      <label>Pitch court (une phrase percutante)</label>
+      <input id="sPitch" placeholder="Ex: La solution qui connecte agriculteurs et acheteurs en temps réel">
+      <label>Description complète</label>
+      <textarea id="sDescription" placeholder="Le problème résolu, la solution, l'équipe, la vision..."></textarea>
+      <div class="row2">
+        <div><label>Secteur</label><select id="sSecteur"></select></div>
+        <div>
+          <label>Avancement</label>
+          <select id="sAvancement">
+            <option value="idee">Idée</option>
+            <option value="prototype">Prototype</option>
+            <option value="lance">Lancé</option>
+            <option value="en_croissance">En croissance</option>
+          </select>
+        </div>
+      </div>
+      <label>De quoi as-tu besoin ? (plusieurs choix possibles)</label>
+      <div class="besoins-picker" id="sBesoinsPicker">
+        <span class="besoin-chip" data-val="financier">💰 Soutien financier</span>
+        <span class="besoin-chip" data-val="mentorat">🧭 Mentorat</span>
+        <span class="besoin-chip" data-val="technique">🛠️ Partenaire technique</span>
+        <span class="besoin-chip" data-val="visibilite">📣 Visibilité</span>
+      </div>
+      <div class="row2">
+        <div><label>Pays</label><select id="sPays"></select></div>
+        <div><label>Ville</label><select id="sVille"></select></div>
+      </div>
+      <div id="sVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="sVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <label>Pitch deck / document (PDF, optionnel)</label>
+      <input type="file" id="sDocumentFichier" accept="application/pdf,image/*">
+      <div id="sPhotosZone"></div>
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Comment veux-tu être contacté ? (optionnel, choisis librement)</label>
+      <label>WhatsApp</label>
+      <input id="sContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label>
+      <input id="sContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label>
+      <input id="sContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <button class="btn" onclick="publierStartup()">Présenter ma startup</button>
+    </div>
+  </div>
+
+  </div>
+  <!-- fin #mode-startups -->
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _iPhotos = null;
+
+var LABELS_AVANCEMENT = { idee: "Idée", prototype: "Prototype", lance: "Lancé", en_croissance: "En croissance" };
+var LABELS_BESOIN = { financier: "💰 Soutien financier", mentorat: "🧭 Mentorat", technique: "🛠️ Partenaire technique", visibilite: "📣 Visibilité" };
+var _sPhotos = null;
+var _sBesoinsChoisis = [];
+var _filtreSecteurStartups = "";
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function activerOngletStartup(nom) {
+  document.querySelectorAll("[data-stab]").forEach(function(t){ t.classList.toggle("active", t.dataset.stab === nom); });
+  document.getElementById("stab-liste").style.display = (nom === "liste") ? "" : "none";
+  document.getElementById("stab-publier").style.display = (nom === "publier") ? "" : "none";
+}
+document.querySelectorAll("[data-stab]").forEach(function(t){
+  t.addEventListener("click", function(){ activerOngletStartup(t.dataset.stab); });
+});
+
+var _startupsCharges = false;
+var _editionIdInvest = null;
+var _editionDocumentUrlInvest = null;
+var _investCache = {};
+var _editionIdStartup = null;
+var _editionDocumentUrlStartup = null;
+var _startupsCache = {};
+function activerMode(mode) {
+  document.querySelectorAll(".mode-btn").forEach(function(b){ b.classList.toggle("active", b.dataset.mode === mode); });
+  document.getElementById("mode-investissement").style.display = (mode === "investissement") ? "" : "none";
+  document.getElementById("mode-startups").style.display = (mode === "startups") ? "" : "none";
+  document.getElementById("statInvest").style.display = (mode === "investissement") ? "" : "none";
+  document.getElementById("statStartups").style.display = (mode === "startups") ? "" : "none";
+  if (mode === "investissement") {
+    document.getElementById("pageTitle").textContent = "Projets & investisseurs";
+    document.getElementById("pageSubtitle").textContent = "Mise en relation entre porteurs de projets et investisseurs";
+    document.getElementById("pageDisclaimer").innerHTML = "ℹ️ LOKALI met en relation les porteurs de projets et les investisseurs intéressés. LOKALI n'intervient pas dans les transactions financières et ne garantit aucun investissement.";
+  } else {
+    document.getElementById("pageTitle").textContent = "Startups & Innovations";
+    document.getElementById("pageSubtitle").textContent = "Présente ton innovation au monde et trouve du soutien";
+    document.getElementById("pageDisclaimer").innerHTML = "ℹ️ LOKALI met en avant les startups et innovations africaines. LOKALI n'intervient pas dans les accords conclus entre porteurs de projets et soutiens.";
+    if (!_startupsCharges) { chargerStartups(); chargerStatsStartups(); _startupsCharges = true; }
+  }
+}
+document.querySelectorAll(".mode-btn").forEach(function(b){
+  b.addEventListener("click", function(){ activerMode(b.dataset.mode); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) {
+    _userId = session.user.id;
+    initDropdownsInvest();
+    if (window.LokaliPhotos) {
+      _iPhotos = LokaliPhotos.creerUploader("iPhotos", 5);
+      document.getElementById("iPhotosZone").appendChild(_iPhotos.element);
+      _sPhotos = LokaliPhotos.creerUploader("sPhotos", 3);
+      document.getElementById("sPhotosZone").appendChild(_sPhotos.element);
+    }
+    initDropdownsStartups();
+    initBesoinsPicker();
+  } else {
+    document.getElementById("authGate").style.display = "";
+    document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+    document.querySelectorAll(".tab").forEach(function(t){ t.style.display = "none"; });
+    return;
+  }
+  chargerStats();
+  chargerListe();
+}
+
+function initDropdownsInvest() {
+  fillSecteursSelect(document.getElementById("iSecteur"));
+  fillPaysSelect(document.getElementById("iPays"));
+  document.getElementById("iPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("iVille"));
+  });
+  document.getElementById("iVille").addEventListener("change", function() {
+    document.getElementById("iVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+function initDropdownsStartups() {
+  fillSecteursSelect(document.getElementById("sSecteur"));
+  fillPaysSelect(document.getElementById("sPays"));
+  document.getElementById("sPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("sVille"));
+  });
+  document.getElementById("sVille").addEventListener("change", function() {
+    document.getElementById("sVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+function initBesoinsPicker() {
+  document.querySelectorAll("#sBesoinsPicker .besoin-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      var val = chip.dataset.val;
+      var idx = _sBesoinsChoisis.indexOf(val);
+      if (idx === -1) { _sBesoinsChoisis.push(val); chip.classList.add("selected"); }
+      else { _sBesoinsChoisis.splice(idx, 1); chip.classList.remove("selected"); }
+    });
+  });
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_opportunites_investissement").select("*", { count: "exact", head: true }).eq("statut", "ouvert");
+    document.getElementById("statInvest").textContent = (r.count || 0) + " opportunités ouvertes";
+  } catch(e) {}
+}
+
+async function publier() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("iTitre").value.trim();
+  var description = document.getElementById("iDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  var villeVal = document.getElementById("iVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("iVilleAutre").value.trim();
+
+  var documentUrl = _editionIdInvest ? _editionDocumentUrlInvest : null;
+  var fichier = document.getElementById("iDocumentFichier").files[0];
+  if (fichier) {
+    var chemin = _userId + "/invest-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (up.error) { afficherMsg("publierMsg", "Erreur upload : " + up.error.message, false); return; }
+    documentUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+
+  var payload = {
+    auteur_id: _userId,
+    titre: titre,
+    description: description,
+    secteur: document.getElementById("iSecteur").value,
+    avancement: document.getElementById("iAvancement").value,
+    montant_recherche: parseInt(document.getElementById("iMontant").value) || null,
+    modele_economique: document.getElementById("iModele").value.trim(),
+    pays: document.getElementById("iPays").value,
+    ville: villeVal,
+    document_url: documentUrl,
+    contact_whatsapp: document.getElementById("iContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("iContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("iContactEmail").value.trim() || null,
+    photos: _iPhotos ? _iPhotos.getPhotos() : []
+  };
+  var r;
+  if (_editionIdInvest) {
+    r = await _supabase.from("lokt_opportunites_investissement").update(payload).eq("id", _editionIdInvest);
+  } else {
+    r = await _supabase.from("lokt_opportunites_investissement").insert(payload);
+  }
+  if (r.error) { afficherMsg("publierMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("publierMsg", _editionIdInvest ? "Modifications enregistrées ✅" : "Projet publié ✅", true);
+  annulerEditionInvest();
+  activerOnglet("liste");
+  chargerListe();
+  chargerStats();
+}
+
+function modifierInvest(p) {
+  activerOnglet("publier");
+  _editionIdInvest = p.id;
+  _editionDocumentUrlInvest = p.document_url || null;
+  document.getElementById("iTitre").value = p.titre || "";
+  document.getElementById("iDescription").value = p.description || "";
+  document.getElementById("iSecteur").value = p.secteur || "";
+  document.getElementById("iAvancement").value = p.avancement || "";
+  document.getElementById("iMontant").value = p.montant_recherche || "";
+  document.getElementById("iModele").value = p.modele_economique || "";
+  document.getElementById("iPays").value = p.pays || "";
+  fillVillesByPays(p.pays, document.getElementById("iVille"));
+  setTimeout(function(){ document.getElementById("iVille").value = p.ville || ""; }, 300);
+  document.getElementById("iContactWhatsapp").value = p.contact_whatsapp || "";
+  document.getElementById("iContactTelephone").value = p.contact_telephone || "";
+  document.getElementById("iContactEmail").value = p.contact_email || "";
+  var btn = document.querySelector('button[onclick="publier()"]');
+  if (btn) btn.textContent = "Enregistrer les modifications";
+}
+
+function annulerEditionInvest() {
+  _editionIdInvest = null;
+  _editionDocumentUrlInvest = null;
+  ["iTitre","iDescription","iMontant","iModele"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("iContactWhatsapp").value = "";
+  document.getElementById("iContactTelephone").value = "";
+  document.getElementById("iContactEmail").value = "";
+  document.getElementById("iDocumentFichier").value = "";
+  var btn = document.querySelector('button[onclick="publier()"]');
+  if (btn) btn.textContent = "Publier mon projet";
+}
+
+function formaterNumeroWa(numero) {
+  return (numero || "").replace(/[^0-9]/g, "");
+}
+
+function boutonsContactDirect(item) {
+  var boutons = "";
+  if (item.contact_whatsapp) boutons += '<a href="https://wa.me/' + formaterNumeroWa(item.contact_whatsapp) + '" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff">💬 WhatsApp</a> ';
+  if (item.contact_telephone) boutons += '<a href="tel:' + item.contact_telephone + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">📞 Appeler</a> ';
+  if (item.contact_email) boutons += '<a href="mailto:' + item.contact_email + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">✉️ Email</a> ';
+  return boutons;
+}
+
+async function chargerListe() {
+  var el = document.getElementById("liste");
+  var r = await _supabase.from("lokt_opportunites_investissement").select("*").eq("statut", "ouvert").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune opportunité ouverte pour le moment.</div>'; return; }
+  _investCache = {};
+  r.data.forEach(function(p){ _investCache[p.id] = p; });
+
+  el.innerHTML = r.data.map(function(p){
+    var montant = p.montant_recherche ? p.montant_recherche.toLocaleString("fr-FR") + " FCFA recherchés" : "Montant non précisé";
+    var estAuteur = _userId && p.auteur_id === _userId;
+    return '<div class="item" data-secteur="' + (p.secteur || "") + '" data-montant="' + (p.montant_recherche || "") + '" data-date="' + p.created_at + '">' +
+      '<span class="badge">' + (LABELS_AVANCEMENT[p.avancement] || p.avancement) + '</span> ' +
+      (p.secteur ? '<span class="badge">' + p.secteur + '</span> ' : '') +
+      '<div class="item-title">' + p.titre + '</div>' +
+      '<div class="item-meta">' + (p.ville || "Lieu non précisé") + ' · ' + montant + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + p.description.slice(0, 160) + (p.description.length > 160 ? '…' : '') + '</div>' +
+      (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(p.photos) : '') +
+      (p.document_url ? '<a href="' + p.document_url + '" target="_blank" style="font-size:12px;color:var(--orange2)">📎 Business plan →</a><br>' : '') +
+      (estAuteur
+        ? '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="modifierInvest(_investCache[\'' + p.id + '\'])">✏️ Modifier</button>'
+        : boutonsContactDirect(p) + '<button class="btn btn-sm" onclick="manifesterInteret(\'' + p.id + '\')">Je suis intéressé</button>') +
+      '</div>';
+  }).join("");
+  construireChipsInvest();
+}
+
+function construireChipsInvest() {
+  var select = document.getElementById("iSecteur");
+  var chipsWrap = document.getElementById("listeChips");
+  if (!select || !chipsWrap || !select.options.length) return;
+  var options = Array.prototype.slice.call(select.options).filter(function(o){ return o.value; }).slice(0, 12);
+  if (!options.length) return;
+  chipsWrap.innerHTML = '<span class="filtre-chip active" data-val="">Tous</span>' +
+    options.map(function(o){ return '<span class="filtre-chip" data-val="' + o.value.replace(/"/g,'&quot;') + '">' + o.textContent + '</span>'; }).join("");
+  chipsWrap.querySelectorAll(".filtre-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      chipsWrap.querySelectorAll(".filtre-chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      _filtreSecteurInvest = chip.dataset.val;
+      appliquerFiltresInvest();
+    });
+  });
+
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      _filtreFraicheurInvest = btn.dataset.val;
+      appliquerFiltresInvest();
+    });
+  });
+}
+
+// ── Filtres avancés : montant recherché min/max + fraîcheur ──
+var _filtreSecteurInvest = "";
+var _filtreFraicheurInvest = "";
+
+function toggleFiltresAvances() {
+  var panel = document.getElementById("filtresAvancesPanel");
+  var fleche = document.getElementById("filtresAvancesFleche");
+  var ouvert = panel.style.display !== "none";
+  panel.style.display = ouvert ? "none" : "";
+  fleche.textContent = ouvert ? "▾" : "▴";
+}
+
+function appliquerFiltresInvest() {
+  var filtreMin = parseFloat(document.getElementById("filtrePrixMin").value);
+  var filtreMax = parseFloat(document.getElementById("filtrePrixMax").value);
+  var maintenant = new Date();
+  var seuilsHeures = { "24h": 24, "7j": 24 * 7, "30j": 24 * 30 };
+
+  var items = document.querySelectorAll("#liste .item");
+  var aucunVisible = true;
+  items.forEach(function(it){
+    var visible = true;
+    if (_filtreSecteurInvest && it.dataset.secteur !== _filtreSecteurInvest) visible = false;
+
+    var montant = it.dataset.montant ? parseFloat(it.dataset.montant) : null;
+    if (!isNaN(filtreMin) && (montant === null || montant < filtreMin)) visible = false;
+    if (!isNaN(filtreMax) && (montant === null || montant > filtreMax)) visible = false;
+
+    if (_filtreFraicheurInvest && it.dataset.date) {
+      var diffHeures = (maintenant - new Date(it.dataset.date)) / 3600000;
+      if (diffHeures > seuilsHeures[_filtreFraicheurInvest]) visible = false;
+    }
+
+    it.style.display = visible ? "" : "none";
+    if (visible) aucunVisible = false;
+  });
+
+  var elVide = document.getElementById("listeVideFiltre");
+  if (elVide) elVide.remove();
+  if (aucunVisible && items.length) {
+    document.getElementById("liste").insertAdjacentHTML("beforeend", '<div class="empty" id="listeVideFiltre">Aucune opportunité ne correspond à ces filtres.</div>');
+  }
+}
+
+function reinitialiserFiltresInvest() {
+  document.getElementById("filtrePrixMin").value = "";
+  document.getElementById("filtrePrixMax").value = "";
+  _filtreFraicheurInvest = "";
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b, i){ b.classList.toggle("active", i === 0); });
+  appliquerFiltresInvest();
+}
+
+async function publierStartup() {
+  if (!_userId) { afficherMsg("publierStartupMsg", "Connecte-toi d'abord.", false); return; }
+  var nom = document.getElementById("sNom").value.trim();
+  var description = document.getElementById("sDescription").value.trim();
+  if (!nom || !description) { afficherMsg("publierStartupMsg", "Le nom du projet et la description sont obligatoires.", false); return; }
+  var villeVal = document.getElementById("sVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("sVilleAutre").value.trim();
+
+  var documentUrl = _editionIdStartup ? _editionDocumentUrlStartup : null;
+  var fichier = document.getElementById("sDocumentFichier").files[0];
+  if (fichier) {
+    var chemin = _userId + "/startup-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (up.error) { afficherMsg("publierStartupMsg", "Erreur upload : " + up.error.message, false); return; }
+    documentUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+
+  var payload = {
+    auteur_id: _userId,
+    nom_projet: nom,
+    porteur: document.getElementById("sPorteur").value.trim(),
+    pitch: document.getElementById("sPitch").value.trim(),
+    description: description,
+    secteur: document.getElementById("sSecteur").value,
+    avancement: document.getElementById("sAvancement").value,
+    besoins: _sBesoinsChoisis.slice(),
+    pays: document.getElementById("sPays").value,
+    ville: villeVal,
+    document_url: documentUrl,
+    contact_whatsapp: document.getElementById("sContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("sContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("sContactEmail").value.trim() || null,
+    photos: _sPhotos ? _sPhotos.getPhotos() : []
+  };
+  var r;
+  if (_editionIdStartup) {
+    r = await _supabase.from("lokt_startups").update(payload).eq("id", _editionIdStartup);
+  } else {
+    r = await _supabase.from("lokt_startups").insert(payload);
+  }
+  if (r.error) { afficherMsg("publierStartupMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("publierStartupMsg", _editionIdStartup ? "Modifications enregistrées ✅" : "Startup présentée ✅", true);
+  annulerEditionStartup();
+  activerOngletStartup("liste");
+  chargerStartups();
+  chargerStatsStartups();
+}
+
+function modifierStartup(s) {
+  activerOngletStartup("publier");
+  _editionIdStartup = s.id;
+  _editionDocumentUrlStartup = s.document_url || null;
+  document.getElementById("sNom").value = s.nom_projet || "";
+  document.getElementById("sPorteur").value = s.porteur || "";
+  document.getElementById("sPitch").value = s.pitch || "";
+  document.getElementById("sDescription").value = s.description || "";
+  document.getElementById("sSecteur").value = s.secteur || "";
+  document.getElementById("sAvancement").value = s.avancement || "";
+  document.getElementById("sPays").value = s.pays || "";
+  fillVillesByPays(s.pays, document.getElementById("sVille"));
+  setTimeout(function(){ document.getElementById("sVille").value = s.ville || ""; }, 300);
+  document.getElementById("sContactWhatsapp").value = s.contact_whatsapp || "";
+  document.getElementById("sContactTelephone").value = s.contact_telephone || "";
+  document.getElementById("sContactEmail").value = s.contact_email || "";
+  _sBesoinsChoisis = (s.besoins || []).slice();
+  document.querySelectorAll("#sBesoinsPicker .besoin-chip").forEach(function(c){
+    c.classList.toggle("selected", _sBesoinsChoisis.indexOf(c.dataset.val) > -1);
+  });
+  var btn = document.querySelector('button[onclick="publierStartup()"]');
+  if (btn) btn.textContent = "Enregistrer les modifications";
+}
+
+function annulerEditionStartup() {
+  _editionIdStartup = null;
+  _editionDocumentUrlStartup = null;
+  ["sNom","sPorteur","sPitch","sDescription"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("sContactWhatsapp").value = "";
+  document.getElementById("sContactTelephone").value = "";
+  document.getElementById("sContactEmail").value = "";
+  document.getElementById("sDocumentFichier").value = "";
+  _sBesoinsChoisis = [];
+  document.querySelectorAll("#sBesoinsPicker .besoin-chip").forEach(function(c){ c.classList.remove("selected"); });
+  var btn = document.querySelector('button[onclick="publierStartup()"]');
+  if (btn) btn.textContent = "Présenter ma startup";
+}
+
+async function chargerStatsStartups() {
+  try {
+    var r = await _supabase.from("lokt_startups").select("*", { count: "exact", head: true }).eq("statut", "actif");
+    document.getElementById("statStartups").textContent = (r.count || 0) + " startups présentées";
+  } catch(e) {}
+}
+
+async function chargerStartups() {
+  var el = document.getElementById("listeStartups");
+  var r = await _supabase.from("lokt_startups").select("*").eq("statut", "actif").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune startup présentée pour le moment. Sois le premier !</div>'; return; }
+  _startupsCache = {};
+  r.data.forEach(function(s){ _startupsCache[s.id] = s; });
+
+  el.innerHTML = r.data.map(function(s){
+    var besoinsHtml = (s.besoins || []).map(function(b){ return '<span class="badge-besoin">' + (LABELS_BESOIN[b] || b) + '</span>'; }).join("");
+    var estAuteur = _userId && s.auteur_id === _userId;
+    return '<div class="item" data-secteur="' + (s.secteur || "") + '">' +
+      '<span class="badge">' + (LABELS_AVANCEMENT[s.avancement] || s.avancement) + '</span> ' +
+      (s.secteur ? '<span class="badge">' + s.secteur + '</span> ' : '') +
+      '<div class="item-title">' + s.nom_projet + '</div>' +
+      '<div class="item-meta">' + (s.porteur ? s.porteur + " · " : "") + (s.ville || "Lieu non précisé") + '</div>' +
+      (s.pitch ? '<div style="font-weight:700;font-size:13.5px;margin-bottom:6px">' + s.pitch + '</div>' : '') +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + s.description.slice(0, 160) + (s.description.length > 160 ? '…' : '') + '</div>' +
+      (besoinsHtml ? '<div style="margin-bottom:8px">' + besoinsHtml + '</div>' : '') +
+      (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(s.photos) : '') +
+      (s.document_url ? '<a href="' + s.document_url + '" target="_blank" style="font-size:12px;color:var(--orange2)">📎 Pitch deck →</a><br>' : '') +
+      (estAuteur
+        ? '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="modifierStartup(_startupsCache[\'' + s.id + '\'])">✏️ Modifier</button>'
+        : boutonsContactDirect(s) + '<button class="btn btn-sm" onclick="soutenirStartup(\'' + s.id + '\')">🤝 Je veux soutenir ce projet</button>') +
+      '</div>';
+  }).join("");
+  construireChipsStartups();
+}
+
+function construireChipsStartups() {
+  var select = document.getElementById("sSecteur");
+  var chipsWrap = document.getElementById("startupsChips");
+  if (!select || !chipsWrap || !select.options.length) return;
+  var options = Array.prototype.slice.call(select.options).filter(function(o){ return o.value; }).slice(0, 12);
+  if (!options.length) return;
+  chipsWrap.innerHTML = '<span class="filtre-chip active" data-val="">Tous</span>' +
+    options.map(function(o){ return '<span class="filtre-chip" data-val="' + o.value.replace(/"/g,'&quot;') + '">' + o.textContent + '</span>'; }).join("");
+  chipsWrap.querySelectorAll(".filtre-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      chipsWrap.querySelectorAll(".filtre-chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      _filtreSecteurStartups = chip.dataset.val;
+      var items = document.querySelectorAll("#listeStartups .item");
+      var aucunVisible = true;
+      items.forEach(function(it){
+        var visible = !_filtreSecteurStartups || it.dataset.secteur === _filtreSecteurStartups;
+        it.style.display = visible ? "" : "none";
+        if (visible) aucunVisible = false;
+      });
+      var elVide = document.getElementById("startupsVideFiltre");
+      if (elVide) elVide.remove();
+      if (aucunVisible && items.length) {
+        document.getElementById("listeStartups").insertAdjacentHTML("beforeend", '<div class="empty" id="startupsVideFiltre">Aucune startup ne correspond à ce secteur.</div>');
+      }
+    });
+  });
+}
+
+async function soutenirStartup(startupId) {
+  if (!_userId) { alert("Connecte-toi d'abord."); return; }
+  var message = prompt("Un message pour te présenter et dire comment tu peux soutenir ce projet (optionnel) :") || "";
+  var ins = await _supabase.from("lokt_startup_soutiens").insert({
+    startup_id: startupId, soutien_id: _userId, message: message
+  });
+  if (ins.error) {
+    if (ins.error.message.indexOf("duplicate") !== -1) { alert("Tu as déjà manifesté ton soutien ✅"); return; }
+    alert("Erreur : " + ins.error.message); return;
+  }
+  alert("Soutien envoyé ✅");
+}
+
+async function manifesterInteret(opportuniteId) {
+  if (!_userId) { alert("Connecte-toi d'abord."); return; }
+  var message = prompt("Un message pour te présenter (optionnel) :") || "";
+  var ins = await _supabase.from("lokt_investissement_interets").insert({
+    opportunite_id: opportuniteId, investisseur_id: _userId, message: message
+  });
+  if (ins.error) {
+    if (ins.error.message.indexOf("duplicate") !== -1) { alert("Tu as déjà manifesté ton intérêt ✅"); return; }
+    alert("Erreur : " + ins.error.message); return;
+  }
+  alert("Intérêt envoyé ✅");
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

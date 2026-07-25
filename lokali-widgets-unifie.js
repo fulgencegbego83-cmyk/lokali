@@ -1,5 +1,5 @@
 // ===================================================================
-// LOKALI — Widget unifié (Favoris + QR Code + Mode sombre + Traduction)
+// LOKALI — Widget unifié (Favoris + QR Code + Mode sombre + Traduction + Retour intelligent)
 // Remplace les 4 anciens fichiers séparés par UNE seule capsule élégante.
 // Ce fichier est IDENTIQUE partout où tu l'utilises. Ne jamais le modifier.
 // Installation : ajoute juste avant </body> de n'importe quelle page :
@@ -121,6 +121,26 @@
     document.getElementById("lokaliTradMenu").classList.remove("open");
   }
 
+  // ---------- Retour intelligent ----------
+  // Problème résolu : sur chaque page, le bouton ".nav-back" pointait en dur
+  // vers le hub ou l'accueil, ce qui faisait "sauter" loin en arrière au lieu
+  // de revenir à l'écran précédent réellement visité (ex: en plein remplissage de CV).
+  // Solution : si la personne vient bien d'une autre page LOKALI (même origine)
+  // et qu'un historique existe, on utilise history.back(). Sinon (arrivée directe,
+  // favori, lien partagé...), le lien garde son comportement normal (href).
+  function corrigerBoutonsRetour(){
+    document.querySelectorAll(".nav-back").forEach(function(lien){
+      lien.addEventListener("click", function(e){
+        var vientDuMemeSite = document.referrer && document.referrer.indexOf(window.location.origin) === 0;
+        if (vientDuMemeSite && window.history.length > 1) {
+          e.preventDefault();
+          window.history.back();
+        }
+        // sinon : comportement normal du lien (fallback vers son href d'origine)
+      });
+    });
+  }
+
   // ---------- Construction de la capsule ----------
   function init(){
     chargerTraduction();
@@ -152,6 +172,7 @@
 
     majBoutonFavori();
     appliquerTheme(themeActuel());
+    corrigerBoutonsRetour();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

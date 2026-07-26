@@ -142,7 +142,13 @@
   }
 
   // ---------- Construction de la capsule ----------
+  // ⏸️ Temporairement désactivée à la demande (masque des éléments de l'interface).
+  // Pour réactiver : remettre "true" à la place de "false" ci-dessous.
+  var LOKALI_TOOLBAR_ACTIVE = false;
+
   function init(){
+    corrigerBoutonsRetour();
+    if (!LOKALI_TOOLBAR_ACTIVE) { return; }
     chargerTraduction();
 
     var toolbar = document.createElement("div");
@@ -172,7 +178,6 @@
 
     majBoutonFavori();
     appliquerTheme(themeActuel());
-    corrigerBoutonsRetour();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

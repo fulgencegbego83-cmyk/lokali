@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>LOKALI — Migration photos vers Storage</title>
+<meta name="robots" content="noindex,nofollow">
+<style>
+  body{font-family:Arial,sans-serif;max-width:700px;margin:30px auto;padding:0 16px;background:#0F1923;color:#fff}
+  h1{font-size:20px}
+  p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.6}
+  input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:#fff;margin-bottom:10px;box-sizing:border-box}
+  button{padding:13px 20px;border-radius:8px;border:none;background:#F97316;color:#fff;font-weight:700;font-size:14px;cursor:pointer;width:100%}
+  button:disabled{opacity:.5;cursor:default}
+  #log{margin-top:20px;background:#000;border-radius:8px;padding:14px;font-family:monospace;font-size:12px;white-space:pre-wrap;max-height:400px;overflow-y:auto;line-height:1.6}
+  .warn{background:rgba(220,38,38,.15);border:1px solid rgba(220,38,38,.4);border-radius:8px;padding:12px;font-size:13px;margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<h1>🔧 LOKALI — Migration des photos vers Storage</h1>
+
+<div class="warn">
+  ⚠️ <b>Outil à usage unique.</b> Ne mets jamais ce fichier en ligne sur ton site — utilise-le une seule fois depuis ton navigateur, puis supprime-le. Il utilise ta clé secrète Supabase (service_role), qui donne un accès total à ta base — ne la partage avec personne.
+</div>
+
+<p>
+  Colle ta clé <b>service_role</b> (Supabase → Project Settings → API → service_role key, PAS la clé "anon").
+  Cette page va parcourir toutes tes annonces, offres, projets, etc., trouver les photos encore stockées
+  directement en base (longues chaînes "data:image..."), les envoyer vers le bucket <code>lokali-photos</code>,
+  et remplacer chaque photo par son nouveau lien léger.
+</p>
+
+<input id="serviceKey" type="password" placeholder="Colle ta clé service_role ici">
+<button id="btnLancer" onclick="lancerMigration()">Lancer la migration</button>
+
+<div id="log"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPABASE_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var BUCKET = "lokali-photos";
+
+// Toutes les tables connues contenant des photos, avec le nom de leur colonne.
+// "single: true" = une seule photo (texte), sinon un tableau de photos.
+var TABLES_A_MIGRER = [
+  { table: "lokt_annonces", colonne: "photos" },
+  { table: "lokt_emplois", colonne: "photos" },
+  { table: "lokt_missions", colonne: "photos" },
+  { table: "lokt_projets", colonne: "photos" },
+  { table: "lokt_startups", colonne: "photos" },
+  { table: "lokt_partenariats", colonne: "photos" },
+  { table: "lokt_appels_offres", colonne: "photos" },
+  { table: "lokt_marches", colonne: "photos" },
+  { table: "lokt_produits", colonne: "photos" },
+  { table: "prestataires", colonne: "photo_profil", single: true }
+];
+
+function log(msg) {
+  var el = document.getElementById("log");
+  el.textContent += msg + "\n";
+  el.scrollTop = el.scrollHeight;
+}
+
+function estBase64Image(s) {
+  return typeof s === "string" && s.indexOf("data:image") === 0;
+}
+
+function base64VersBlob(dataUrl) {
+  var parts = dataUrl.split(",");
+  var meta = parts[0];
+  var typeMatch = meta.match(/data:(.*?);base64/);
+  var type = typeMatch ? typeMatch[1] : "image/webp";
+  var binaire = atob(parts[1]);
+  var tableau = new Uint8Array(binaire.length);
+  for (var i = 0; i < binaire.length; i++) tableau[i] = binaire.charCodeAt(i);
+  return new Blob([tableau], { type: type });
+}
+
+async function migrerUnePhoto(supa, dataUrl, prefixeChemin, index) {
+  var blob = base64VersBlob(dataUrl);
+  var extension = blob.type.indexOf("webp") > -1 ? "webp" : (blob.type.indexOf("png") > -1 ? "png" : "jpg");
+  var chemin = prefixeChemin + "/" + index + "-" + Date.now() + "." + extension;
+  var res = await supa.storage.from(BUCKET).upload(chemin, blob, { contentType: blob.type, upsert: true });
+  if (res.error) { log("    ❌ Échec upload : " + res.error.message); return null; }
+  var pub = supa.storage.from(BUCKET).getPublicUrl(chemin);
+  return pub && pub.data ? pub.data.publicUrl : null;
+}
+
+async function lancerMigration() {
+  var cle = document.getElementById("serviceKey").value.trim();
+  if (!cle) { alert("Colle ta clé service_role d'abord."); return; }
+  document.getElementById("btnLancer").disabled = true;
+  document.getElementById("log").textContent = "";
+
+  var supa = supabase.createClient(SUPABASE_URL, cle);
+  var totalPhotosMigrees = 0;
+  var totalLignesModifiees = 0;
+
+  for (var t = 0; t < TABLES_A_MIGRER.length; t++) {
+    var conf = TABLES_A_MIGRER[t];
+    log("📂 Table : " + conf.table + " (" + conf.colonne + ")");
+
+    var r = await supa.from(conf.table).select("id," + conf.colonne);
+    if (r.error) { log("  ❌ Erreur de lecture : " + r.error.message); continue; }
+    if (!r.data || !r.data.length) { log("  (vide)"); continue; }
+
+    for (var i = 0; i < r.data.length; i++) {
+      var ligne = r.data[i];
+      var valeur = ligne[conf.colonne];
+
+      if (conf.single) {
+        if (!estBase64Image(valeur)) continue;
+        log("  → " + conf.table + " #" + ligne.id + " : migration de la photo unique...");
+        var urlUnique = await migrerUnePhoto(supa, valeur, conf.table + "/" + ligne.id, 0);
+        if (urlUnique) {
+          var upd = await supa.from(conf.table).update({ [conf.colonne]: urlUnique }).eq("id", ligne.id);
+          if (!upd.error) { totalPhotosMigrees++; totalLignesModifiees++; log("    ✅ OK"); }
+          else log("    ❌ Échec mise à jour : " + upd.error.message);
+        }
+      } else {
+        if (!Array.isArray(valeur) || !valeur.length) continue;
+        var aDesBase64 = valeur.some(estBase64Image);
+        if (!aDesBase64) continue;
+
+        log("  → " + conf.table + " #" + ligne.id + " : " + valeur.length + " photo(s) à vérifier...");
+        var nouveauTableau = [];
+        for (var p = 0; p < valeur.length; p++) {
+          if (estBase64Image(valeur[p])) {
+            var url = await migrerUnePhoto(supa, valeur[p], conf.table + "/" + ligne.id, p);
+            nouveauTableau.push(url || valeur[p]);
+            if (url) totalPhotosMigrees++;
+          } else {
+            nouveauTableau.push(valeur[p]); // déjà une URL, on ne touche pas
+          }
+        }
+        var upd2 = await supa.from(conf.table).update({ [conf.colonne]: nouveauTableau }).eq("id", ligne.id);
+        if (!upd2.error) { totalLignesModifiees++; log("    ✅ OK"); }
+        else log("    ❌ Échec mise à jour : " + upd2.error.message);
+      }
+    }
+  }
+
+  log("");
+  log("🎉 Terminé — " + totalPhotosMigrees + " photo(s) migrée(s) sur " + totalLignesModifiees + " ligne(s).");
+  document.getElementById("btnLancer").disabled = false;
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Boutique — Ouvre ta boutique en ligne gratuitement</title>
+<meta name="description" content="Crée gratuitement ta boutique en ligne sur LOKALI : catalogue de produits, contact direct, visibilité dans toute l'Afrique francophone.">
+<link rel="canonical" href="https://mylokali.com/lokali-boutique.html">
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:12px 10px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+.tab.active{color:var(--orange-txt);border-color:var(--orange)}
+.tab-content{display:none}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(15,52,96,.5);color:#93C5FD}
+.badge-local{background:rgba(5,150,105,.15);color:#34D399}
+.produit-item{border-bottom:1px solid var(--border);padding:14px 0}
+.produit-item:last-child{border-bottom:none}
+.produit-title{font-weight:700;font-size:15px}
+.produit-prix{font-weight:900;font-size:15px;color:var(--orange2);margin-top:2px}
+#vueVitrine{display:none}
+.vit-banniere{width:100%;aspect-ratio:16/6;object-fit:cover;background:var(--dark3);display:block}
+.vit-header{max-width:640px;margin:0 auto;padding:0 16px;position:relative}
+.vit-logo{width:76px;height:76px;border-radius:16px;object-fit:cover;border:3px solid #fff;background:#fff;box-shadow:0 6px 16px rgba(15,23,42,.15);margin-top:-38px}
+.vit-nom{font-size:22px;font-weight:900;margin-top:10px}
+.vit-slogan{font-size:14px;color:var(--gray);margin-bottom:8px}
+.vit-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.produit-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:520px){.produit-grid{grid-template-columns:repeat(3,1fr)}}
+.produit-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.produit-cover{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:var(--dark3)}
+.produit-body{padding:8px 10px 10px}
+.produit-nom{font-size:12.5px;font-weight:800;line-height:1.25;margin-bottom:3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px}
+.produit-px{font-size:12.5px;font-weight:800;color:var(--orange2)}
+.produit-rupture{opacity:.5}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><img src="/lokali-logo-v2.svg" alt="LOKALI" style="height:26px;display:block"> <span style="font-size:12px;color:var(--gray);font-weight:700;margin-left:2px">BOUTIQUE</span></span>
+  <a class="nav-back" href="/">‹ Accueil</a>
+</nav>
+
+<!-- ═══ VUE GESTION (propriétaire) ═══ -->
+<div id="vueGestion" class="wrap">
+  <h1>🏪 Ma Boutique</h1>
+  <div class="subtitle">Crée et gère gratuitement ta boutique en ligne LOKALI</div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="infos">Ma boutique</div>
+    <div class="tab" data-tab="produits">Mes produits</div>
+    <div class="tab" data-tab="commandes">Commandes</div>
+    <div class="tab" data-tab="achats">Mes achats</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi sur LOKALI pour créer ta boutique.</p>
+    <a class="btn" href="/?action=inscription">Aller me connecter</a>
+  </div>
+
+  <div id="tab-infos" class="tab-content" style="display:block">
+    <div id="infosMsg"></div>
+    <div class="card">
+      <h3>Informations de la boutique</h3>
+      <label>Logo</label>
+      <div id="logoZone"></div>
+      <label>Bannière</label>
+      <div id="banniereZone"></div>
+      <label>Nom de la boutique</label>
+      <input id="bNom" placeholder="Ex: Chez Aïcha Mode">
+      <label>Slogan (optionnel)</label>
+      <input id="bSlogan" placeholder="Ex: L'élégance à petit prix">
+      <label>Description</label>
+      <textarea id="bDescription" placeholder="Présente ta boutique, ce que tu vends, ton savoir-faire..."></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="bPays"></select></div>
+        <div><label>Ville</label><select id="bVille"></select></div>
+      </div>
+      <div id="bVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="bVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <label>Adresse (optionnel)</label>
+      <input id="bAdresse" placeholder="Ex: Rue des Jardins, non loin du marché">
+      <label>Horaires (optionnel)</label>
+      <input id="bHoraires" placeholder="Ex: Lun-Sam 8h-19h">
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Comment veux-tu être contacté ?</label>
+      <label>WhatsApp</label>
+      <input id="bContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label>
+      <input id="bContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label>
+      <input id="bContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">💳 Moyens de paiement de ma boutique</label>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Active les opérateurs que tu utilises réellement, et renseigne le numéro correspondant. Le client ne verra que ceux que tu actives.</p>
+      <div id="bMoyensPaiementZone"></div>
+      <button class="btn" onclick="enregistrerBoutique()">Enregistrer ma boutique</button>
+    </div>
+    <div id="lienBoutiqueZone"></div>
+  </div>
+
+  <div id="tab-produits" class="tab-content">
+    <div id="produitsMsg"></div>
+    <div class="card">
+      <h3 id="produitFormTitre">Ajouter un produit</h3>
+      <label>Nom du produit</label>
+      <input id="pNom" placeholder="Ex: Robe wax bleue, taille M">
+      <label>Description</label>
+      <textarea id="pDescription" placeholder="Décris le produit : matière, taille, état..."></textarea>
+      <div class="row2">
+        <div><label>Catégorie</label><select id="pCategorie"></select></div>
+        <div><label>Prix (FCFA)</label><input id="pPrix" type="number" placeholder="Ex: 15000"></div>
+      </div>
+      <label>Type de produit</label>
+      <select id="pType" onchange="basculerZoneFichierDigital()">
+        <option value="physique">📦 Produit physique (à livrer/récupérer)</option>
+        <option value="digital">💾 Produit digital (ebook, fichier, document...)</option>
+      </select>
+      <div id="pZoneFichierDigital" style="display:none;margin-top:10px">
+        <label>Fichier à livrer automatiquement (PDF, image, document...)</label>
+        <input id="pFichierDigital" type="file">
+        <p id="pFichierDigitalActuel" style="font-size:12px;color:var(--gray);margin-top:4px"></p>
+        <p style="font-size:12px;color:var(--gray)">Ce fichier sera envoyé automatiquement dès que tu valides le paiement d'un client — tu n'auras plus rien à faire à ce moment-là.</p>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:12px">
+        <input type="checkbox" id="pDisponible" checked style="width:auto"> Disponible en stock
+      </label>
+      <label>Photos</label>
+      <div id="pPhotosZone"></div>
+      <label>Lien vidéo (optionnel — YouTube, Facebook, Instagram, TikTok...)</label>
+      <input id="pVideoUrl" placeholder="Colle le lien de ta vidéo ici">
+      <button class="btn" onclick="enregistrerProduit()">Ajouter le produit</button>
+      <button class="btn" id="btnAnnulerProduit" style="display:none;background:rgba(15,23,42,.08);color:var(--white)" onclick="annulerEditionProduit()">Annuler la modification</button>
+    </div>
+    <div class="card">
+      <h3>Mon catalogue</h3>
+      <div id="mesProduitsList"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+
+  <div id="tab-commandes" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>Commandes à valider</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:14px">Vérifie que la preuve de paiement correspond bien au montant reçu sur ton Mobile Money avant de valider.</p>
+      <div id="commandesList"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+
+  <div id="tab-achats" class="tab-content" style="display:none">
+    <div class="card">
+      <h3>Mes achats</h3>
+      <div id="mesAchatsList"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VUE VITRINE (publique) ═══ -->
+<div id="vueVitrine">
+  <img id="vitBanniere" class="vit-banniere" src="" alt="" loading=lazy>
+  <div class="vit-header">
+    <img id="vitLogo" class="vit-logo" src="" alt="" loading=lazy>
+    <div class="vit-nom" id="vitNom"></div>
+    <div class="vit-slogan" id="vitSlogan"></div>
+    <div class="vit-badges" id="vitBadges"></div>
+    <div id="vitAvisResume" style="margin-bottom:14px"></div>
+    <div id="vitContactZone" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px"></div>
+    <div class="card" id="vitDescriptionCard">
+      <h3>À propos</h3>
+      <p style="font-size:14px;color:var(--white);line-height:1.7;white-space:pre-wrap" id="vitDescription"></p>
+      <div id="vitInfosPratiques" style="margin-top:12px;font-size:13px;color:var(--gray)"></div>
+    </div>
+    <h3 style="font-size:16px;margin:20px 0 12px">🛍️ Produits (<span id="vitNbProduits">0</span>)</h3>
+    <input id="rechercheProduits" placeholder="🔍 Rechercher un produit..." style="margin-bottom:10px" oninput="filtrerProduitsVitrine()">
+    <div id="vitCategoriesFiltre" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div class="produit-grid" id="vitProduitsGrid"></div>
+    <h3 style="font-size:16px;margin:24px 0 12px">⭐ Avis clients</h3>
+    <div class="card" id="vitAvisFormZone"></div>
+    <div class="card" id="vitAvisListe"><div class="empty">Chargement...</div></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script src="/lokali-avis-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _maBoutique = null;
+var _maBoutiqueVitrineActuelle = null;
+var _logoUploader = null;
+var _banniereUploader = null;
+var _pPhotos = null;
+var _editionProduitId = null;
+var _mesProduitsCache = {};
+var _produitsVitrineCache = [];
+var _filtreCategorieProduitVitrine = "";
+
+var CATEGORIES_PRODUITS = [
+  "Mode & Beauté", "Électronique & High-tech", "Téléphones & Accessoires",
+  "Maison, Meubles & Électroménager", "Alimentation & Boissons", "Jardin & Bricolage",
+  "Loisirs, Sport & Hobbies", "Enfants & Bébé", "Services", "Autres"
+];
+
+function formaterNumeroWa(numero) { return (numero || "").replace(/[^0-9]/g, ""); }
+
+function boutonsContactDirect(item) {
+  if (!_userId) {
+    return '<a href="/?action=inscription" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">🔒 Connecte-toi sur LOKALI pour voir les coordonnées</a> ';
+  }
+  var boutons = "";
+  if (item.contact_whatsapp) boutons += '<a href="https://wa.me/' + formaterNumeroWa(item.contact_whatsapp) + '" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff">💬 WhatsApp</a> ';
+  if (item.contact_telephone) boutons += '<a href="tel:' + item.contact_telephone + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">📞 Appeler</a> ';
+  if (item.contact_email) boutons += '<a href="mailto:' + item.contact_email + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">✉️ Email</a> ';
+  return boutons;
+}
+
+function partagerBoutique(boutiqueId, nom) {
+  var url = window.location.origin + "/lokali-boutique.html?id=" + boutiqueId;
+  var texte = "🏪 " + nom + " — découvre cette boutique sur LOKALI";
+  if (navigator.share) {
+    navigator.share({ title: nom, text: texte, url: url }).catch(function(){});
+  } else {
+    window.open("https://wa.me/?text=" + encodeURIComponent(texte + " : " + url), "_blank");
+  }
+}
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+function activerOnglet(nom) {
+  document.querySelectorAll("#vueGestion .tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll("#vueGestion .tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "block" : "none"; });
+  if (nom === "commandes") chargerCommandesRecues();
+  if (nom === "achats") chargerMesAchats();
+}
+document.querySelectorAll("#vueGestion .tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+// ══ Initialisation ══
+async function initSession() {
+  var params = new URLSearchParams(window.location.search);
+  var boutiqueId = params.get("id");
+
+  if (boutiqueId) {
+    document.getElementById("vueGestion").style.display = "none";
+    document.getElementById("vueVitrine").style.display = "block";
+    var res = await _supabase.auth.getSession();
+    _userId = (res.data && res.data.session) ? res.data.session.user.id : null;
+    afficherVitrine(boutiqueId);
+    return;
+  }
+
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) {
+    document.getElementById("authGate").style.display = "block";
+    document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+    document.querySelectorAll(".tab").forEach(function(t){ t.style.display = "none"; });
+    return;
+  }
+  _userId = session.user.id;
+  initFormulaires();
+  chargerMaBoutique();
+  chargerMesProduits();
+}
+
+function initFormulaires() {
+  fillPaysSelect(document.getElementById("bPays"));
+  document.getElementById("bPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("bVille"));
+  });
+  document.getElementById("bVille").addEventListener("change", function() {
+    document.getElementById("bVilleAutreWrap").style.display = (this.value === "__autre__") ? "block" : "none";
+  });
+  document.getElementById("pCategorie").innerHTML = CATEGORIES_PRODUITS.map(function(c){ return '<option value="' + c + '">' + c + '</option>'; }).join("");
+
+  if (window.LokaliPhotos) {
+    _logoUploader = LokaliPhotos.creerUploader("bLogo", 1);
+    document.getElementById("logoZone").appendChild(_logoUploader.element);
+    _banniereUploader = LokaliPhotos.creerUploader("bBanniere", 1);
+    document.getElementById("banniereZone").appendChild(_banniereUploader.element);
+    _pPhotos = LokaliPhotos.creerUploader("pPhotos", 8);
+    document.getElementById("pPhotosZone").appendChild(_pPhotos.element);
+  }
+}
+
+// ══ Gestion de la boutique ══
+async function chargerMaBoutique() {
+  var r = await _supabase.from("lokt_boutiques").select("*").eq("auteur_id", _userId).maybeSingle();
+  if (r.data) {
+    _maBoutique = r.data;
+    document.getElementById("bNom").value = r.data.nom || "";
+    document.getElementById("bSlogan").value = r.data.slogan || "";
+    document.getElementById("bDescription").value = r.data.description || "";
+    document.getElementById("bPays").value = r.data.pays || "";
+    fillVillesByPays(r.data.pays, document.getElementById("bVille"));
+    setTimeout(function(){ document.getElementById("bVille").value = r.data.ville || ""; }, 300);
+    document.getElementById("bAdresse").value = r.data.adresse || "";
+    document.getElementById("bHoraires").value = r.data.horaires || "";
+    document.getElementById("bContactWhatsapp").value = r.data.contact_whatsapp || "";
+    document.getElementById("bContactTelephone").value = r.data.contact_telephone || "";
+    document.getElementById("bContactEmail").value = r.data.contact_email || "";
+    genererFormulaireMoyensPaiement(r.data.moyens_paiement);
+    afficherLienBoutique(r.data);
+  } else {
+    genererFormulaireMoyensPaiement([]);
+  }
+}
+
+function afficherLienBoutique(boutique) {
+  var url = window.location.origin + "/lokali-boutique.html?id=" + boutique.id;
+  document.getElementById("lienBoutiqueZone").innerHTML =
+    '<div class="card">' +
+      '<h3>🔗 Ma page boutique publique</h3>' +
+      '<p style="font-size:13px;color:var(--gray);word-break:break-all;margin-bottom:12px">' + url + '</p>' +
+      '<a class="btn btn-sm" href="' + url + '" target="_blank">👁️ Voir ma boutique</a> ' +
+      '<button class="btn btn-sm" style="background:#25D366;color:#fff" onclick="partagerBoutique(\'' + boutique.id + '\',\'' + (boutique.nom || "").replace(/'/g,"\\'") + '\')">📤 Partager</button>' +
+    '</div>' +
+    '<div class="card">' +
+      '<h3>📊 Statistiques de ma boutique</h3>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+        '<div style="background:var(--dark3);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--orange-txt)">' + (boutique.nb_vues || 0) + '</div><div style="font-size:11px;color:var(--gray)">👁️ Vues de la boutique</div></div>' +
+        '<div style="background:var(--dark3);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:#25D366">' + (boutique.nb_clics_whatsapp || 0) + '</div><div style="font-size:11px;color:var(--gray)">💬 Clics WhatsApp</div></div>' +
+        '<div style="background:var(--dark3);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--orange-txt)">' + (boutique.nb_appels || 0) + '</div><div style="font-size:11px;color:var(--gray)">📞 Clics Appeler</div></div>' +
+        '<div style="background:var(--dark3);border-radius:10px;padding:12px;text-align:center"><div style="font-size:20px;font-weight:900;color:var(--orange-txt)">' + (boutique.nb_partages || 0) + '</div><div style="font-size:11px;color:var(--gray)">📤 Partages</div></div>' +
+      '</div>' +
+    '</div>';
+}
+
+// ══ MOYENS DE PAIEMENT — structure évolutive ══
+// Pour ajouter un futur opérateur : une seule ligne à ajouter ici, rien
+// d'autre à modifier dans le reste du fichier.
+var MOYENS_PAIEMENT_CONFIG = [
+  { cle: "wave", nom: "Wave", logo: "/public/payment-logos/wave.png" },
+  { cle: "moov-money", nom: "Moov Money", logo: "/public/payment-logos/moov-money.png" },
+  { cle: "orange-money", nom: "Orange Money", logo: "/public/payment-logos/orange-money.svg" },
+  { cle: "mtn-momo", nom: "MTN Mobile Money", logo: "/public/payment-logos/mtn-momo.svg" }
+];
+
+function genererFormulaireMoyensPaiement(valeursExistantes) {
+  valeursExistantes = valeursExistantes || [];
+  var zone = document.getElementById("bMoyensPaiementZone");
+  zone.innerHTML = MOYENS_PAIEMENT_CONFIG.map(function(op){
+    var existant = valeursExistantes.find(function(v){ return v.cle === op.cle; });
+    var actif = existant ? existant.actif : false;
+    var numero = existant ? (existant.numero || "") : "";
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(15,23,42,.06)">' +
+      '<input type="checkbox" id="bMpActif_' + op.cle + '" ' + (actif ? "checked" : "") + ' style="width:20px;height:20px;flex-shrink:0">' +
+      '<img src="' + op.logo + '" alt="' + op.nom + '" style="height:26px;width:auto;flex-shrink:0" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
+      '<span style="display:none;font-weight:800;font-size:13px;flex-shrink:0;width:70px">' + op.nom + '</span>' +
+      '<input id="bMpNumero_' + op.cle + '" value="' + numero.replace(/"/g,"") + '" placeholder="Numéro ' + op.nom + '" style="flex:1;margin:0">' +
+    '</div>';
+  }).join("");
+}
+
+function collecterMoyensPaiement() {
+  return MOYENS_PAIEMENT_CONFIG.map(function(op){
+    return {
+      cle: op.cle,
+      nom: op.nom,
+      actif: document.getElementById("bMpActif_" + op.cle).checked,
+      numero: document.getElementById("bMpNumero_" + op.cle).value.trim()
+    };
+  }).filter(function(m){ return m.numero; }); // on ne garde que ceux avec un numéro renseigné
+}
+
+async function enregistrerBoutique() {
+  var nom = document.getElementById("bNom").value.trim();
+  var description = document.getElementById("bDescription").value.trim();
+  if (!nom || !description) { afficherMsg("infosMsg", "Le nom et la description sont obligatoires.", false); return; }
+  if (window.LokaliModeration) {
+    var moderation = LokaliModeration.verifierTexte(nom + " " + description);
+    if (!moderation.ok) { afficherMsg("infosMsg", moderation.motif, false); return; }
+  }
+  var villeVal = document.getElementById("bVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("bVilleAutre").value.trim();
+
+  var logoPhotos = _logoUploader ? _logoUploader.getPhotos() : [];
+  var bannierePhotos = _banniereUploader ? _banniereUploader.getPhotos() : [];
+
+  var payload = {
+    auteur_id: _userId,
+    nom: nom,
+    slogan: document.getElementById("bSlogan").value.trim(),
+    description: description,
+    pays: document.getElementById("bPays").value,
+    ville: villeVal,
+    adresse: document.getElementById("bAdresse").value.trim(),
+    horaires: document.getElementById("bHoraires").value.trim(),
+    contact_whatsapp: document.getElementById("bContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("bContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("bContactEmail").value.trim() || null,
+    moyens_paiement: collecterMoyensPaiement(),
+    statut: "active"
+  };
+  if (logoPhotos.length) payload.logo_url = logoPhotos[0];
+  if (bannierePhotos.length) payload.banniere_url = bannierePhotos[0];
+
+  var r = await _supabase.from("lokt_boutiques").upsert(payload, { onConflict: "auteur_id" }).select().single();
+  if (r.error) { afficherMsg("infosMsg", "Erreur : " + r.error.message, false); return; }
+  _maBoutique = r.data;
+  afficherMsg("infosMsg", "✅ Boutique enregistrée avec succès !", true);
+  afficherLienBoutique(r.data);
+}
+
+// ══ Gestion des produits ══
+function basculerZoneFichierDigital() {
+  var type = document.getElementById("pType").value;
+  document.getElementById("pZoneFichierDigital").style.display = (type === "digital") ? "block" : "none";
+}
+
+async function enregistrerProduit() {
+  if (!_maBoutique) { afficherMsg("produitsMsg", "Enregistre d'abord les informations de ta boutique (onglet \"Ma boutique\").", false); return; }
+  var nom = document.getElementById("pNom").value.trim();
+  var description = document.getElementById("pDescription").value.trim();
+  if (!nom || !description) { afficherMsg("produitsMsg", "Le nom et la description sont obligatoires.", false); return; }
+  if (window.LokaliModeration) {
+    var moderation = LokaliModeration.verifierTexte(nom + " " + description);
+    if (!moderation.ok) { afficherMsg("produitsMsg", moderation.motif, false); return; }
+  }
+
+  var typeProduit = document.getElementById("pType").value;
+  var fichierDigitalUrl = null;
+  var fichierInp = document.getElementById("pFichierDigital");
+  if (typeProduit === "digital" && fichierInp.files[0]) {
+    afficherMsg("produitsMsg", "Envoi du fichier digital...", true);
+    var fichier = fichierInp.files[0];
+    var chemin = _userId + "/produits-digitaux/" + Date.now() + "-" + fichier.name;
+    var upFichier = await _supabase.storage.from("lokali-photos").upload(chemin, fichier, { upsert: true });
+    if (upFichier.error) { afficherMsg("produitsMsg", "Erreur envoi fichier : " + upFichier.error.message, false); return; }
+    fichierDigitalUrl = _supabase.storage.from("lokali-photos").getPublicUrl(chemin).data.publicUrl;
+  }
+
+  var payload = {
+    boutique_id: _maBoutique.id,
+    auteur_id: _userId,
+    nom: nom,
+    description: description,
+    categorie: document.getElementById("pCategorie").value,
+    prix: parseInt(document.getElementById("pPrix").value) || null,
+    type_produit: typeProduit,
+    disponible: document.getElementById("pDisponible").checked,
+    photos: _pPhotos ? _pPhotos.getPhotos() : [],
+    video_url: document.getElementById("pVideoUrl").value.trim() || null,
+    statut: "actif"
+  };
+  if (fichierDigitalUrl) payload.fichier_digital_url = fichierDigitalUrl;
+  var r;
+  if (_editionProduitId) {
+    r = await _supabase.from("lokt_produits").update(payload).eq("id", _editionProduitId);
+  } else {
+    r = await _supabase.from("lokt_produits").insert(payload);
+  }
+  if (r.error) { afficherMsg("produitsMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("produitsMsg", _editionProduitId ? "✅ Produit modifié avec succès !" : "✅ Produit ajouté avec succès !", true);
+  annulerEditionProduit();
+  chargerMesProduits();
+}
+
+function modifierProduit(p) {
+  _editionProduitId = p.id;
+  document.getElementById("pNom").value = p.nom || "";
+  document.getElementById("pDescription").value = p.description || "";
+  document.getElementById("pCategorie").value = p.categorie || "";
+  document.getElementById("pPrix").value = p.prix || "";
+  document.getElementById("pDisponible").checked = !!p.disponible;
+  document.getElementById("pVideoUrl").value = p.video_url || "";
+  document.getElementById("produitFormTitre").textContent = "Modifier le produit";
+  document.querySelector('button[onclick="enregistrerProduit()"]').textContent = "Enregistrer les modifications";
+  document.getElementById("btnAnnulerProduit").style.display = "inline-block";
+  document.getElementById("pNom").scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function annulerEditionProduit() {
+  _editionProduitId = null;
+  ["pNom","pDescription","pPrix","pVideoUrl"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("pDisponible").checked = true;
+  document.getElementById("produitFormTitre").textContent = "Ajouter un produit";
+  document.querySelector('button[onclick="enregistrerProduit()"]').textContent = "Ajouter le produit";
+  document.getElementById("btnAnnulerProduit").style.display = "none";
+}
+
+async function supprimerProduit(id) {
+  if (!confirm("Supprimer définitivement ce produit ?")) return;
+  var r = await _supabase.from("lokt_produits").delete().eq("id", id);
+  if (r.error) { afficherMsg("produitsMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("produitsMsg", "✅ Produit supprimé avec succès !", true);
+  chargerMesProduits();
+}
+
+async function chargerMesProduits() {
+  var el = document.getElementById("mesProduitsList");
+  var r = await _supabase.from("lokt_produits").select("*").eq("auteur_id", _userId).order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucun produit publié pour le moment.</div>'; return; }
+  _mesProduitsCache = {};
+  r.data.forEach(function(p){ _mesProduitsCache[p.id] = p; });
+
+  el.innerHTML = r.data.map(function(p){
+    var prixTxt = p.prix ? p.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+    return '<div class="produit-item">' +
+      (!p.disponible ? '<span class="badge" style="background:rgba(220,38,38,.15);color:#F87171">Rupture de stock</span> ' : '') +
+      '<span class="badge">' + p.categorie + '</span>' +
+      '<div class="produit-title">' + p.nom + '</div>' +
+      '<div class="produit-prix">' + prixTxt + '</div>' +
+      (p.photos && p.photos.length ? '<img src="' + p.photos[0] + '" style="width:100%;max-height:160px;object-fit:cover;border-radius:10px;margin:8px 0;display:block" loading=lazy>' : '') +
+      '<div style="margin-top:6px">' +
+        '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="modifierProduit(_mesProduitsCache[\'' + p.id + '\'])">✏️ Modifier</button> ' +
+        '<button class="btn btn-sm" style="background:rgba(220,38,38,.1);color:#DC2626" onclick="supprimerProduit(\'' + p.id + '\')">🗑️ Supprimer</button>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+// ══ Vitrine publique ══
+async function afficherVitrine(boutiqueId) {
+  var r = await _supabase.from("lokt_boutiques").select("*").eq("id", boutiqueId).eq("statut", "active").maybeSingle();
+  if (!r.data) {
+    document.getElementById("vueVitrine").innerHTML = '<div style="padding:100px 20px;text-align:center"><h2>Boutique introuvable</h2><p style="color:#64748B;margin-top:10px">Cette boutique n\'existe pas ou n\'est plus active.</p><a href="/" style="display:inline-block;margin-top:16px;background:#F97316;color:#fff;padding:10px 20px;border-radius:30px;text-decoration:none;font-weight:700">Retour à l\'accueil</a></div>';
+    return;
+  }
+  var b = r.data;
+  _maBoutiqueVitrineActuelle = b;
+  document.title = b.nom + " — Boutique LOKALI";
+
+  document.getElementById("vitBanniere").src = b.banniere_url || "";
+  if (!b.banniere_url) document.getElementById("vitBanniere").style.background = "linear-gradient(135deg,#F97316,#FB923C)";
+  document.getElementById("vitLogo").src = b.logo_url || "";
+  document.getElementById("vitNom").textContent = b.nom;
+  document.getElementById("vitSlogan").textContent = b.slogan || "";
+  document.getElementById("vitDescription").textContent = b.description;
+
+  var joursDepuisCreation = Math.floor((new Date() - new Date(b.created_at)) / 86400000);
+  var ancienneteTxt = joursDepuisCreation < 1 ? "Nouvelle boutique" : joursDepuisCreation < 30 ? "Sur LOKALI depuis " + joursDepuisCreation + " jours" : "Sur LOKALI depuis " + Math.floor(joursDepuisCreation/30) + " mois";
+  document.getElementById("vitBadges").innerHTML =
+    '<span class="badge badge-local">📍 ' + (b.ville || "") + (b.pays ? ", " + b.pays : "") + '</span>' +
+    '<span class="badge">🕐 ' + ancienneteTxt + '</span>' +
+    (b.verifie ? '<span class="badge" style="background:rgba(16,185,129,.15);color:#10B981">✅ Boutique Vérifiée LOKALI</span>' : '');
+
+  document.getElementById("vitContactZone").innerHTML =
+    boutonsContactDirect(b) +
+    '<button class="btn btn-sm" style="background:#25D366;color:#fff" onclick="partagerBoutiqueAvecTracking(\'' + b.id + '\',\'' + b.nom.replace(/'/g,"\\'") + '\')">📤 Partager</button> ' +
+    '<button class="btn btn-sm" style="background:rgba(220,38,38,.08);color:#DC2626" onclick="LokaliSignaler.ouvrirModal(_supabase,\'boutique\',\'' + b.id + '\',_userId)">🚩 Signaler</button>' +
+    '<span id="vitSuivreZone"></span>';
+  afficherBoutonSuivre(b.id, b.auteur_id);
+  activerTrackingContact(b.id);
+
+  var infosPratiques = "";
+  if (b.adresse) infosPratiques += "📍 " + b.adresse + "<br>";
+  if (b.horaires) infosPratiques += "🕐 " + b.horaires;
+  document.getElementById("vitInfosPratiques").innerHTML = infosPratiques;
+  if (!infosPratiques) document.getElementById("vitInfosPratiques").style.display = "none";
+
+  chargerProduitsVitrine(boutiqueId);
+  incrementerVues(boutiqueId);
+  chargerAvisBoutique(boutiqueId, b.auteur_id);
+}
+
+async function chargerAvisBoutique(boutiqueId, auteurBoutiqueId) {
+  if (!window.LokaliAvis) return;
+  var resume = await LokaliAvis.chargerResume(_supabase, "boutique", boutiqueId);
+  document.getElementById("vitAvisResume").innerHTML = LokaliAvis.afficherResumeHTML(resume);
+
+  var avisListe = await LokaliAvis.chargerAvis(_supabase, "boutique", boutiqueId);
+  document.getElementById("vitAvisListe").innerHTML = LokaliAvis.rendreAvisListeHTML(avisListe);
+
+  var formZone = document.getElementById("vitAvisFormZone");
+  if (!_userId) {
+    formZone.innerHTML = '<a href="/?action=inscription" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">🔒 Connecte-toi pour laisser un avis</a>';
+    return;
+  }
+  if (_userId === auteurBoutiqueId) {
+    formZone.style.display = "none";
+    return;
+  }
+  formZone.innerHTML = LokaliAvis.construireFormulaireHTML("avis");
+  LokaliAvis.activerFormulaire("avis", _supabase, "boutique", boutiqueId, _userId, function(){
+    chargerAvisBoutique(boutiqueId, auteurBoutiqueId);
+  });
+}
+
+function activerTrackingContact(boutiqueId) {
+  var zone = document.getElementById("vitContactZone");
+  if (!zone) return;
+  zone.addEventListener("click", function(e){
+    var lien = e.target.closest("a");
+    if (!lien) return;
+    if (lien.href.indexOf("wa.me") > -1) {
+      _supabase.rpc("lokali_incrementer_clic_boutique", { p_boutique_id: boutiqueId, p_type: "whatsapp" }).catch(function(){});
+    } else if (lien.href.indexOf("tel:") === 0) {
+      _supabase.rpc("lokali_incrementer_clic_boutique", { p_boutique_id: boutiqueId, p_type: "appel" }).catch(function(){});
+    }
+  });
+}
+
+function partagerBoutiqueAvecTracking(boutiqueId, nom) {
+  _supabase.rpc("lokali_incrementer_clic_boutique", { p_boutique_id: boutiqueId, p_type: "partage" }).catch(function(){});
+  partagerBoutique(boutiqueId, nom);
+}
+
+async function afficherBoutonSuivre(boutiqueId, auteurBoutiqueId) {
+  var zone = document.getElementById("vitSuivreZone");
+  if (!zone) return;
+  if (!_userId) {
+    zone.innerHTML = ' <a href="/?action=inscription" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">🔔 Connecte-toi pour suivre</a>';
+    return;
+  }
+  if (_userId === auteurBoutiqueId) { zone.innerHTML = ""; return; }
+  var r = await _supabase.from("lokt_boutique_abonnes").select("id").eq("boutique_id", boutiqueId).eq("utilisateur_id", _userId).maybeSingle();
+  var estAbonne = !!r.data;
+  dessinerBoutonSuivre(zone, boutiqueId, estAbonne);
+}
+
+function dessinerBoutonSuivre(zone, boutiqueId, estAbonne) {
+  zone.innerHTML = ' <button class="btn btn-sm" style="' + (estAbonne ? 'background:rgba(15,23,42,.08);color:var(--white)' : 'background:var(--orange);color:#fff') + '" onclick="toggleSuivreBoutique(\'' + boutiqueId + '\',' + estAbonne + ')">' + (estAbonne ? '🔔 Suivi(e)' : '🔔 Suivre') + '</button>';
+}
+
+async function toggleSuivreBoutique(boutiqueId, estAbonne) {
+  var zone = document.getElementById("vitSuivreZone");
+  if (estAbonne) {
+    await _supabase.from("lokt_boutique_abonnes").delete().eq("boutique_id", boutiqueId).eq("utilisateur_id", _userId);
+    dessinerBoutonSuivre(zone, boutiqueId, false);
+  } else {
+    var r = await _supabase.from("lokt_boutique_abonnes").insert({ boutique_id: boutiqueId, utilisateur_id: _userId });
+    if (r.error) return;
+    dessinerBoutonSuivre(zone, boutiqueId, true);
+  }
+}
+
+async function chargerProduitsVitrine(boutiqueId) {
+  var r = await _supabase.from("lokt_produits").select("*").eq("boutique_id", boutiqueId).eq("statut", "actif").order("created_at", { ascending: false });
+  var grid = document.getElementById("vitProduitsGrid");
+  if (r.error || !r.data || !r.data.length) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1">Aucun produit publié pour le moment.</div>'; return; }
+  _produitsVitrineCache = r.data;
+  document.getElementById("vitNbProduits").textContent = r.data.length;
+
+  var categories = Array.from(new Set(r.data.map(function(p){ return p.categorie; }).filter(Boolean)));
+  var filtreZone = document.getElementById("vitCategoriesFiltre");
+  if (categories.length > 1) {
+    filtreZone.innerHTML = '<span class="badge" style="cursor:pointer;background:var(--orange);color:#fff" onclick="filtrerParCategorieVitrine(\'\',this)">Tous</span> ' +
+      categories.map(function(c){ return '<span class="badge" style="cursor:pointer" onclick="filtrerParCategorieVitrine(\'' + c.replace(/'/g,"\\'") + '\',this)">' + c + '</span>'; }).join(" ");
+  } else {
+    filtreZone.innerHTML = "";
+  }
+  rendreProduitsVitrine(r.data);
+
+  var paramsProduit = new URLSearchParams(window.location.search);
+  var produitDemande = paramsProduit.get("produit");
+  if (produitDemande) { ouvrirDetailProduitVitrine(produitDemande); }
+}
+
+function filtrerParCategorieVitrine(cat, el) {
+  _filtreCategorieProduitVitrine = cat;
+  document.querySelectorAll("#vitCategoriesFiltre .badge").forEach(function(b){ b.style.background = ""; b.style.color = ""; });
+  if (el) { el.style.background = "var(--orange)"; el.style.color = "#fff"; }
+  filtrerProduitsVitrine();
+}
+
+function filtrerProduitsVitrine() {
+  var texte = (document.getElementById("rechercheProduits").value || "").trim().toLowerCase();
+  var filtres = _produitsVitrineCache.filter(function(p){
+    var okCat = !_filtreCategorieProduitVitrine || p.categorie === _filtreCategorieProduitVitrine;
+    var okTexte = !texte || p.nom.toLowerCase().indexOf(texte) > -1;
+    return okCat && okTexte;
+  });
+  rendreProduitsVitrine(filtres);
+}
+
+function rendreProduitsVitrine(liste) {
+  var grid = document.getElementById("vitProduitsGrid");
+  if (!liste.length) { grid.innerHTML = '<div class="empty" style="grid-column:1/-1">Aucun produit ne correspond à ta recherche.</div>'; return; }
+  grid.innerHTML = liste.map(function(p){
+    var couverture = (p.photos && p.photos.length) ? p.photos[0] : null;
+    var prixTxt = p.prix ? p.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+    return '<div class="produit-card' + (!p.disponible ? ' produit-rupture' : '') + '" style="cursor:pointer" onclick="ouvrirDetailProduitVitrine(\'' + p.id + '\')">' +
+      (couverture ? '<img class="produit-cover" src="' + couverture + '" alt="' + p.nom.replace(/"/g,"") + '" loading=lazy>' : '<div class="produit-cover" style="display:flex;align-items:center;justify-content:center;font-size:24px;color:var(--gray)">📦</div>') +
+      '<div class="produit-body">' +
+        '<div class="produit-nom">' + p.nom + (!p.disponible ? ' (Rupture)' : '') + '</div>' +
+        '<div class="produit-px">' + prixTxt + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+function ouvrirDetailProduitVitrine(produitId) {
+  var p = _produitsVitrineCache.find(function(x){ return x.id === produitId; });
+  if (!p) return;
+  var photos = (p.photos && p.photos.length) ? p.photos : [];
+  var prixTxt = p.prix ? p.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+  var galerieHtml = photos.length
+    ? '<div style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:14px;margin-bottom:16px">' +
+        photos.map(function(ph){ return '<img src="' + ph + '" style="width:100%;flex:0 0 100%;aspect-ratio:1/1;object-fit:cover;scroll-snap-align:start;border-radius:14px" loading=lazy>'; }).join("") +
+      '</div>'
+    : '<div style="width:100%;aspect-ratio:1/1;background:var(--dark3);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:16px">📦</div>';
+  var overlay = document.createElement("div");
+  overlay.id = "produitDetailOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:var(--dark);z-index:10000;overflow-y:auto";
+  overlay.innerHTML =
+    '<div style="position:sticky;top:0;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">' +
+      '<button onclick="document.getElementById(\'produitDetailOverlay\').remove();document.body.style.overflow=\'\'" style="background:rgba(15,23,42,.08);border:none;border-radius:20px;padding:8px 16px;font-weight:700;cursor:pointer;color:var(--white)">‹ Retour</button>' +
+      '<span style="font-weight:800;font-size:14px">Détail du produit</span><span style="width:70px"></span>' +
+    '</div>' +
+    '<div style="max-width:640px;margin:0 auto;padding:20px 16px 40px">' +
+      (!p.disponible ? '<span class="badge" style="background:rgba(220,38,38,.15);color:#F87171;margin-bottom:10px;display:inline-block">Rupture de stock</span>' : '') +
+      (p.categorie ? '<span class="badge" style="margin-bottom:10px;display:inline-block">' + p.categorie + '</span>' : '') +
+      '<h1 style="font-size:20px;font-weight:900;margin:8px 0">' + p.nom + '</h1>' +
+      '<div style="font-size:22px;font-weight:900;color:var(--orange2);margin-bottom:20px">' + prixTxt + '</div>' +
+      galerieHtml +
+      (p.video_url ? '<a href="' + p.video_url + '" target="_blank" style="display:block;margin-bottom:16px;text-align:center;background:rgba(15,23,42,.08);color:var(--white);padding:12px;border-radius:12px;text-decoration:none;font-weight:700;font-size:13px">▶️ Voir la vidéo de démonstration</a>' : '') +
+      '<h3 style="font-size:15px;margin-bottom:10px">Description</h3>' +
+      '<p style="font-size:14px;color:var(--white);line-height:1.7;white-space:pre-wrap;margin-bottom:24px">' + p.description + '</p>' +
+      (p.type_produit === "digital" && p.disponible
+        ? '<button class="btn" style="width:100%;margin-bottom:16px" onclick="ouvrirAchatProduit(\'' + p.id + '\')">💾 Acheter ce produit digital</button>'
+        : '') +
+      '<div id="produitContactZone" style="display:flex;flex-wrap:wrap;gap:8px"></div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  document.body.style.overflow = "hidden";
+  document.getElementById("produitContactZone").innerHTML = boutonsContactDirect(_maBoutiqueVitrineActuelle || {});
+}
+
+// ══ ACHAT PRODUIT DIGITAL (sans API de paiement) ══
+var _achatPhotoPreuve = null;
+
+function ouvrirAchatProduit(produitId) {
+  if (!_userId) { showToast("Connecte-toi d'abord pour acheter."); window.location.href = "/?action=inscription"; return; }
+  var p = _produitsVitrineCache.find(function(x){ return x.id === produitId; });
+  var boutique = _maBoutiqueVitrineActuelle;
+  if (!p || !boutique) return;
+
+  var operateurs = (boutique.moyens_paiement || []).filter(function(o){ return o.actif && o.numero; });
+
+  if (!operateurs.length) { showToast("Cette boutique n'a pas encore configuré de moyen de paiement Mobile Money."); return; }
+
+  var prixTxt = p.prix ? p.prix.toLocaleString("fr-FR") + " FCFA" : "Prix à discuter";
+  var overlay = document.createElement("div");
+  overlay.id = "achatOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:10001;display:flex;align-items:flex-end;justify-content:center";
+  overlay.innerHTML =
+    '<div style="background:var(--card,#fff);color:#1E293B;border-radius:20px 20px 0 0;max-width:480px;width:100%;max-height:88vh;overflow-y:auto;padding:20px 20px 28px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">' +
+        '<h3 style="font-size:16px;font-weight:900">Acheter — ' + p.nom + '</h3>' +
+        '<span onclick="document.getElementById(\'achatOverlay\').remove()" style="cursor:pointer;font-size:20px;color:#94A3B8">✕</span>' +
+      '</div>' +
+      '<p style="font-size:12px;font-weight:800;text-transform:uppercase;color:#059669;margin-bottom:10px">Étape 1 — Choisis ton moyen de paiement</p>' +
+      '<p style="font-size:13px;margin-bottom:12px">Montant à envoyer : <b style="font-size:16px">' + prixTxt + '</b></p>' +
+      '<div id="achatOperateursZone" style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">' +
+        operateurs.map(function(o){
+          var config = MOYENS_PAIEMENT_CONFIG.find(function(c){ return c.cle === o.cle; });
+          var logo = config ? config.logo : "";
+          return '<button type="button" onclick="choisirOperateurAchat(\'' + o.cle + '\',\'' + o.numero + '\',this)" ' +
+            'style="width:100%;text-align:left;padding:12px 16px;border-radius:12px;border:2px solid rgba(15,23,42,.1);background:#fff;' +
+            'cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px">' +
+            '<span style="display:flex;align-items:center;gap:10px">' +
+              '<img src="' + logo + '" alt="' + o.nom + '" style="height:28px;width:auto" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline\'">' +
+              '<span style="display:none;font-weight:800;font-size:14px">' + o.nom + '</span>' +
+            '</span>' +
+            '<span style="font-size:12px;font-weight:700;color:#94A3B8">Choisir →</span>' +
+          '</button>';
+        }).join("") +
+      '</div>' +
+      '<div id="achatEtape2" style="display:none">' +
+        '<div id="achatNumeroAffiche" style="border-radius:14px;padding:16px;margin-bottom:16px"></div>' +
+        '<p style="font-size:12px;font-weight:800;text-transform:uppercase;color:#F97316;margin-bottom:8px">Étape 2 — Envoie ta preuve de paiement</p>' +
+        '<div id="achatPhotoZone" style="margin-bottom:16px"></div>' +
+        '<button class="btn" style="width:100%" onclick="confirmerAchat(\'' + p.id + '\',\'' + p.nom.replace(/'/g,"\\'") + '\',' + (p.prix||0) + ',\'' + boutique.id + '\',\'' + boutique.auteur_id + '\')">✅ J\'ai payé — Envoyer la preuve</button>' +
+        '<p style="font-size:11px;color:#94A3B8;margin-top:10px;text-align:center">Le vendeur validera ta preuve, puis ton produit te sera livré automatiquement.</p>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+}
+
+var _achatOperateurChoisi = null;
+
+function choisirOperateurAchat(cle, numero, el) {
+  _achatOperateurChoisi = cle;
+  document.querySelectorAll("#achatOperateursZone button").forEach(function(b){ b.style.opacity = "0.4"; b.style.borderColor = "rgba(15,23,42,.1)"; });
+  el.style.opacity = "1";
+  el.style.borderColor = "#F97316";
+
+  var config = MOYENS_PAIEMENT_CONFIG.find(function(c){ return c.cle === cle; });
+  var nom = config ? config.nom : cle;
+  var logo = config ? config.logo : "";
+  var zone = document.getElementById("achatNumeroAffiche");
+  zone.style.background = "rgba(249,115,22,.06)";
+  zone.style.border = "2px solid rgba(249,115,22,.3)";
+  zone.innerHTML =
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">' +
+      '<img src="' + logo + '" alt="' + nom + '" style="height:22px;width:auto" onerror="this.style.display=\'none\'">' +
+      '<p style="font-size:13px;margin:0">Envoie le paiement via <b>' + nom + '</b> au numéro :</p>' +
+    '</div>' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px">' +
+      '<span style="font-size:20px;font-weight:900">' + numero + '</span>' +
+      '<button type="button" onclick="copierNumeroAchat(\'' + numero + '\')" style="background:#F97316;color:#fff;border:none;border-radius:10px;padding:8px 14px;font-weight:700;font-size:12px;cursor:pointer">📋 Copier</button>' +
+    '</div>';
+
+  document.getElementById("achatEtape2").style.display = "block";
+  if (!_achatPhotoPreuve && window.LokaliPhotos) {
+    _achatPhotoPreuve = LokaliPhotos.creerUploader("achatPhoto", 1);
+    document.getElementById("achatPhotoZone").appendChild(_achatPhotoPreuve.element);
+  }
+  document.getElementById("achatEtape2").scrollIntoView({ behavior: "smooth", block: "nearest" });
+}
+
+function copierNumeroAchat(numero) {
+  navigator.clipboard.writeText(numero).then(function(){
+    showToast("📋 Numéro copié — ouvre ton app pour envoyer le paiement");
+  }).catch(function(){
+    showToast("Numéro : " + numero);
+  });
+}
+
+async function confirmerAchat(produitId, nomProduit, prix, boutiqueId, vendeurId) {
+  var preuves = _achatPhotoPreuve ? _achatPhotoPreuve.getPhotos() : [];
+  if (!preuves.length) { showToast("Ajoute une capture de ta preuve de paiement d'abord."); return; }
+  if (!_achatOperateurChoisi) { showToast("Choisis d'abord ton moyen de paiement."); return; }
+
+  var ins = await _supabase.from("lokt_achats_produits").insert({
+    produit_id: produitId,
+    boutique_id: boutiqueId,
+    vendeur_id: vendeurId,
+    acheteur_id: _userId,
+    nom_produit: nomProduit,
+    type_produit: "digital",
+    prix: prix,
+    operateur_choisi: _achatOperateurChoisi,
+    preuve_paiement_url: preuves[0],
+    statut: "en_attente"
+  });
+  if (ins.error) { showToast("Erreur : " + ins.error.message); return; }
+  document.getElementById("achatOverlay").remove();
+  _achatOperateurChoisi = null;
+  _achatPhotoPreuve = null;
+  showToast("✅ Preuve envoyée ! Le vendeur va vérifier et valider rapidement.");
+}
+
+// ══ COMMANDES REÇUES (côté vendeur) ══
+async function chargerCommandesRecues() {
+  var zone = document.getElementById("commandesList");
+  var r = await _supabase.from("lokt_achats_produits").select("*").eq("vendeur_id", _userId).order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Aucune commande pour le moment.</div>'; return; }
+
+  zone.innerHTML = r.data.map(function(c){
+    var prixTxt = c.prix ? c.prix.toLocaleString("fr-FR") + " FCFA" : "Prix non précisé";
+    var opInfo = MOYENS_PAIEMENT_CONFIG.find(function(o){ return o.cle === c.operateur_choisi; });
+    var badgeStatut = c.statut === "validee"
+      ? '<span class="badge badge-neuf">✅ Validée</span>'
+      : (c.statut === "refusee" ? '<span class="badge badge-vendue">Refusée</span>' : '<span class="badge">⏳ En attente</span>');
+    return '<div class="mes-annonce-item">' +
+      (c.preuve_paiement_url ? '<img class="mes-annonce-thumb" src="' + c.preuve_paiement_url + '" onclick="window.open(this.src)" style="cursor:pointer" loading=lazy>' : '<div class="mes-annonce-thumb-empty">🧾</div>') +
+      '<div style="flex:1;min-width:0">' +
+        badgeStatut + ' ' +
+        '<div class="annonce-title">' + c.nom_produit + '</div>' +
+        '<div class="annonce-prix">' + prixTxt + (opInfo ? ' · via ' + opInfo.nom : '') + '</div>' +
+        (c.statut === "en_attente"
+          ? '<div style="margin-top:8px"><button class="btn btn-sm" onclick="validerAchat(\'' + c.id + '\')">✅ Valider le paiement reçu</button></div>'
+          : '') +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+async function validerAchat(achatId) {
+  if (!confirm("Confirmes-tu avoir bien reçu ce paiement sur ton Mobile Money ?")) return;
+  var upd = await _supabase.from("lokt_achats_produits").update({ statut: "validee", valide_at: new Date().toISOString() }).eq("id", achatId);
+  if (upd.error) { showToast("Erreur : " + upd.error.message); return; }
+  showToast("✅ Paiement validé — le produit et la facture sont maintenant disponibles pour ton client.");
+  chargerCommandesRecues();
+}
+
+// ══ MES ACHATS (côté acheteur) ══
+async function chargerMesAchats() {
+  var zone = document.getElementById("mesAchatsList");
+  var r = await _supabase.from("lokt_achats_produits").select("*").eq("acheteur_id", _userId).order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Tu n\'as encore rien acheté sur LOKALI.</div>'; return; }
+
+  var achatsValides = r.data.filter(function(a){ return a.statut === "validee"; });
+  for (var i = 0; i < achatsValides.length; i++) {
+    var pr = await _supabase.from("lokt_produits").select("fichier_digital_url").eq("id", achatsValides[i].produit_id).maybeSingle();
+    if (pr.data && pr.data.fichier_digital_url) achatsValides[i].fichier_url = pr.data.fichier_digital_url;
+  }
+
+  zone.innerHTML = r.data.map(function(a){
+    var prixTxt = a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "";
+    if (a.statut === "validee") {
+      return '<div class="mes-annonce-item"><div style="flex:1">' +
+        '<span class="badge badge-neuf">✅ Payé et validé</span>' +
+        '<div class="annonce-title">' + a.nom_produit + '</div>' +
+        '<div class="annonce-prix">' + prixTxt + '</div>' +
+        '<div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="btn btn-sm" onclick="voirFacture(\'' + a.id + '\')">🧾 Voir la facture</button>' +
+          (a.fichier_url ? '<a class="btn btn-sm" href="' + a.fichier_url + '" target="_blank" style="background:#059669;color:#fff">⬇️ Télécharger le produit</a>' : '') +
+        '</div>' +
+      '</div></div>';
+    }
+    return '<div class="mes-annonce-item"><div style="flex:1">' +
+      '<span class="badge">⏳ En attente de validation par le vendeur</span>' +
+      '<div class="annonce-title">' + a.nom_produit + '</div>' +
+      '<div class="annonce-prix">' + prixTxt + '</div>' +
+    '</div></div>';
+  }).join("");
+}
+
+function voirFacture(achatId) {
+  _supabase.from("lokt_achats_produits").select("*").eq("id", achatId).maybeSingle().then(function(r){
+    if (!r.data) return;
+    var a = r.data;
+    var w = window.open("", "_blank");
+    w.document.write(
+      '<html><head><meta charset="UTF-8"><title>Facture LOKALI</title>' +
+      '<style>body{font-family:Arial,sans-serif;max-width:600px;margin:40px auto;color:#1E293B}' +
+      '.entete{text-align:center;border-bottom:3px solid #F97316;padding-bottom:16px;margin-bottom:24px}' +
+      '.ligne{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #E2E8F0}' +
+      '.total{font-size:20px;font-weight:900;color:#F97316}</style></head><body>' +
+      '<div class="entete"><h1>LOKALI</h1><p>Facture d\'achat</p></div>' +
+      '<div class="ligne"><span>Produit</span><b>' + a.nom_produit + '</b></div>' +
+      '<div class="ligne"><span>Montant</span><b>' + (a.prix ? a.prix.toLocaleString("fr-FR") + " FCFA" : "-") + '</b></div>' +
+      '<div class="ligne"><span>Date d\'achat</span><b>' + new Date(a.created_at).toLocaleDateString("fr-FR") + '</b></div>' +
+      '<div class="ligne"><span>Validé le</span><b>' + (a.valide_at ? new Date(a.valide_at).toLocaleDateString("fr-FR") : "-") + '</b></div>' +
+      '<div class="ligne"><span>Référence</span><b>' + a.id.slice(0,8).toUpperCase() + '</b></div>' +
+      '<p style="margin-top:30px;font-size:12px;color:#94A3B8;text-align:center">Facture générée automatiquement par LOKALI — mylokali.com</p>' +
+      '<script>window.print()</' + 'script>' +
+      '</body></html>'
+    );
+  });
+}
+
+async function incrementerVues(boutiqueId) {
+  try { await _supabase.rpc("lokali_incrementer_vue_boutique", { p_boutique_id: boutiqueId }); } catch(e) {}
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

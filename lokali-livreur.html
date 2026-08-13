@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Espace Livreur — LOKALI</title>
+<style>
+:root{color-scheme:light;--orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;--dark:#F1F5F9;--card:#FFFFFF;
+  --border:rgba(15,23,42,.10);--white:#1E293B;--gray:#64748B;--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:40px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:16px;font-weight:900}
+.wrap{max-width:600px;margin:0 auto;padding:72px 16px 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:30px 0}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;padding:12px 20px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;width:100%;text-align:center}
+.btn-sm{padding:9px 14px;font-size:12.5px;border-radius:20px;border:none;font-weight:700;cursor:pointer}
+.badge{display:inline-block;font-size:10px;padding:3px 9px;border-radius:20px;font-weight:800;background:rgba(15,52,96,.85);color:#93C5FD}
+.course-item{border-bottom:1px solid var(--border);padding:14px 0}
+.course-item:last-child{border-bottom:none}
+.toggle-partage{display:flex;align-items:center;justify-content:space-between;background:rgba(5,150,105,.06);border:1px solid rgba(5,150,105,.2);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">LOKALI</a>
+  <a class="nav-logo" href="/" style="font-size:13px">Accueil ›</a>
+</nav>
+
+<div class="wrap">
+  <div id="zoneConnexionRequise" class="card" style="display:none;text-align:center">
+    <div style="font-size:32px;margin-bottom:10px">🔒</div>
+    <h2 style="margin-bottom:8px">Connexion requise</h2>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Connecte-toi pour accéder à l'espace livreur.</p>
+    <a class="btn" href="/?action=inscription" style="display:inline-block;width:auto;padding:12px 24px">Se connecter</a>
+  </div>
+
+  <div id="zoneActivation" class="card" style="display:none;text-align:center">
+    <div style="font-size:32px;margin-bottom:10px">🛵</div>
+    <h2 style="margin-bottom:8px">Devenir livreur LOKALI</h2>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:16px">Accepte des courses de livraison pour les boutiques LOKALI près de chez toi, et sois payé directement par les vendeurs.</p>
+    <button class="btn" onclick="activerRoleLivreur()" style="width:auto;display:inline-block;padding:12px 24px">Activer mon compte livreur</button>
+  </div>
+
+  <div id="zoneLivreur" style="display:none">
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:10px">🛒 Courses disponibles</h3>
+      <div id="coursesDisponibles"><div class="empty">Chargement...</div></div>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:10px">🛵 Mes livraisons en cours</h3>
+      <div id="mesLivraisons"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _partageActifPour = null;
+var _watchId = null;
+
+function showToast(texte) {
+  var el = document.createElement("div");
+  el.textContent = texte;
+  el.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1E293B;color:#fff;padding:12px 20px;border-radius:30px;font-size:13px;font-weight:700;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,.2)";
+  document.body.appendChild(el);
+  setTimeout(function(){ el.remove(); }, 3000);
+}
+
+async function initLivreur() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) { document.getElementById("zoneConnexionRequise").style.display = "block"; return; }
+  _userId = session.user.id;
+
+  var r = await _supabase.from("prestataires").select("est_livreur").eq("user_id", _userId).maybeSingle();
+  if (!r.data || !r.data.est_livreur) { document.getElementById("zoneActivation").style.display = "block"; return; }
+
+  document.getElementById("zoneLivreur").style.display = "block";
+  chargerCoursesDisponibles();
+  chargerMesLivraisons();
+}
+
+async function activerRoleLivreur() {
+  var existant = await _supabase.from("prestataires").select("id").eq("user_id", _userId).maybeSingle();
+  var r;
+  if (existant.data) {
+    r = await _supabase.from("prestataires").update({ est_livreur: true }).eq("user_id", _userId);
+  } else {
+    r = await _supabase.from("prestataires").insert({ user_id: _userId, nom: "Livreur LOKALI", est_livreur: true });
+  }
+  if (r.error) { showToast("Erreur : " + r.error.message); return; }
+  document.getElementById("zoneActivation").style.display = "none";
+  document.getElementById("zoneLivreur").style.display = "block";
+  showToast("✅ Compte livreur activé !");
+  chargerCoursesDisponibles();
+  chargerMesLivraisons();
+}
+
+async function chargerCoursesDisponibles() {
+  var zone = document.getElementById("coursesDisponibles");
+  var r = await _supabase.from("lokt_commandes").select("*").eq("statut", "pret").eq("mode_reception", "livraison").is("livreur_id", null).order("created_at", { ascending: true }).limit(20);
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Aucune course disponible pour le moment.</div>'; return; }
+
+  zone.innerHTML = r.data.map(function(c){
+    return '<div class="course-item">' +
+      '<div style="font-weight:700;font-size:14px">' + c.nom_produit + '</div>' +
+      '<div style="font-size:12px;color:var(--gray);margin:4px 0">📍 ' + [c.livraison_quartier,c.livraison_commune,c.livraison_ville].filter(Boolean).join(", ") + '</div>' +
+      '<button class="btn-sm" style="background:var(--orange);color:#fff" onclick="accepterCourse(\'' + c.id + '\')">Accepter cette course</button>' +
+    '</div>';
+  }).join("");
+}
+
+async function accepterCourse(commandeId) {
+  var upd = await _supabase.from("lokt_commandes").update({ livreur_id: _userId, statut: "livreur_affecte" }).eq("id", commandeId).eq("livreur_id", null);
+  if (upd.error) { showToast("Erreur : " + upd.error.message); return; }
+  showToast("✅ Course acceptée !");
+  chargerCoursesDisponibles();
+  chargerMesLivraisons();
+}
+
+async function chargerMesLivraisons() {
+  var zone = document.getElementById("mesLivraisons");
+  var r = await _supabase.from("lokt_commandes").select("*").eq("livreur_id", _userId).not("statut", "in", "(livre,annulee,probleme)").order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Aucune livraison en cours.</div>'; return; }
+
+  zone.innerHTML = r.data.map(function(c){
+    var actionsHtml = "";
+    if (c.statut === "livreur_affecte") actionsHtml = '<button class="btn-sm" style="background:var(--orange);color:#fff" onclick="changerStatutLivreur(\'' + c.id + '\',\'colis_recupere\')">📤 J\'ai récupéré le colis</button>';
+    else if (c.statut === "colis_recupere") actionsHtml = '<button class="btn-sm" style="background:var(--orange);color:#fff" onclick="demarrerLivraison(\'' + c.id + '\')">🚚 Démarrer la livraison</button>';
+    else if (c.statut === "livraison_en_cours") actionsHtml = '<button class="btn-sm" style="background:var(--green);color:#fff" onclick="confirmerLivraison(\'' + c.id + '\')">🎉 Confirmer la livraison</button>';
+
+    var indicPartage = (c.statut === "livraison_en_cours" && _partageActifPour === c.id)
+      ? '<div class="toggle-partage"><span style="font-size:12px;font-weight:700;color:var(--green)">📍 Ta position est partagée en direct</span><button class="btn-sm" style="background:#DC2626;color:#fff" onclick="arreterPartagePosition()">Arrêter</button></div>'
+      : "";
+
+    var tel = c.livraison_telephone ? '<a href="tel:' + c.livraison_telephone + '" class="btn-sm" style="background:rgba(15,23,42,.08);color:var(--white);margin-left:6px">📞 Appeler le client</a>' : "";
+
+    return '<div class="course-item">' +
+      indicPartage +
+      '<div style="font-weight:700;font-size:14px">' + c.nom_produit + '</div>' +
+      '<div style="font-size:12px;color:var(--gray);margin:4px 0">📍 ' + [c.livraison_quartier,c.livraison_commune,c.livraison_ville].filter(Boolean).join(", ") + (c.livraison_indications ? " — " + c.livraison_indications : "") + '</div>' +
+      '<div style="margin-top:8px">' + actionsHtml + tel + '</div>' +
+    '</div>';
+  }).join("");
+}
+
+async function changerStatutLivreur(commandeId, nouveauStatut) {
+  var upd = await _supabase.from("lokt_commandes").update({ statut: nouveauStatut }).eq("id", commandeId);
+  if (upd.error) { showToast("Erreur : " + upd.error.message); return; }
+  chargerMesLivraisons();
+}
+
+async function demarrerLivraison(commandeId) {
+  var upd = await _supabase.from("lokt_commandes").update({ statut: "livraison_en_cours" }).eq("id", commandeId);
+  if (upd.error) { showToast("Erreur : " + upd.error.message); return; }
+  demarrerPartagePosition(commandeId);
+  chargerMesLivraisons();
+}
+
+// Partage la vraie position du téléphone du livreur, uniquement pendant une
+// livraison active, avec son accord explicite (le navigateur demande la
+// permission). Jamais de position simulée ou approximée.
+function demarrerPartagePosition(commandeId) {
+  if (!navigator.geolocation) { showToast("La géolocalisation n'est pas disponible sur cet appareil."); return; }
+  _partageActifPour = commandeId;
+  _watchId = navigator.geolocation.watchPosition(function(pos){
+    _supabase.from("lokt_livraison_position").upsert({
+      commande_id: commandeId, lat: pos.coords.latitude, lng: pos.coords.longitude, updated_at: new Date().toISOString()
+    }, { onConflict: "commande_id" }).then(function(){});
+  }, function(){
+    showToast("Impossible de partager ta position — vérifie les autorisations de localisation.");
+  }, { enableHighAccuracy: true, maximumAge: 10000 });
+  chargerMesLivraisons();
+}
+
+function arreterPartagePosition() {
+  if (_watchId !== null) { navigator.geolocation.clearWatch(_watchId); _watchId = null; }
+  _partageActifPour = null;
+  chargerMesLivraisons();
+}
+
+async function confirmerLivraison(commandeId) {
+  if (!confirm("Confirmes-tu que le colis a bien été remis au client ?")) return;
+  arreterPartagePosition();
+  var upd = await _supabase.from("lokt_commandes").update({ statut: "livre" }).eq("id", commandeId);
+  if (upd.error) { showToast("Erreur : " + upd.error.message); return; }
+  showToast("🎉 Livraison confirmée !");
+  chargerMesLivraisons();
+}
+
+document.addEventListener("DOMContentLoaded", initLivreur);
+</script>
+</body>
+</html>

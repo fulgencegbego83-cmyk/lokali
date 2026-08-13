@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Emplois — CDI, CDD, stages et alternances en Afrique francophone</title>
+<meta name="description" content="Trouvez un emploi ou publiez une offre gratuitement sur LOKALI. CDI, CDD, stages, alternance, tous secteurs, dans toute l'Afrique francophone.">
+<link rel="canonical" href="https://mylokali.com/lokali-emplois.html">
+<meta property="og:title" content="LOKALI Emplois — CDI, CDD, stages et alternances en Afrique francophone">
+<meta property="og:description" content="Trouvez un emploi ou publiez une offre gratuitement sur LOKALI. CDI, CDD, stages, alternance, tous secteurs, dans toute l'Afrique francophone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mylokali.com/lokali-emplois.html">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+
+<style>
+:root{
+  --orange:#0D9488;--orange2:#14B8A6;--orange-txt:#0F766E;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+  --gradient:linear-gradient(135deg,#1A1A2E 0%,#16213E 50%,#0F3460 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:20px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:12px 10px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+.tab.active{color:var(--orange-txt);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(249,115,22,.15);color:var(--orange2);
+  border:1px solid rgba(249,115,22,.3);border-radius:20px;padding:5px 10px;font-size:12px;margin:4px 6px 0 0}
+.chip button{background:none;border:none;color:var(--orange2);cursor:pointer;font-size:13px;line-height:1;padding:0}
+.chip-add{display:flex;gap:8px;margin-top:8px}
+.chip-add input{flex:1}
+.chip-add select{width:120px}
+.job-item{border-bottom:1px solid var(--border);padding:14px 0;cursor:pointer}
+.job-item:last-child{border-bottom:none}
+.job-title{font-weight:700;font-size:15px}
+.job-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700}
+.badge-type{background:rgba(15,52,96,.5);color:#93C5FD}
+.badge-score{background:rgba(5,150,105,.15);color:#34D399}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.skill-list{margin-bottom:8px}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.fiche-header{background:var(--white);color:#fff;padding:14px 18px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px;border-radius:14px 14px 0 0}
+.fiche-body{background:var(--card);border:1px solid var(--border);border-top:none;border-radius:0 0 14px 14px;padding:6px 18px;margin-bottom:20px}
+.fiche-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.fiche-row:last-child{border-bottom:none}
+.fiche-icon-box{background:rgba(15,23,42,.05);color:var(--gray);width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.fiche-icon-box.highlight{background:rgba(249,115,22,.12);color:var(--orange-txt)}
+.fiche-label{font-size:11px;color:var(--gray);text-transform:uppercase;font-weight:700;letter-spacing:.5px}
+.fiche-value{font-size:14.5px;font-weight:600;color:var(--white);margin-top:2px}
+.fiche-value.highlight{color:var(--orange-txt);font-weight:800}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.filtre-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filtre-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:12px 16px;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.filtre-chip.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.filtres-avances{margin-bottom:14px}
+.filtres-avances-toggle{font-size:12.5px;font-weight:700;color:var(--gray);cursor:pointer;padding:8px 2px;user-select:none}
+.filtres-avances-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:6px}
+.fraicheur-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.fraicheur-btn{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;
+  background:rgba(15,23,42,.04);border:1px solid var(--border);color:var(--gray);min-height:36px;display:inline-flex;align-items:center}
+.fraicheur-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.intro-banniere{border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
+.intro-banniere.recruteur{background:linear-gradient(135deg,rgba(8,145,178,.12),rgba(34,211,238,.05));border:1.5px solid rgba(8,145,178,.3)}
+.intro-banniere.candidat{background:linear-gradient(135deg,rgba(249,115,22,.10),rgba(251,146,60,.05));border:1.5px solid rgba(249,115,22,.3)}
+.intro-banniere h4{font-size:15px;font-weight:800;margin-bottom:4px}
+.intro-banniere.recruteur h4{color:#0891B2}
+.intro-banniere.candidat h4{color:var(--orange-txt)}
+.intro-banniere p{font-size:12.5px;color:var(--gray);line-height:1.5}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--white)}
+.photo-preview{width:90px;height:90px;border-radius:50%;object-fit:cover;border:2px solid var(--border);margin-bottom:8px}
+#cvApercu{background:#fff;border-radius:var(--radius);box-shadow:0 4px 24px rgba(15,23,42,.08);
+  max-width:760px;margin:0 auto;overflow:hidden;font-family:'Georgia',serif}
+.cv-header{background:linear-gradient(135deg,#1E293B,#334155);color:#fff;padding:32px;display:flex;gap:20px;align-items:center}
+.cv-photo{width:96px;height:96px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.3);flex-shrink:0}
+.cv-photo-vide{width:96px;height:96px;border-radius:50%;background:rgba(255,255,255,.15);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:32px}
+.cv-nom{font-size:24px;font-weight:900}
+.cv-titre{font-size:14px;opacity:.85;margin-top:2px}
+.cv-contacts{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;font-size:12px;opacity:.85}
+.cv-body{padding:28px 32px;color:#1E293B;font-family:'Segoe UI',Arial,sans-serif}
+.cv-section{margin-bottom:22px}
+.cv-section-titre{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:#F97316;
+  border-bottom:2px solid #F97316;padding-bottom:4px;margin-bottom:10px}
+.cv-exp-item{margin-bottom:14px}
+.cv-exp-poste{font-size:14px;font-weight:800}
+.cv-exp-meta{font-size:12px;color:#64748B;margin-bottom:4px}
+.cv-exp-desc{font-size:13px;line-height:1.5}
+.cv-chip{display:inline-block;background:#FFF7ED;color:#C2410C;border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;margin:0 6px 6px 0}
+.cv-portfolio-item{display:inline-block;width:31%;margin:0 1% 12px;vertical-align:top}
+.cv-portfolio-item img{width:100%;border-radius:8px;height:80px;object-fit:cover}
+.cv-portfolio-item div{font-size:11px;text-align:center;margin-top:4px;color:#64748B}
+.couleur-cv-choix{display:inline-block;width:22px;height:22px;border-radius:50%;cursor:pointer;margin-right:6px;vertical-align:middle;border:2px solid transparent}
+.couleur-cv-choix.selectionnee{border-color:#1E293B}
+.cv-subtab.active{background:var(--orange) !important;color:#fff !important}
+@media print {
+  .nav, .tabs, #cvTabsNav, #tab-editer, .btn, .no-print { display:none !important; }
+  body { background:#fff; padding:0 }
+  #cvApercu { box-shadow:none; max-width:100% }
+  .wrap{padding:0}
+}
+@media print {
+  .nav, .tabs, .btn, .no-print { display:none !important; }
+  body { background:#fff; padding:0 }
+  .wrap{padding:0}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>EMPLOIS</b></span>
+  <a class="nav-back" href="/">‹ Accueil</a>
+</nav>
+
+<div class="wrap">
+  <h1>Trouvez votre prochain poste</h1>
+  <div class="subtitle">CDI, CDD, stages, alternance — partout où LOKALI est présent</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statEmplois">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="offres">Offres d'emploi</div>
+    <div class="tab" data-tab="publier">Publier une offre</div>
+    <div class="tab" data-tab="chercheurs">Je cherche un emploi</div>
+    <div class="tab" data-tab="entreprise">🏢 Mon Entreprise</div>
+    <div class="tab" data-tab="cv">📄 Mon CV</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour postuler ou publier une offre.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <div id="tab-offres" class="tab-content">
+    <input id="rechercheOffres" placeholder="🔍 Rechercher une offre (ex: comptable, développeur...)" style="margin-bottom:10px" oninput="_filtreRechercheEmplois=this.value.trim().toLowerCase();appliquerFiltresEmplois()">
+    <div class="filtre-chips" id="offresChips"></div>
+
+    <button class="btn btn-sm" style="background:rgba(249,115,22,.1);color:var(--orange-txt);margin-bottom:14px" onclick="ouvrirCreationAlerte()">🔔 Créer une alerte pour ce type d'offre</button>
+    <button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white);margin-bottom:14px;margin-left:8px" onclick="ouvrirMesAlertes()">📋 Mes alertes</button>
+
+    <div class="filtres-avances">
+      <div class="filtres-avances-toggle" onclick="toggleFiltresAvances()">🔎 Filtres avancés (salaire, fraîcheur) <span id="filtresAvancesFleche">▾</span></div>
+      <div class="filtres-avances-panel" id="filtresAvancesPanel" style="display:none">
+        <div class="row2">
+          <div><label>Salaire minimum (FCFA)</label><input type="number" id="filtrePrixMin" placeholder="0"></div>
+          <div><label>Salaire maximum (FCFA)</label><input type="number" id="filtrePrixMax" placeholder="Aucun maximum"></div>
+        </div>
+        <label>Fraîcheur de l'offre</label>
+        <div class="fraicheur-btns" id="fraicheurBtns">
+          <span class="fraicheur-btn active" data-val="">Tous</span>
+          <span class="fraicheur-btn" data-val="24h">24h</span>
+          <span class="fraicheur-btn" data-val="7j">7 jours</span>
+          <span class="fraicheur-btn" data-val="30j">30 jours</span>
+        </div>
+        <button class="btn btn-sm" style="width:100%;margin-top:10px" onclick="appliquerFiltresEmplois()">Appliquer les filtres</button>
+        <button class="btn btn-sm" style="width:100%;margin-top:6px;background:rgba(15,23,42,.08);color:var(--white)" onclick="reinitialiserFiltresEmplois()">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div id="offresList" class="card"><div class="empty">Chargement des offres...</div></div>
+  </div>
+
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="intro-banniere recruteur">
+      <h4>📢 Publiez votre offre d'emploi</h4>
+      <p>Votre annonce est visible immédiatement auprès de plusieurs profils inscrits sur LOKALI, dans toute l'Afrique francophone.</p>
+    </div>
+    <div class="card">
+      <h3>Publier une offre d'emploi</h3>
+      <label>Nom de l'entreprise</label>
+      <input id="jEntreprise" placeholder="Ex: LOKALI SARL">
+      <label>Intitulé du poste</label>
+      <input id="jTitre" placeholder="Ex: Développeur mobile React Native">
+      <label>Description du poste</label>
+      <textarea id="jDescription" placeholder="Missions, responsabilités, profil recherché..."></textarea>
+      <label>Secteur d'activité</label>
+      <select id="jSecteur"></select>
+      <label>Compétences requises</label>
+      <div id="jCompetencesListe" class="skill-list"></div>
+      <div class="row2">
+        <select id="jNewCompSecteur"></select>
+        <select id="jNewCompCompetence"></select>
+      </div>
+      <div id="jNewCompAutreWrap" style="display:none">
+        <input id="jNewCompAutre" placeholder="Précise la compétence">
+      </div>
+      <button type="button" class="btn btn-sm" onclick="ajouterCompetenceEmploi()">+ Ajouter cette compétence</button>
+      <div class="row2">
+        <div>
+          <label>Type de contrat</label>
+          <select id="jType">
+            <option value="cdi">CDI</option>
+            <option value="cdd">CDD</option>
+            <option value="stage">Stage</option>
+            <option value="alternance">Alternance</option>
+            <option value="temporaire">Temporaire</option>
+            <option value="saisonnier">Saisonnier</option>
+          </select>
+        </div>
+        <div>
+          <label>Niveau d'expérience</label>
+          <select id="jNiveau">
+            <option value="junior">Junior</option>
+            <option value="intermediaire">Intermédiaire</option>
+            <option value="senior">Senior</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div><label>Salaire min (FCFA)</label><input id="jSalaireMin" type="number"></div>
+        <div><label>Salaire max (FCFA)</label><input id="jSalaireMax" type="number"></div>
+      </div>
+      <div class="row2">
+        <div><label>Pays</label><select id="jPays"></select></div>
+        <div><label>Ville</label><select id="jVille"></select></div>
+      </div>
+      <div id="jVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="jVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <div class="row2">
+        <div><label>Date limite</label><input id="jDateLimite" type="date"></div>
+      </div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:12px">
+        <input type="checkbox" id="jRemote" style="width:auto"> Télétravail possible
+      </label>
+      <div id="jPhotosZone"></div>
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Comment veux-tu être contacté ? (optionnel, choisis librement)</label>
+      <label>WhatsApp</label>
+      <input id="jContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label>
+      <input id="jContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label>
+      <input id="jContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <button class="btn" onclick="publierOffre()">Publier l'offre</button>
+    </div>
+  </div>
+
+  <div id="tab-chercheurs" class="tab-content" style="display:none">
+    <div id="chercheursMsg"></div>
+    <div class="intro-banniere candidat">
+      <h4>🎯 Faites-vous remarquer par les recruteurs</h4>
+      <p>Publiez votre recherche pour apparaître directement auprès des entreprises qui recrutent sur LOKALI.</p>
+    </div>
+    <div class="card" style="background:rgba(8,145,178,.05);border-color:rgba(8,145,178,.25)">
+      <h3>📄 Ton CV professionnel</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:10px">Un CV complet et à jour multiplie tes chances d'être contacté. Crée-le gratuitement, en quelques minutes.</p>
+      <a class="btn" style="background:#0891B2" href="/lokali-cv.html">Créer / modifier mon CV →</a>
+    </div>
+    <div class="card">
+      <h3>Publier ma recherche d'emploi</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:8px">Fais savoir aux entreprises que tu es disponible — visible par tous les recruteurs sur LOKALI.</p>
+      <label>Titre / poste recherché</label>
+      <input id="chTitre" placeholder="Ex: Développeur mobile junior">
+      <label>Présentation</label>
+      <textarea id="chPresentation" placeholder="Ton profil, tes compétences, ce que tu recherches..."></textarea>
+      <label>Secteur</label>
+      <select id="chSecteur"></select>
+      <div class="row2">
+        <div>
+          <label>Type de contrat souhaité</label>
+          <select id="chType">
+            <option value="cdi">CDI</option>
+            <option value="cdd">CDD</option>
+            <option value="stage">Stage</option>
+            <option value="alternance">Alternance</option>
+            <option value="temporaire">Temporaire</option>
+          </select>
+        </div>
+        <div>
+          <label>Disponibilité</label>
+          <select id="chDispo">
+            <option value="immediate">Immédiate</option>
+            <option value="1mois">Sous 1 mois</option>
+            <option value="a_definir">À définir</option>
+          </select>
+        </div>
+      </div>
+      <div class="row2">
+        <div><label>Pays</label><select id="chPays"></select></div>
+        <div><label>Ville</label><select id="chVille"></select></div>
+      </div>
+      <div id="chVilleAutreWrap" style="display:none"><label>Précise la ville</label><input id="chVilleAutre"></div>
+      <label style="display:flex;align-items:center;gap:8px;margin-top:12px">
+        <input type="checkbox" id="chRemote" style="width:auto"> Ouvert au télétravail
+      </label>
+      <label>Prétention salariale (optionnel)</label>
+      <input id="chSalaire" placeholder="Ex: 200 000 - 300 000 FCFA">
+      <button class="btn" onclick="publierRechercheEmploi()">Publier ma recherche</button>
+    </div>
+
+    <div class="card">
+      <h3>Candidats disponibles</h3>
+      <input id="rechercheChercheurs" placeholder="🔍 Rechercher (titre, secteur...)" style="margin-bottom:10px" oninput="filtrerChercheurs()">
+      <div class="row2" style="margin-bottom:10px">
+        <div><label>Secteur</label><select id="filtreSecteurChercheurs" onchange="filtrerChercheurs()"></select></div>
+        <div><label>Ville</label><input id="filtreVilleChercheurs" placeholder="Ex: Abidjan" oninput="filtrerChercheurs()"></div>
+      </div>
+      <div id="listeChercheurs"><div class="empty">Chargement...</div></div>
+    </div>
+  </div>
+
+  <div id="tab-entreprise" class="tab-content" style="display:none">
+    <div id="entrepriseMsg"></div>
+    <div class="card">
+      <h3>Fiche de mon entreprise</h3>
+      <p style="font-size:12.5px;color:var(--gray);margin-bottom:12px">Une vitrine publique qui regroupe automatiquement toutes tes offres d'emploi et appels d'offres.</p>
+      <label>Logo</label>
+      <div id="entLogoZone"></div>
+      <label>Nom de l'entreprise</label>
+      <input id="entNom" placeholder="Ex: CAMARA ET FRÈRES">
+      <label>Description</label>
+      <textarea id="entDescription" placeholder="Présente ton entreprise, son activité, son histoire..."></textarea>
+      <div class="row2">
+        <div><label>Secteur</label><select id="entSecteur"></select></div>
+        <div><label>Site web (optionnel)</label><input id="entSiteWeb" placeholder="https://..."></div>
+      </div>
+      <div class="row2">
+        <div><label>Pays</label><select id="entPays"></select></div>
+        <div><label>Ville</label><select id="entVille"></select></div>
+      </div>
+      <div id="entVilleAutreWrap" style="display:none"><label>Précise la ville</label><input id="entVilleAutre"></div>
+      <label style="margin-top:14px;font-weight:700;color:var(--white)">Contact</label>
+      <label>WhatsApp</label><input id="entContactWhatsapp" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Téléphone</label><input id="entContactTelephone" placeholder="Ex: +225 07 00 00 00 00">
+      <label>Email</label><input id="entContactEmail" type="email" placeholder="Ex: contact@exemple.com">
+      <button class="btn" onclick="enregistrerEntreprise()">Enregistrer ma fiche entreprise</button>
+    </div>
+    <div id="entrepriseLienZone"></div>
+  </div>
+
+  <div id="tab-cv" class="tab-content" style="display:none">
+<div class="tabs" id="cvTabsNav" style="margin-bottom:14px">
+    <div class="cv-subtab active" data-tab="editer" onclick="activerOngletCv('editer')" style="display:inline-block;padding:8px 16px;margin-right:8px;margin-bottom:8px;border-radius:20px;cursor:pointer;background:var(--orange);color:#fff;font-size:13px;font-weight:700">✏️ Éditer mon CV</div>
+    <div class="cv-subtab" data-tab="apercu" onclick="activerOngletCv('apercu')" style="display:inline-block;padding:8px 16px;border-radius:20px;cursor:pointer;background:rgba(15,23,42,.08);color:var(--white);font-size:13px;font-weight:700">👁️ Aperçu &amp; Télécharger</div>
+  </div>
+
+<div id="tab-editer" class="cv-subtab-content">
+    <div id="cvMsg"></div>
+
+    <div class="card">
+      <h3>Photo de profil</h3>
+      <img id="photoPreview" class="photo-preview" style="display:none">
+      <input type="file" id="photoInput" accept="image/*" onchange="televerserPhoto()">
+    </div>
+
+    <div class="card">
+      <h3>Informations personnelles</h3>
+      <label>Nom complet</label>
+      <input id="cvNom" placeholder="Prénom et nom">
+      <label>Titre professionnel</label>
+      <input id="cvTitrePro" placeholder="Ex: Développeur mobile & Entrepreneur digital">
+      <label>Présentation</label>
+      <textarea id="cvPresentation" placeholder="Quelques lignes sur ton parcours, tes objectifs..."></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="cvPays"></select></div>
+        <div><label>Ville</label><select id="cvVille"></select></div>
+      </div>
+      <div id="cvVilleAutreWrap" style="display:none"><label>Précise ta ville</label><input id="cvVilleAutre"></div>
+      <div class="row3">
+        <div><label>Téléphone</label><input id="cvTelephone" placeholder="+225 07 00 00 00 00"></div>
+        <div><label>WhatsApp</label><input id="cvWhatsapp" placeholder="+225 07 00 00 00 00"></div>
+        <div><label>Email</label><input id="cvEmail" type="email" placeholder="toi@exemple.com"></div>
+      </div>
+      <button class="btn" onclick="sauvegarderInfosPerso()">Enregistrer mes informations</button>
+    </div>
+
+    <div class="card">
+      <h3>Expériences professionnelles</h3>
+      <div id="listeExperiences"></div>
+      <div class="row2">
+        <input id="expPoste" placeholder="Poste occupé">
+        <input id="expStructure" placeholder="Entreprise / structure">
+      </div>
+      <div class="row3">
+        <input id="expDebut" type="month">
+        <input id="expFin" type="month">
+        <label style="display:flex;align-items:center;gap:6px;margin:0"><input type="checkbox" id="expEnCours" style="width:auto"> En cours</label>
+      </div>
+      <textarea id="expDescription" placeholder="Missions, responsabilités..."></textarea>
+      <button class="btn btn-sm" onclick="ajouterExperience()">+ Ajouter cette expérience</button>
+    </div>
+
+    <div class="card">
+      <h3>Formations</h3>
+      <div id="listeFormations"></div>
+      <div class="row2">
+        <input id="formDiplome" placeholder="Diplôme obtenu">
+        <input id="formEtablissement" placeholder="Établissement">
+      </div>
+      <div class="row2">
+        <input id="formDomaine" placeholder="Domaine d'étude">
+        <input id="formAnnee" type="number" placeholder="Année">
+      </div>
+      <button class="btn btn-sm" onclick="ajouterFormation()">+ Ajouter cette formation</button>
+    </div>
+
+    <div class="card">
+      <h3>Compétences</h3>
+      <div id="listeCompetencesCv"></div>
+      <div class="row2">
+        <select id="cvNewCompSecteur"></select>
+        <select id="cvNewCompCompetence"></select>
+      </div>
+      <div id="cvNewCompAutreWrap" style="display:none"><input id="cvNewCompAutre" placeholder="Précise la compétence"></div>
+      <button class="btn btn-sm" onclick="ajouterCompetenceCv()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Langues</h3>
+      <div id="listeLangues"></div>
+      <div class="row2">
+        <input id="langueNom" placeholder="Ex: Anglais">
+        <select id="langueNiveau">
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Courant">Courant</option>
+          <option value="Bilingue">Bilingue</option>
+          <option value="Langue maternelle">Langue maternelle</option>
+        </select>
+      </div>
+      <button class="btn btn-sm" onclick="ajouterLangue()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Certifications & diplômes justificatifs</h3>
+      <div id="listeCertifications"></div>
+      <div class="row2">
+        <input id="certNom" placeholder="Nom de la certification">
+        <input id="certOrganisme" placeholder="Organisme">
+      </div>
+      <div class="row2">
+        <input id="certAnnee" type="number" placeholder="Année">
+        <input type="file" id="certFichier" accept="application/pdf,image/*">
+      </div>
+      <button class="btn btn-sm" onclick="ajouterCertification()">+ Ajouter</button>
+    </div>
+
+    <div class="card">
+      <h3>Portfolio / Réalisations</h3>
+      <p style="font-size:12px;color:var(--gray);margin-bottom:8px">Ajoute des photos de tes réalisations ou des liens vers tes projets (vidéo YouTube, site web...).</p>
+      <div id="listePortfolio"></div>
+      <div class="row2">
+        <input id="portTitre" placeholder="Titre du projet">
+        <input id="portLien" placeholder="Lien (optionnel) — site, vidéo...">
+      </div>
+      <input type="file" id="portImage" accept="image/*" style="margin-top:8px">
+      <button class="btn btn-sm" onclick="ajouterPortfolio()">+ Ajouter au portfolio</button>
+    </div>
+  </div>
+
+  <div id="tab-apercu" class="cv-subtab-content" style="display:none">
+    <div style="text-align:center;margin-bottom:16px" class="no-print">
+      <div style="margin-bottom:10px">
+        <span style="font-size:12px;color:var(--gray);margin-right:8px">Couleur du CV :</span>
+        <span class="couleur-cv-choix" data-couleur="#F97316" style="background:#F97316" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#0F3460" style="background:#0F3460" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#059669" style="background:#059669" onclick="choisirCouleurCv(this)"></span>
+        <span class="couleur-cv-choix" data-couleur="#1E293B" style="background:#1E293B" onclick="choisirCouleurCv(this)"></span>
+      </div>
+      <button class="btn" onclick="window.print()">🖨️ Télécharger en PDF</button>
+      <button class="btn btn-outline" onclick="copierLienPublic()">🔗 Copier mon lien public</button>
+      <button class="btn btn-outline" onclick="toggleQrCv()">📇 QR Code</button>
+    </div>
+    <div id="qrCvZone" style="display:none;text-align:center;margin-bottom:16px" class="no-print"></div>
+    <div id="cvApercu"></div>
+  </div>
+
+
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script src="/lokali-confiance-widget.js"></script>
+<script src="/lokali-contact.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script src="/lokali-avis-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+var _userId = null;
+var _talentId = null;
+var _jobCompetences = [];
+var _mesCompetences = [];
+var _jPhotos = null;
+var _entLogo = null;
+var _maEntreprise = null;
+var _editionIdOffre = null;
+var _offresCache = {};
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+  if (nom === "chercheurs") chargerChercheurs();
+  if (nom === "entreprise") chargerMonEntreprise();
+  if (nom === "cv") initCv();
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var params = new URLSearchParams(window.location.search);
+  var entrepriseId = params.get("entreprise");
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (session) _userId = session.user.id;
+  if (entrepriseId) { afficherVitrineEntreprise(entrepriseId); return; }
+  initDropdownsEmplois();
+  if (session) {
+    _userId = session.user.id;
+    var r = await _supabase.from("lokt_talents").select("id").eq("user_id", _userId).maybeSingle();
+    if (r.data) {
+      _talentId = r.data.id;
+      var c = await _supabase.from("lokt_talent_competences").select("nom_competence").eq("talent_id", _talentId);
+      _mesCompetences = (c.data || []).map(function(x){ return x.nom_competence.toLowerCase(); });
+    }
+    if (window.LokaliPhotos) {
+      _jPhotos = LokaliPhotos.creerUploader("jPhotos", 10);
+      document.getElementById("jPhotosZone").appendChild(_jPhotos.element);
+      _entLogo = LokaliPhotos.creerUploader("entLogo", 1);
+      document.getElementById("entLogoZone").appendChild(_entLogo.element);
+    }
+    var entRes = await _supabase.from("lokt_entreprises").select("*").eq("auteur_id", _userId).maybeSingle();
+    if (entRes.data) _maEntreprise = entRes.data;
+  } else {
+    var tabPublier = document.querySelector('.tab[data-tab="publier"]');
+    if (tabPublier) tabPublier.style.display = "none";
+  }
+  chargerStats();
+  chargerOffres();
+  var hash = window.location.hash.replace("#", "");
+  if (hash === "cv" || hash === "entreprise" || hash === "chercheurs") {
+    activerOnglet(hash);
+  }
+  var paramsEmploi = new URLSearchParams(window.location.search);
+  var rechercheInitialeEmploi = paramsEmploi.get("recherche");
+  if (rechercheInitialeEmploi) {
+    document.getElementById("rechercheOffres").value = rechercheInitialeEmploi;
+    _filtreRechercheEmplois = rechercheInitialeEmploi.trim().toLowerCase();
+    setTimeout(function(){ appliquerFiltresEmplois(); }, 600);
+  }
+  var offreDemandee = paramsEmploi.get("offre");
+  if (offreDemandee) {
+    setTimeout(function(){ ouvrirDetailOffre(offreDemandee); }, 700);
+  }
+}
+
+function initDropdownsEmplois() {
+  fillSecteursSelect(document.getElementById("jSecteur"));
+  fillPaysSelect(document.getElementById("jPays"));
+  document.getElementById("jPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("jVille"));
+  });
+  document.getElementById("jVille").addEventListener("change", function() {
+    document.getElementById("jVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  fillSecteursSelect(document.getElementById("jNewCompSecteur"));
+  document.getElementById("jNewCompSecteur").addEventListener("change", function() {
+    fillMetiersBySecteur(this.value, document.getElementById("jNewCompCompetence"));
+  });
+  document.getElementById("jNewCompCompetence").addEventListener("change", function() {
+    document.getElementById("jNewCompAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+
+  fillSecteursSelect(document.getElementById("chSecteur"));
+  fillPaysSelect(document.getElementById("chPays"));
+  document.getElementById("chPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("chVille"));
+  });
+  document.getElementById("chVille").addEventListener("change", function() {
+    document.getElementById("chVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  fillSecteursSelect(document.getElementById("entSecteur"));
+  fillPaysSelect(document.getElementById("entPays"));
+  document.getElementById("entPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("entVille"));
+  });
+  document.getElementById("entVille").addEventListener("change", function() {
+    document.getElementById("entVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+function ajouterCompetenceEmploi() {
+  var val = document.getElementById("jNewCompCompetence").value;
+  var nom = (val === "__autre__") ? document.getElementById("jNewCompAutre").value.trim() : val;
+  if (!nom) return;
+  if (_jobCompetences.indexOf(nom) === -1) _jobCompetences.push(nom);
+  afficherCompetencesEmploi();
+  document.getElementById("jNewCompAutre").value = "";
+}
+
+function supprimerCompetenceEmploi(nom) {
+  _jobCompetences = _jobCompetences.filter(function(c){ return c !== nom; });
+  afficherCompetencesEmploi();
+}
+
+function afficherCompetencesEmploi() {
+  var el = document.getElementById("jCompetencesListe");
+  if (!_jobCompetences.length) { el.innerHTML = '<div class="empty">Aucune compétence ajoutée.</div>'; return; }
+  el.innerHTML = _jobCompetences.map(function(c){
+    return '<span class="chip">' + c + ' <button onclick="supprimerCompetenceEmploi(\'' + c.replace(/'/g,"\\'") + '\')">×</button></span>';
+  }).join("");
+}
+
+function calculerScore(competencesRequises) {
+  if (!_talentId) return null;
+  if (!competencesRequises || !competencesRequises.length) return null;
+  if (!_mesCompetences.length) return 0;
+  var matches = competencesRequises.filter(function(req){ return _mesCompetences.indexOf(req.toLowerCase()) !== -1; });
+  return Math.round((matches.length / competencesRequises.length) * 100);
+}
+
+var LABELS_TYPE = { cdi: "CDI", cdd: "CDD", stage: "Stage", alternance: "Alternance", temporaire: "Temporaire", saisonnier: "Saisonnier" };
+var LABELS_NIVEAU = { junior: "Junior (débutant)", intermediaire: "Intermédiaire", senior: "Senior (confirmé)" };
+
+function formaterFraicheur(dateStr) {
+  var diffHeures = (new Date() - new Date(dateStr)) / 3600000;
+  if (diffHeures < 24) return { texte: "🟢 Nouveau", nouveau: true };
+  var jours = Math.floor(diffHeures / 24);
+  if (jours < 30) return { texte: "il y a " + jours + " j", nouveau: false };
+  return { texte: "il y a " + Math.floor(jours / 30) + " mois", nouveau: false };
+}
+
+function formaterNumeroWa(numero) {
+  return (numero || "").replace(/[^0-9]/g, "");
+}
+
+function boutonsContactDirect(item) {
+  if (!_userId) {
+    return '<a href="/?action=inscription" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">🔒 Connecte-toi sur LOKALI pour voir les coordonnées</a> ';
+  }
+  var boutons = "";
+  if (item.contact_whatsapp) boutons += '<a href="https://wa.me/' + formaterNumeroWa(item.contact_whatsapp) + '" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff">💬 WhatsApp</a> ';
+  if (item.contact_telephone) boutons += '<a href="tel:' + item.contact_telephone + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">📞 Appeler</a> ';
+  if (item.contact_email) boutons += '<a href="mailto:' + item.contact_email + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">✉️ Email</a> ';
+  return boutons;
+}
+
+function partagerOffre(offreId, titre) {
+  var url = window.location.origin + "/lokali-emplois.html?offre=" + offreId;
+  var texte = "💼 " + titre + " — offre à voir sur LOKALI";
+  if (navigator.share) {
+    navigator.share({ title: titre, text: texte, url: url }).catch(function(){});
+  } else {
+    window.open("https://wa.me/?text=" + encodeURIComponent(texte + " : " + url), "_blank");
+  }
+}
+
+function ouvrirDetailOffre(id) {
+  var j = _offresCache[id];
+  if (!j) return;
+  var photos = (j.photos && j.photos.length) ? j.photos : [];
+  var salaireTxt = (j.salaire_min || j.salaire_max) ? (j.salaire_min ? j.salaire_min.toLocaleString("fr-FR") : "?") + " - " + (j.salaire_max ? j.salaire_max.toLocaleString("fr-FR") : "?") + " FCFA" : "À négocier";
+  var lieu = j.remote_ok ? (j.ville ? j.ville + " · Télétravail possible" : "Télétravail possible") : (j.ville || "Non précisé");
+  var dateTxt = new Date(j.created_at).toLocaleDateString("fr-FR", { day:"numeric", month:"long", year:"numeric" });
+
+  var galerieHtml = photos.length
+    ? '<div id="jDetailGalerieTrack" style="display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;border-radius:14px;margin-bottom:20px">' +
+        photos.map(function(p){ return '<img src="' + p + '" style="width:100%;flex:0 0 100%;aspect-ratio:16/10;object-fit:cover;scroll-snap-align:start;border-radius:14px">'; }).join("") +
+      '</div>'
+    : '';
+
+  var competencesHtml = (j.competences_requises && j.competences_requises.length)
+    ? '<div style="margin-bottom:20px">' + j.competences_requises.map(function(c){ return '<span class="chip" style="margin-top:0">' + c + '</span>'; }).join("") + '</div>'
+    : '';
+
+  var overlay = document.createElement("div");
+  overlay.id = "offreDetailOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:var(--dark);z-index:10000;overflow-y:auto";
+  overlay.innerHTML =
+    '<div style="position:sticky;top:0;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">' +
+      '<button onclick="fermerDetailOffre()" style="background:rgba(15,23,42,.08);border:none;border-radius:20px;padding:8px 16px;font-weight:700;cursor:pointer;color:var(--white)">‹ Retour</button>' +
+      '<span style="font-weight:800;font-size:14px">Détail de l\'offre</span>' +
+      '<span style="width:70px"></span>' +
+    '</div>' +
+    '<div style="max-width:640px;margin:0 auto;padding:24px 16px 40px">' +
+
+      '<div style="text-align:center;margin-bottom:22px">' +
+        '<span class="badge badge-type" style="margin-bottom:10px;display:inline-block">' + (LABELS_TYPE[j.type_contrat] || j.type_contrat) + '</span>' +
+        '<h1 style="font-size:22px;font-weight:900;margin:6px 0 4px;color:var(--white)">' + j.titre_poste + '</h1>' +
+        (j.entreprise_nom ? '<div style="font-size:14px;color:var(--gray);margin-bottom:14px">' + j.entreprise_nom + '</div>' : '') +
+        '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">' +
+          '<button class="btn" onclick="postuler(\'' + j.id + '\')">Postuler à l\'offre</button>' +
+          '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="partagerOffre(\'' + j.id + '\',\'' + j.titre_poste.replace(/'/g,"\\'") + '\')">🔗 Partager</button>' +
+        '</div>' +
+        '<div style="font-size:11.5px;color:var(--gray);margin-top:10px">Publiée le ' + dateTxt + '</div>' +
+      '</div>' +
+
+      galerieHtml +
+
+      '<div class="fiche-header">📋 Fiche synthétique du poste</div>' +
+      '<div class="fiche-body">' +
+        '<div class="fiche-row">' +
+          '<div class="fiche-icon-box">🏷️</div>' +
+          '<div><div class="fiche-label">Secteur</div><div class="fiche-value">' + (j.secteur || "Non précisé") + '</div></div>' +
+        '</div>' +
+        '<div class="fiche-row">' +
+          '<div class="fiche-icon-box highlight">📍</div>' +
+          '<div><div class="fiche-label">Zone locale</div><div class="fiche-value highlight">' + lieu + '</div></div>' +
+        '</div>' +
+        '<div class="fiche-row">' +
+          '<div class="fiche-icon-box">📈</div>' +
+          '<div><div class="fiche-label">Niveau d\'expérience</div><div class="fiche-value">' + (LABELS_NIVEAU[j.niveau_experience] || "Non précisé") + '</div></div>' +
+        '</div>' +
+        '<div class="fiche-row">' +
+          '<div class="fiche-icon-box highlight">💰</div>' +
+          '<div><div class="fiche-label">Proposition salariale</div><div class="fiche-value highlight">' + salaireTxt + '</div></div>' +
+        '</div>' +
+        (j.date_limite ? '<div class="fiche-row"><div class="fiche-icon-box">⏳</div><div><div class="fiche-label">Date limite de candidature</div><div class="fiche-value">' + new Date(j.date_limite).toLocaleDateString("fr-FR") + '</div></div></div>' : '') +
+      '</div>' +
+
+      (competencesHtml ? '<h3 style="font-size:15px;margin-bottom:10px">Compétences recherchées</h3>' + competencesHtml : '') +
+
+      '<h3 style="font-size:15px;margin-bottom:10px">Description du poste</h3>' +
+      '<p style="font-size:14px;color:var(--white);line-height:1.7;white-space:pre-wrap;margin-bottom:24px">' + j.description + '</p>' +
+
+      '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px">' +
+        boutonsContactDirect(j) +
+        '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'emploi\', \'' + j.id + '\', \'' + j.auteur_id + '\', \'' + j.titre_poste.replace(/'/g,"\\'") + '\')">💬 Contacter</button>' +
+        '<button class="btn" style="background:var(--orange)" onclick="postuler(\'' + j.id + '\')">Postuler à l\'offre</button>' +
+        '<button class="btn btn-sm" style="background:rgba(220,38,38,.08);color:#DC2626" onclick="LokaliSignaler.ouvrirModal(_supabase,\'utilisateur\',\'' + j.auteur_id + '\',_userId)">🚩 Signaler</button>' +
+      '</div>' +
+      '<div class="card"><h3 style="font-size:14px;margin-bottom:8px">🏢 Le recruteur</h3><div id="avisResumeOffre">Chargement...</div><div id="avisFormOffre" style="margin-top:10px"></div><div id="avisListeOffre" style="margin-top:14px"></div></div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  document.body.style.overflow = "hidden";
+  chargerAvisOffre(j.auteur_id);
+}
+
+async function chargerAvisOffre(auteurId) {
+  if (!window.LokaliAvis) return;
+  var resume = await LokaliAvis.chargerResume(_supabase, "utilisateur", auteurId);
+  document.getElementById("avisResumeOffre").innerHTML = LokaliAvis.afficherResumeHTML(resume);
+
+  var listeZone = document.getElementById("avisListeOffre");
+  if (listeZone) {
+    var avisListe = await LokaliAvis.chargerAvis(_supabase, "utilisateur", auteurId);
+    listeZone.innerHTML = avisListe.length
+      ? '<h4 style="font-size:13px;margin-bottom:6px;color:var(--white)">Avis reçus</h4>' + LokaliAvis.rendreAvisListeHTML(avisListe)
+      : "";
+  }
+
+  var formZone = document.getElementById("avisFormOffre");
+  if (!_userId) { formZone.innerHTML = '<a href="/?action=inscription" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">🔒 Connecte-toi pour laisser un avis</a>'; return; }
+  if (_userId === auteurId) { formZone.style.display = "none"; return; }
+  formZone.innerHTML = LokaliAvis.construireFormulaireHTML("avisO");
+  LokaliAvis.activerFormulaire("avisO", _supabase, "utilisateur", auteurId, _userId, function(){ chargerAvisOffre(auteurId); });
+}
+
+function fermerDetailOffre() {
+  var overlay = document.getElementById("offreDetailOverlay");
+  if (overlay) overlay.remove();
+  document.body.style.overflow = "";
+}
+
+async function chargerOffres() {
+  var el = document.getElementById("offresList");
+  var r = await _supabase.from("lokt_emplois").select("*").eq("statut", "ouverte").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucune offre ouverte pour le moment.</div>'; return; }
+  _offresCache = {};
+  r.data.forEach(function(j){ _offresCache[j.id] = j; });
+
+  el.innerHTML = r.data.map(function(j){
+    var score = calculerScore(j.competences_requises);
+    var scoreHtml = (score !== null) ? '<span class="badge badge-score">' + score + '% compatible</span> ' : "";
+    var lieu = j.remote_ok ? (j.ville ? j.ville + " · Télétravail OK" : "Télétravail OK") : (j.ville || "Lieu non précisé");
+    var salaire = (j.salaire_min || j.salaire_max) ? (j.salaire_min || "?") + " - " + (j.salaire_max || "?") + " FCFA" : "Salaire non précisé";
+    var fraicheur = formaterFraicheur(j.created_at);
+    var estAuteur = _userId && j.auteur_id === _userId;
+    return '<div class="job-item" data-secteur="' + (j.secteur || "") + '" data-salairemin="' + (j.salaire_min || "") + '" data-salairemax="' + (j.salaire_max || "") + '" data-date="' + j.created_at + '" data-titre="' + (j.titre_poste + " " + (j.entreprise_nom||"")).replace(/"/g,"").toLowerCase() + '">' +
+      '<span class="badge badge-type">' + (LABELS_TYPE[j.type_contrat] || j.type_contrat) + '</span> ' +
+      (fraicheur.nouveau ? '<span class="badge" style="background:rgba(5,150,105,.15);color:#059669">' + fraicheur.texte + '</span> ' : '') +
+      '<div class="job-title" style="cursor:pointer" onclick="ouvrirDetailOffre(\'' + j.id + '\')">' + j.titre_poste + (j.entreprise_nom ? ' — ' + j.entreprise_nom : '') + '</div>' +
+      '<div class="job-meta">' + lieu + ' · ' + salaire + (fraicheur.nouveau ? '' : ' · ' + fraicheur.texte) + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + j.description.slice(0, 160) + (j.description.length > 160 ? '…' : '') + '</div>' +
+      (j.photos && j.photos.length ? '<img src="' + j.photos[0] + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:12px;margin-bottom:10px;display:block;cursor:pointer" onclick="ouvrirDetailOffre(\'' + j.id + '\')">' : '') +
+      (j.competences_requises && j.competences_requises.length ? '<div style="margin-bottom:8px">' + j.competences_requises.map(function(c){ return '<span class="chip" style="margin-top:0">' + c + '</span>'; }).join("") + '</div>' : '') +
+      scoreHtml +
+      '<div style="margin-top:8px"><button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirDetailOffre(\'' + j.id + '\')">📄 Voir la fiche complète</button></div>' +
+      (estAuteur
+        ? '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="modifierOffre(_offresCache[\'' + j.id + '\'])">✏️ Modifier</button> ' +
+          '<button class="btn btn-sm" style="background:rgba(249,115,22,.1);color:var(--orange-txt)" onclick="voirCandidatures(\'' + j.id + '\',\'' + j.titre_poste.replace(/'/g,"\\'") + '\')">👥 Candidatures</button>'
+        : boutonsContactDirect(j) + '<button class="btn btn-sm" style="margin-left:8px" onclick="postuler(\'' + j.id + '\')">Postuler</button> ' +
+          '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'emploi\', \'' + j.id + '\', \'' + j.auteur_id + '\', \'' + j.titre_poste.replace(/'/g,"\\'") + '\')">💬 Contacter</button>') +
+      '</div>';
+  }).join("");
+  construireChipsSecteurs();
+}
+
+// ── Chips de catégories, façon "Trouvez votre travail idéal" ──
+// Réutilise directement la liste des secteurs déjà chargée dans le formulaire
+// de publication (fillSecteursSelect), pas de doublon de données.
+function construireChipsSecteurs() {
+  var select = document.getElementById("jSecteur");
+  var chipsWrap = document.getElementById("offresChips");
+  if (!select || !chipsWrap || !select.options.length) return;
+  var options = Array.prototype.slice.call(select.options).filter(function(o){ return o.value; }).slice(0, 12);
+  if (!options.length) return;
+  chipsWrap.innerHTML = '<span class="filtre-chip active" data-secteur="">Tous</span>' +
+    options.map(function(o){ return '<span class="filtre-chip" data-secteur="' + o.value.replace(/"/g,'&quot;') + '">' + o.textContent + '</span>'; }).join("");
+  chipsWrap.querySelectorAll(".filtre-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      chipsWrap.querySelectorAll(".filtre-chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      _filtreSecteurEmplois = chip.dataset.secteur;
+      appliquerFiltresEmplois();
+    });
+  });
+
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      _filtreFraicheurEmplois = btn.dataset.val;
+      appliquerFiltresEmplois();
+    });
+  });
+}
+
+// ── Filtres avancés : salaire min/max + fraîcheur (feuille de route, benchmark
+// CoinAfrique) — combinés avec le filtre de secteur, tous appliqués ensemble. ──
+var _filtreSecteurEmplois = "";
+var _filtreRechercheEmplois = "";
+var _filtreFraicheurEmplois = "";
+
+function toggleFiltresAvances() {
+  var panel = document.getElementById("filtresAvancesPanel");
+  var fleche = document.getElementById("filtresAvancesFleche");
+  var ouvert = panel.style.display !== "none";
+  panel.style.display = ouvert ? "none" : "";
+  fleche.textContent = ouvert ? "▾" : "▴";
+}
+
+function appliquerFiltresEmplois() {
+  var filtreMin = parseFloat(document.getElementById("filtrePrixMin").value);
+  var filtreMax = parseFloat(document.getElementById("filtrePrixMax").value);
+  var maintenant = new Date();
+  var seuilsHeures = { "24h": 24, "7j": 24 * 7, "30j": 24 * 30 };
+
+  var items = document.querySelectorAll("#offresList .job-item");
+  var aucunVisible = true;
+  items.forEach(function(it){
+    var visible = true;
+
+    if (_filtreSecteurEmplois && it.dataset.secteur !== _filtreSecteurEmplois) visible = false;
+    if (_filtreRechercheEmplois && it.dataset.titre.indexOf(_filtreRechercheEmplois) === -1) visible = false;
+
+    // Chevauchement de plage : l'offre convient si son salaire max >= mon minimum
+    // souhaité, et son salaire min <= mon maximum souhaité.
+    var sMin = it.dataset.salairemin ? parseFloat(it.dataset.salairemin) : null;
+    var sMax = it.dataset.salairemax ? parseFloat(it.dataset.salairemax) : null;
+    if (!isNaN(filtreMin) && sMax !== null && sMax < filtreMin) visible = false;
+    if (!isNaN(filtreMin) && sMax === null && sMin !== null && sMin < filtreMin) visible = false;
+    if (!isNaN(filtreMax) && sMin !== null && sMin > filtreMax) visible = false;
+
+    if (_filtreFraicheurEmplois && it.dataset.date) {
+      var diffHeures = (maintenant - new Date(it.dataset.date)) / 3600000;
+      if (diffHeures > seuilsHeures[_filtreFraicheurEmplois]) visible = false;
+    }
+
+    it.style.display = visible ? "" : "none";
+    if (visible) aucunVisible = false;
+  });
+
+  var elVide = document.getElementById("offresVideFiltre");
+  if (elVide) elVide.remove();
+  if (aucunVisible && items.length) {
+    document.getElementById("offresList").insertAdjacentHTML("beforeend", '<div class="empty" id="offresVideFiltre">Aucune offre ne correspond à ces filtres.</div>');
+  }
+}
+
+function reinitialiserFiltresEmplois() {
+  document.getElementById("filtrePrixMin").value = "";
+  document.getElementById("filtrePrixMax").value = "";
+  _filtreFraicheurEmplois = "";
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b, i){ b.classList.toggle("active", i === 0); });
+  appliquerFiltresEmplois();
+}
+
+async function postuler(emploiId) {
+  if (!_userId) { alert("Connecte-toi d'abord pour postuler."); window.location.href = "/"; return; }
+  if (!_talentId) {
+    // Un compte LOKALI suffit pour tout faire — on crée silencieusement le
+    // profil talent minimal nécessaire en coulisses, sans rien demander.
+    var creation = await _supabase.from("lokt_talents").insert({ user_id: _userId }).select().single();
+    if (creation.error) { alert("Erreur : " + creation.error.message); return; }
+    _talentId = creation.data.id;
+  }
+  var r = await _supabase.from("lokt_emplois").select("competences_requises").eq("id", emploiId).single();
+  var score = r.data ? calculerScore(r.data.competences_requises) : null;
+  var lettre = prompt("Un mot pour accompagner ta candidature (optionnel) :") || "";
+  var ins = await _supabase.from("lokt_candidatures_emploi").insert({
+    emploi_id: emploiId, talent_id: _talentId, lettre_motivation: lettre, score_compatibilite: score
+  });
+  if (ins.error) {
+    if (ins.error.message.indexOf("duplicate") !== -1) { alert("Tu as déjà postulé à cette offre ✅"); return; }
+    alert("Erreur : " + ins.error.message); return;
+  }
+  alert("Candidature envoyée ✅");
+}
+
+async function publierOffre() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("jTitre").value.trim();
+  var description = document.getElementById("jDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  if (window.LokaliModeration) {
+    var moderation = LokaliModeration.verifierTexte(titre + " " + description);
+    if (!moderation.ok) { afficherMsg("publierMsg", moderation.motif, false); return; }
+  }
+
+  var villeVal = document.getElementById("jVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("jVilleAutre").value.trim();
+
+  var payload = {
+    auteur_id: _userId,
+    entreprise_nom: document.getElementById("jEntreprise").value.trim(),
+    entreprise_id: _maEntreprise ? _maEntreprise.id : null,
+    titre_poste: titre,
+    description: description,
+    secteur: document.getElementById("jSecteur").value,
+    competences_requises: _jobCompetences,
+    type_contrat: document.getElementById("jType").value,
+    niveau_experience: document.getElementById("jNiveau").value,
+    salaire_min: parseInt(document.getElementById("jSalaireMin").value) || null,
+    salaire_max: parseInt(document.getElementById("jSalaireMax").value) || null,
+    pays: document.getElementById("jPays").value,
+    ville: villeVal,
+    date_limite: document.getElementById("jDateLimite").value || null,
+    remote_ok: document.getElementById("jRemote").checked,
+    contact_whatsapp: document.getElementById("jContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("jContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("jContactEmail").value.trim() || null,
+    photos: _jPhotos ? _jPhotos.getPhotos() : []
+  };
+  var ins;
+  if (_editionIdOffre) {
+    ins = await _supabase.from("lokt_emplois").update(payload).eq("id", _editionIdOffre);
+  } else {
+    payload.statut = "ouverte";
+    ins = await _supabase.from("lokt_emplois").insert(payload);
+  }
+  if (ins.error) { afficherMsg("publierMsg", "Erreur : " + ins.error.message, false); return; }
+  afficherMsg("publierMsg", _editionIdOffre ? "Modifications enregistrées ✅" : "Offre publiée ✅", true);
+  annulerEditionOffre();
+  activerOnglet("offres");
+  chargerOffres();
+}
+
+function modifierOffre(j) {
+  activerOnglet("publier");
+  _editionIdOffre = j.id;
+  document.getElementById("jEntreprise").value = j.entreprise_nom || "";
+  document.getElementById("jTitre").value = j.titre_poste || "";
+  document.getElementById("jDescription").value = j.description || "";
+  document.getElementById("jSecteur").value = j.secteur || "";
+  document.getElementById("jType").value = j.type_contrat || "";
+  document.getElementById("jNiveau").value = j.niveau_experience || "";
+  document.getElementById("jSalaireMin").value = j.salaire_min || "";
+  document.getElementById("jSalaireMax").value = j.salaire_max || "";
+  document.getElementById("jPays").value = j.pays || "";
+  fillVillesByPays(j.pays, document.getElementById("jVille"));
+  setTimeout(function(){ document.getElementById("jVille").value = j.ville || ""; }, 300);
+  document.getElementById("jDateLimite").value = j.date_limite || "";
+  document.getElementById("jRemote").checked = !!j.remote_ok;
+  document.getElementById("jContactWhatsapp").value = j.contact_whatsapp || "";
+  document.getElementById("jContactTelephone").value = j.contact_telephone || "";
+  document.getElementById("jContactEmail").value = j.contact_email || "";
+  _jobCompetences = (j.competences_requises || []).slice();
+  afficherCompetencesEmploi();
+  var btn = document.querySelector('button[onclick="publierOffre()"]');
+  if (btn) btn.textContent = "Enregistrer les modifications";
+}
+
+function annulerEditionOffre() {
+  _editionIdOffre = null;
+  ["jEntreprise","jTitre","jDescription","jSalaireMin","jSalaireMax","jDateLimite"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("jRemote").checked = false;
+  document.getElementById("jContactWhatsapp").value = "";
+  document.getElementById("jContactTelephone").value = "";
+  document.getElementById("jContactEmail").value = "";
+  _jobCompetences = [];
+  afficherCompetencesEmploi();
+  var btn = document.querySelector('button[onclick="publierOffre()"]');
+  if (btn) btn.textContent = "Publier l'offre";
+}
+
+async function chargerStats() {
+  try {
+    var r = await _supabase.from("lokt_emplois").select("*", { count: "exact", head: true }).eq("statut", "ouverte");
+    document.getElementById("statEmplois").textContent = (r.count || 0) + " offres ouvertes";
+  } catch(e) {}
+}
+chargerStats();
+
+async function publierRechercheEmploi() {
+  if (!_userId) { afficherMsg("chercheursMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("chTitre").value.trim();
+  if (!titre) { afficherMsg("chercheursMsg", "Le titre du poste recherché est obligatoire.", false); return; }
+  var villeVal = document.getElementById("chVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("chVilleAutre").value.trim();
+
+  var payload = {
+    user_id: _userId,
+    titre: titre,
+    presentation: document.getElementById("chPresentation").value.trim(),
+    secteur: document.getElementById("chSecteur").value,
+    type_contrat_souhaite: document.getElementById("chType").value,
+    disponibilite: document.getElementById("chDispo").value,
+    pays: document.getElementById("chPays").value,
+    ville: villeVal,
+    remote_ok: document.getElementById("chRemote").checked,
+    pretention_salariale: document.getElementById("chSalaire").value.trim()
+  };
+  var r = await _supabase.from("lokt_recherches_emploi").upsert(payload, { onConflict: "user_id" });
+  if (r.error) { afficherMsg("chercheursMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("chercheursMsg", "Recherche publiée ✅ — visible par les recruteurs", true);
+  chargerChercheurs();
+}
+
+var LABELS_DISPO = { immediate: "Disponible immédiatement", "1mois": "Disponible sous 1 mois", a_definir: "Disponibilité à définir" };
+var LABELS_TYPE_CH = { cdi: "CDI", cdd: "CDD", stage: "Stage", alternance: "Alternance", temporaire: "Temporaire" };
+
+var _chercheursCache = [];
+
+async function chargerChercheurs() {
+  var el = document.getElementById("listeChercheurs");
+  var r = await _supabase.from("lokt_recherches_emploi").select("*").eq("statut", "ouverte").order("created_at", { ascending: false }).limit(60);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucun candidat disponible pour le moment.</div>'; return; }
+  _chercheursCache = r.data;
+  if (window.fillSecteursSelect) {
+    fillSecteursSelect(document.getElementById("filtreSecteurChercheurs"));
+    document.getElementById("filtreSecteurChercheurs").insertAdjacentHTML("afterbegin", '<option value="">Tous les secteurs</option>');
+  }
+  rendreChercheurs(_chercheursCache);
+}
+
+function filtrerChercheurs() {
+  var texte = (document.getElementById("rechercheChercheurs").value || "").trim().toLowerCase();
+  var secteur = document.getElementById("filtreSecteurChercheurs").value;
+  var ville = (document.getElementById("filtreVilleChercheurs").value || "").trim().toLowerCase();
+  var filtres = _chercheursCache.filter(function(c){
+    var okTexte = !texte || (c.titre && c.titre.toLowerCase().indexOf(texte) > -1) || (c.presentation && c.presentation.toLowerCase().indexOf(texte) > -1);
+    var okSecteur = !secteur || c.secteur === secteur;
+    var okVille = !ville || (c.ville && c.ville.toLowerCase().indexOf(ville) > -1);
+    return okTexte && okSecteur && okVille;
+  });
+  rendreChercheurs(filtres);
+}
+
+function rendreChercheurs(liste) {
+  var el = document.getElementById("listeChercheurs");
+  if (!liste.length) { el.innerHTML = '<div class="empty">Aucun candidat ne correspond à ta recherche.</div>'; return; }
+  el.innerHTML = liste.map(function(c) {
+    var lieu = c.remote_ok ? (c.ville ? c.ville + " · Télétravail OK" : "Télétravail OK") : (c.ville || "Lieu non précisé");
+    return '<div class="job-item">' +
+      '<span class="badge badge-type">' + (LABELS_TYPE_CH[c.type_contrat_souhaite] || c.type_contrat_souhaite) + '</span> ' +
+      '<span class="badge" style="background:rgba(5,150,105,.15);color:#34D399">' + (LABELS_DISPO[c.disponibilite] || c.disponibilite) + '</span>' +
+      '<div class="job-title">' + c.titre + '</div>' +
+      '<div class="job-meta">' + lieu + (c.secteur ? ' · ' + c.secteur : '') + '</div>' +
+      (c.presentation ? '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + c.presentation.slice(0, 160) + (c.presentation.length > 160 ? '…' : '') + '</div>' : '') +
+      '<button class="btn btn-sm" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'candidat\', \'' + c.id + '\', \'' + c.user_id + '\', \'' + c.titre.replace(/'/g,"\\'") + '\')">💬 Contacter</button>' +
+      '</div>';
+  }).join("");
+}
+
+// ══ ALERTES EMPLOI ══
+function ouvrirCreationAlerte() {
+  if (!_userId) {
+    if (confirm("Connecte-toi pour créer une alerte. Aller à la connexion maintenant ?")) window.location.href = "/?action=inscription";
+    return;
+  }
+  var overlay = document.createElement("div");
+  overlay.id = "alerteOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px";
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:16px;padding:20px;max-width:380px;width:100%;color:var(--white);max-height:90vh;overflow-y:auto">' +
+      '<div style="font-weight:900;font-size:16px;margin-bottom:4px">🔔 Créer une alerte emploi</div>' +
+      '<div style="font-size:12.5px;color:var(--gray);margin-bottom:14px">Reçois un email dès qu\'une offre correspondante est publiée.</div>' +
+      '<label>Secteur (optionnel)</label><select id="alerteSecteur"></select>' +
+      '<label>Ville (optionnel)</label><input id="alerteVille" placeholder="Ex: Abidjan">' +
+      '<label>Mots-clés (optionnel)</label><input id="alerteMotsCles" placeholder="Ex: comptable, développeur...">' +
+      '<div id="alerteMsg" style="margin:10px 0"></div>' +
+      '<div style="display:flex;gap:8px;margin-top:6px">' +
+        '<button style="flex:1;background:rgba(15,23,42,.08);border:none;border-radius:30px;padding:11px;font-weight:700;font-size:13px;cursor:pointer" onclick="document.getElementById(\'alerteOverlay\').remove()">Annuler</button>' +
+        '<button class="btn" style="flex:1;margin-top:0" onclick="creerAlerteEmploi()">Créer l\'alerte</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  if (typeof fillSecteursSelect === "function") fillSecteursSelect(document.getElementById("alerteSecteur"));
+}
+
+async function creerAlerteEmploi() {
+  var secteur = document.getElementById("alerteSecteur").value;
+  var ville = document.getElementById("alerteVille").value.trim();
+  var motsCles = document.getElementById("alerteMotsCles").value.trim();
+  var r = await _supabase.from("lokt_alertes_emploi").insert({ auteur_id: _userId, secteur: secteur || null, ville: ville || null, mots_cles: motsCles || null });
+  if (r.error) { document.getElementById("alerteMsg").innerHTML = '<span style="color:#DC2626;font-size:12px">Erreur : ' + r.error.message + '</span>'; return; }
+  document.getElementById("alerteOverlay").innerHTML = '<div style="background:#fff;border-radius:16px;padding:30px 20px;text-align:center;max-width:320px"><div style="font-size:32px;margin-bottom:10px">✅</div><div style="font-weight:800;color:var(--white)">Alerte créée ! Tu recevras un email dès qu\'une offre correspondra.</div></div>';
+  setTimeout(function(){ var o = document.getElementById("alerteOverlay"); if (o) o.remove(); }, 2200);
+}
+
+function ouvrirMesAlertes() {
+  if (!_userId) {
+    if (confirm("Connecte-toi pour voir tes alertes. Aller à la connexion maintenant ?")) window.location.href = "/?action=inscription";
+    return;
+  }
+  var overlay = document.createElement("div");
+  overlay.id = "mesAlertesOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:20000;display:flex;align-items:center;justify-content:center;padding:20px";
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:16px;padding:20px;max-width:400px;width:100%;color:var(--white);max-height:80vh;overflow-y:auto">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">' +
+        '<div style="font-weight:900;font-size:16px">📋 Mes alertes</div>' +
+        '<button onclick="document.getElementById(\'mesAlertesOverlay\').remove()" style="background:rgba(15,23,42,.08);border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;font-size:16px">✕</button>' +
+      '</div>' +
+      '<div id="listeMesAlertes"><div class="empty">Chargement...</div></div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  chargerMesAlertes();
+}
+
+async function chargerMesAlertes() {
+  var zone = document.getElementById("listeMesAlertes");
+  var r = await _supabase.from("lokt_alertes_emploi").select("*").eq("auteur_id", _userId).order("created_at", { ascending: false });
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Aucune alerte créée pour le moment.</div>'; return; }
+  zone.innerHTML = r.data.map(function(a){
+    var criteres = [];
+    if (a.secteur) criteres.push(a.secteur);
+    if (a.ville) criteres.push(a.ville);
+    if (a.mots_cles) criteres.push('"' + a.mots_cles + '"');
+    return '<div style="background:var(--dark3);border-radius:10px;padding:12px;margin-bottom:8px">' +
+      '<div style="font-size:13px;font-weight:700;margin-bottom:6px">' + (criteres.length ? criteres.join(" · ") : "Toutes les offres") + '</div>' +
+      '<button class="btn btn-sm" style="background:rgba(220,38,38,.08);color:#DC2626" onclick="supprimerAlerte(\'' + a.id + '\')">🗑️ Supprimer cette alerte</button>' +
+    '</div>';
+  }).join("");
+}
+
+async function supprimerAlerte(id) {
+  var r = await _supabase.from("lokt_alertes_emploi").delete().eq("id", id);
+  if (r.error) { alert("Erreur : " + r.error.message); return; }
+  chargerMesAlertes();
+}
+
+// ══ MINI-ATS ══
+var LABELS_STATUT_CANDIDATURE = { recu: "📥 Reçu", selectionne: "⭐ Sélectionné", entretien: "📅 Entretien", refuse: "❌ Refusé" };
+var TEMPLATES_REPONSE = {
+  selectionne: "Bonjour, votre profil a retenu notre attention pour ce poste. Nous revenons vers vous prochainement pour la suite du processus.",
+  entretien: "Bonjour, nous souhaiterions vous rencontrer pour un entretien. Merci de nous indiquer vos disponibilités.",
+  refuse: "Bonjour, nous vous remercions pour votre candidature. Après étude, nous avons malheureusement retenu un autre profil pour ce poste. Nous gardons votre profil pour de futures opportunités."
+};
+
+async function voirCandidatures(emploiId, titreOffre) {
+  var overlay = document.createElement("div");
+  overlay.id = "candidaturesOverlay";
+  overlay.style.cssText = "position:fixed;inset:0;background:var(--dark);z-index:10000;overflow-y:auto";
+  overlay.innerHTML =
+    '<div style="position:sticky;top:0;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)">' +
+      '<button onclick="document.getElementById(\'candidaturesOverlay\').remove();document.body.style.overflow=\'\'" style="background:rgba(15,23,42,.08);border:none;border-radius:20px;padding:8px 16px;font-weight:700;cursor:pointer;color:var(--white)">‹ Retour</button>' +
+      '<span style="font-weight:800;font-size:14px">Candidatures</span><span style="width:70px"></span>' +
+    '</div>' +
+    '<div style="max-width:640px;margin:0 auto;padding:20px 16px 40px">' +
+      '<h2 style="font-size:17px;margin-bottom:16px">' + titreOffre + '</h2>' +
+      '<div id="candidaturesListe"><div class="empty">Chargement...</div></div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  document.body.style.overflow = "hidden";
+
+  var r = await _supabase.from("lokt_candidatures_emploi").select("*, lokt_talents(titre, ville, cv_url, user_id)").eq("emploi_id", emploiId).order("created_at", { ascending: false });
+  var zone = document.getElementById("candidaturesListe");
+  if (r.error || !r.data || !r.data.length) { zone.innerHTML = '<div class="empty">Aucune candidature reçue pour le moment.</div>'; return; }
+
+  var idsUsers = r.data.map(function(c){ return c.lokt_talents ? c.lokt_talents.user_id : null; }).filter(Boolean);
+  var profils = {};
+  if (idsUsers.length) {
+    var pr = await _supabase.from("profiles").select("id, prenom, nom, telephone").in("id", idsUsers);
+    (pr.data || []).forEach(function(p){ profils[p.id] = p; });
+  }
+
+  zone.innerHTML = r.data.map(function(c){
+    var t = c.lokt_talents || {};
+    var profil = profils[t.user_id] || {};
+    var nom = (profil.prenom || profil.nom) ? ((profil.prenom||"") + " " + (profil.nom||"")).trim() : "Candidat LOKALI";
+    return '<div class="card">' +
+      '<span id="candidTel-' + c.id + '" data-tel="' + (profil.telephone || "") + '" style="display:none"></span>' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">' +
+        '<div><div style="font-weight:800;font-size:14px">' + nom + '</div><div style="font-size:12px;color:var(--gray)">' + (t.titre || "") + (t.ville ? " · " + t.ville : "") + '</div></div>' +
+        '<span class="badge" id="statutBadge-' + c.id + '">' + (LABELS_STATUT_CANDIDATURE[c.statut] || c.statut) + '</span>' +
+      '</div>' +
+      (c.score_compatibilite !== null ? '<div style="font-size:12px;color:#059669;font-weight:700;margin-bottom:6px">' + c.score_compatibilite + '% de compatibilité</div>' : '') +
+      (c.lettre_motivation ? '<p style="font-size:13px;color:var(--white);line-height:1.5;margin-bottom:8px">' + c.lettre_motivation + '</p>' : '') +
+      (t.cv_url ? '<a href="' + t.cv_url + '" target="_blank" style="font-size:12px;color:var(--orange2);display:block;margin-bottom:10px">📄 Voir le CV →</a>' : '') +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px">' +
+        '<select onchange="changerStatutCandidature(\'' + c.id + '\', this.value)" style="width:auto;padding:6px 10px;font-size:12px">' +
+          Object.keys(LABELS_STATUT_CANDIDATURE).map(function(k){ return '<option value="' + k + '"' + (k === c.statut ? " selected" : "") + '>' + LABELS_STATUT_CANDIDATURE[k] + '</option>'; }).join("") +
+        '</select>' +
+        (profil.telephone ? '<a href="tel:' + profil.telephone + '" class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)">📞 Appeler</a>' : '') +
+      '</div>' +
+    '</div>';
+  }).join("");
+}
+
+async function changerStatutCandidature(candidatureId, nouveauStatut) {
+  var r = await _supabase.from("lokt_candidatures_emploi").update({ statut: nouveauStatut }).eq("id", candidatureId);
+  if (r.error) { alert("Erreur : " + r.error.message); return; }
+  var badge = document.getElementById("statutBadge-" + candidatureId);
+  if (badge) badge.textContent = LABELS_STATUT_CANDIDATURE[nouveauStatut];
+  if (TEMPLATES_REPONSE[nouveauStatut]) {
+    var numero = document.getElementById("candidTel-" + candidatureId);
+    if (numero && numero.dataset.tel && confirm("Envoyer un message type au candidat par WhatsApp pour ce changement de statut ?")) {
+      var texte = prompt("Message (modifiable avant envoi) :", TEMPLATES_REPONSE[nouveauStatut]);
+      if (texte) window.open("https://wa.me/" + formaterNumeroWa(numero.dataset.tel) + "?text=" + encodeURIComponent(texte), "_blank");
+    }
+  }
+}
+
+// ══ PAGE VITRINE ENTREPRISE ══
+async function chargerMonEntreprise() {
+  var r = await _supabase.from("lokt_entreprises").select("*").eq("auteur_id", _userId).maybeSingle();
+  if (r.data) {
+    _maEntreprise = r.data;
+    document.getElementById("entNom").value = r.data.nom || "";
+    document.getElementById("entDescription").value = r.data.description || "";
+    document.getElementById("entSecteur").value = r.data.secteur || "";
+    document.getElementById("entSiteWeb").value = r.data.site_web || "";
+    document.getElementById("entPays").value = r.data.pays || "";
+    fillVillesByPays(r.data.pays, document.getElementById("entVille"));
+    setTimeout(function(){ document.getElementById("entVille").value = r.data.ville || ""; }, 300);
+    document.getElementById("entContactWhatsapp").value = r.data.contact_whatsapp || "";
+    document.getElementById("entContactTelephone").value = r.data.contact_telephone || "";
+    document.getElementById("entContactEmail").value = r.data.contact_email || "";
+    afficherLienEntreprise(r.data);
+  }
+}
+
+function afficherLienEntreprise(entreprise) {
+  var url = window.location.origin + "/lokali-emplois.html?entreprise=" + entreprise.id;
+  document.getElementById("entrepriseLienZone").innerHTML =
+    '<div class="card"><h3>🔗 Ma page entreprise publique</h3>' +
+    '<p style="font-size:13px;color:var(--gray);word-break:break-all;margin-bottom:12px">' + url + '</p>' +
+    '<a class="btn btn-sm" href="' + url + '" target="_blank">👁️ Voir ma fiche entreprise</a></div>';
+}
+
+async function enregistrerEntreprise() {
+  var nom = document.getElementById("entNom").value.trim();
+  if (!nom) { afficherMsg("entrepriseMsg", "Le nom de l'entreprise est obligatoire.", false); return; }
+  if (window.LokaliModeration) {
+    var moderation = LokaliModeration.verifierTexte(nom + " " + document.getElementById("entDescription").value);
+    if (!moderation.ok) { afficherMsg("entrepriseMsg", moderation.motif, false); return; }
+  }
+  var villeVal = document.getElementById("entVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("entVilleAutre").value.trim();
+  var logos = _entLogo ? _entLogo.getPhotos() : [];
+  var payload = {
+    auteur_id: _userId,
+    nom: nom,
+    description: document.getElementById("entDescription").value.trim(),
+    secteur: document.getElementById("entSecteur").value,
+    site_web: document.getElementById("entSiteWeb").value.trim(),
+    pays: document.getElementById("entPays").value,
+    ville: villeVal,
+    contact_whatsapp: document.getElementById("entContactWhatsapp").value.trim() || null,
+    contact_telephone: document.getElementById("entContactTelephone").value.trim() || null,
+    contact_email: document.getElementById("entContactEmail").value.trim() || null,
+    statut: "active"
+  };
+  if (logos.length) payload.logo_url = logos[0];
+  var r = await _supabase.from("lokt_entreprises").upsert(payload, { onConflict: "auteur_id" }).select().single();
+  if (r.error) { afficherMsg("entrepriseMsg", "Erreur : " + r.error.message, false); return; }
+  _maEntreprise = r.data;
+  afficherMsg("entrepriseMsg", "✅ Fiche entreprise enregistrée avec succès !", true);
+  afficherLienEntreprise(r.data);
+}
+
+async function afficherVitrineEntreprise(entrepriseId) {
+  document.querySelector(".tabs").style.display = "none";
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = "none"; });
+  var r = await _supabase.from("lokt_entreprises").select("*").eq("id", entrepriseId).eq("statut", "active").maybeSingle();
+  var wrap = document.querySelector(".wrap");
+  if (!r.data) { wrap.innerHTML = '<div class="empty">Cette fiche entreprise est introuvable.</div>'; return; }
+  var e = r.data;
+  document.title = e.nom + " — LOKALI Emplois";
+  var zone = document.createElement("div");
+  zone.innerHTML =
+    (e.logo_url ? '<img src="' + e.logo_url + '" style="width:76px;height:76px;border-radius:16px;object-fit:cover;margin-bottom:12px" loading=lazy>' : '') +
+    '<h1 style="font-size:20px;margin-bottom:4px">' + e.nom + '</h1>' +
+    '<div style="font-size:13px;color:var(--gray);margin-bottom:14px">' + (e.secteur || "") + (e.ville ? " · " + e.ville : "") + '</div>' +
+    (e.description ? '<div class="card"><p style="font-size:14px;line-height:1.6">' + e.description + '</p></div>' : '') +
+    (e.site_web ? '<a href="' + e.site_web + '" target="_blank" style="display:block;margin:8px 0;font-size:13px;color:var(--orange2)">🌐 ' + e.site_web + '</a>' : '') +
+    '<div id="entVitContactZone" style="display:flex;flex-wrap:wrap;gap:8px;margin:14px 0"></div>' +
+    '<h3 style="font-size:16px;margin:20px 0 10px">💼 Offres d\'emploi</h3><div id="entVitOffres"><div class="empty">Chargement...</div></div>' +
+    '<h3 style="font-size:16px;margin:20px 0 10px">📄 Appels d\'offres</h3><div id="entVitAO"><div class="empty">Chargement...</div></div>';
+  wrap.insertBefore(zone, wrap.firstChild.nextSibling);
+
+  document.getElementById("entVitContactZone").innerHTML = boutonsContactDirect(e);
+
+  var offres = await _supabase.from("lokt_emplois").select("*").eq("entreprise_id", entrepriseId).eq("statut", "ouverte").order("created_at", { ascending: false });
+  document.getElementById("entVitOffres").innerHTML = (offres.data && offres.data.length)
+    ? offres.data.map(function(j){ return '<div class="job-item"><div class="job-title">' + j.titre_poste + '</div><div class="job-meta">' + (j.ville || "") + '</div></div>'; }).join("")
+    : '<div class="empty">Aucune offre active pour le moment.</div>';
+
+  var ao = await _supabase.from("lokt_appels_offres").select("*").eq("entreprise_id", entrepriseId).eq("statut", "ouvert").order("created_at", { ascending: false });
+  document.getElementById("entVitAO").innerHTML = (ao.data && ao.data.length)
+    ? ao.data.map(function(a){ return '<div class="item"><div class="item-title">' + a.titre + '</div><div class="item-meta">' + (a.ville || "") + '</div></div>'; }).join("")
+    : '<div class="empty">Aucun appel d\'offres actif pour le moment.</div>';
+}
+
+
+// ══ MON CV (intégré depuis lokali-cv.html) ══
+var _cvId = null;
+var _cvData = {
+  experiences: [], formations: [], competences: [], langues: [], certifications: [], portfolio: []
+};
+var _lectureSeule = false;
+var _idConsulte = null;
+var _cvUpdatedAt = null;
+
+function activerOngletCv(nom) {
+  document.querySelectorAll("#tab-cv .cv-subtab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll("#tab-cv .cv-subtab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+  if (nom === "apercu") rendreApercu();
+}
+document.querySelectorAll("#tab-cv .cv-subtab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOngletCv(t.dataset.tab); });
+});
+
+function afficherMsgCv(texte, ok) {
+  var el = document.getElementById("cvMsg");
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initCv() {
+  if (!_userId) return;
+  initDropdownsCv();
+  await chargerMonCv();
+}
+
+function normaliserCv(data) {
+  return {
+    nom_complet: data.nom_complet, titre_professionnel: data.titre_professionnel, presentation: data.presentation,
+    photo_url: data.photo_url, telephone: data.telephone, whatsapp: data.whatsapp, email_public: data.email_public,
+    pays: data.pays, ville: data.ville,
+    experiences: data.experiences || [], formations: data.formations || [], competences: data.competences || [],
+    langues: data.langues || [], certifications: data.certifications || [], portfolio: data.portfolio || []
+  };
+}
+
+function initDropdownsCv() {
+  fillPaysSelect(document.getElementById("cvPays"));
+  document.getElementById("cvPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("cvVille"));
+  });
+  document.getElementById("cvVille").addEventListener("change", function() {
+    document.getElementById("cvVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  fillSecteursSelect(document.getElementById("cvNewCompSecteur"));
+  document.getElementById("cvNewCompSecteur").addEventListener("change", function() {
+    fillMetiersBySecteur(this.value, document.getElementById("cvNewCompCompetence"));
+  });
+  document.getElementById("cvNewCompCompetence").addEventListener("change", function() {
+    document.getElementById("cvNewCompAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerMonCv() {
+  var r = await _supabase.from("lokt_cv").select("*").eq("user_id", _userId).maybeSingle();
+  if (r.data) {
+    _cvId = r.data.id;
+    _cvData = normaliserCv(r.data);
+    _cvUpdatedAt = r.data.updated_at;
+    document.getElementById("cvNom").value = r.data.nom_complet || "";
+    document.getElementById("cvTitrePro").value = r.data.titre_professionnel || "";
+    document.getElementById("cvPresentation").value = r.data.presentation || "";
+    document.getElementById("cvTelephone").value = r.data.telephone || "";
+    document.getElementById("cvWhatsapp").value = r.data.whatsapp || "";
+    document.getElementById("cvEmail").value = r.data.email_public || "";
+    document.getElementById("cvPays").value = r.data.pays || "Côte d'Ivoire";
+    fillVillesByPays(document.getElementById("cvPays").value, document.getElementById("cvVille"));
+    document.getElementById("cvVille").value = r.data.ville || "";
+    if (r.data.photo_url) {
+      document.getElementById("photoPreview").src = r.data.photo_url;
+      document.getElementById("photoPreview").style.display = "";
+    }
+  }
+  afficherExperiences(); afficherFormations(); afficherCompetencesCv(); afficherLangues(); afficherCertifications(); afficherPortfolio();
+}
+
+async function sauvegarderTout(messageOk) {
+  var villeVal = document.getElementById("cvVille") ? document.getElementById("cvVille").value : (_cvData.ville || "");
+  if (villeVal === "__autre__") villeVal = document.getElementById("cvVilleAutre").value.trim();
+  var payload = {
+    user_id: _userId,
+    nom_complet: document.getElementById("cvNom").value.trim(),
+    titre_professionnel: document.getElementById("cvTitrePro").value.trim(),
+    presentation: document.getElementById("cvPresentation").value.trim(),
+    photo_url: _cvData.photo_url || null,
+    telephone: document.getElementById("cvTelephone").value.trim(),
+    whatsapp: document.getElementById("cvWhatsapp").value.trim(),
+    email_public: document.getElementById("cvEmail").value.trim(),
+    pays: document.getElementById("cvPays").value,
+    ville: villeVal,
+    experiences: _cvData.experiences, formations: _cvData.formations, competences: _cvData.competences,
+    langues: _cvData.langues, certifications: _cvData.certifications, portfolio: _cvData.portfolio,
+    updated_at: new Date().toISOString()
+  };
+  var r = await _supabase.from("lokt_cv").upsert(payload, { onConflict: "user_id" }).select().single();
+  if (r.error) { afficherMsgCv("Erreur : " + r.error.message, false); return; }
+  _cvId = r.data.id;
+  _cvUpdatedAt = r.data.updated_at;
+  if (messageOk) afficherMsgCv(messageOk, true);
+}
+
+function sauvegarderInfosPerso() { sauvegarderTout("Informations enregistrées ✅"); }
+
+async function televerserPhoto() {
+  var fichier = document.getElementById("photoInput").files[0];
+  if (!fichier) return;
+  var chemin = _userId + "/photo-" + Date.now() + "-" + fichier.name;
+  var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+  if (up.error) { afficherMsgCv("Erreur upload : " + up.error.message, false); return; }
+  var url = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  _cvData.photo_url = url;
+  document.getElementById("photoPreview").src = url;
+  document.getElementById("photoPreview").style.display = "";
+  await sauvegarderTout("Photo mise à jour ✅");
+}
+
+function ajouterExperience() {
+  var poste = document.getElementById("expPoste").value.trim();
+  var structure = document.getElementById("expStructure").value.trim();
+  if (!poste) { afficherMsgCv("Le poste est obligatoire.", false); return; }
+  _cvData.experiences.push({
+    poste: poste, structure: structure,
+    debut: document.getElementById("expDebut").value,
+    fin: document.getElementById("expFin").value,
+    en_cours: document.getElementById("expEnCours").checked,
+    description: document.getElementById("expDescription").value.trim()
+  });
+  ["expPoste","expStructure","expDebut","expFin","expDescription"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("expEnCours").checked = false;
+  afficherExperiences();
+  sauvegarderTout();
+}
+function supprimerExperience(i) { _cvData.experiences.splice(i, 1); afficherExperiences(); sauvegarderTout(); }
+function afficherExperiences() {
+  var el = document.getElementById("listeExperiences");
+  if (!_cvData.experiences.length) { el.innerHTML = '<div class="empty">Aucune expérience ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.experiences.map(function(e, i){
+    var periode = (e.debut || "?") + " → " + (e.en_cours ? "Aujourd'hui" : (e.fin || "?"));
+    return '<div class="item-row"><div class="item-row-text"><b>' + e.poste + (e.structure ? " — " + e.structure : "") + '</b><span>' + periode + '</span></div>' +
+      '<button class="item-del" onclick="supprimerExperience(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+function ajouterFormation() {
+  var diplome = document.getElementById("formDiplome").value.trim();
+  if (!diplome) { afficherMsgCv("Le diplôme est obligatoire.", false); return; }
+  _cvData.formations.push({
+    diplome: diplome, etablissement: document.getElementById("formEtablissement").value.trim(),
+    domaine: document.getElementById("formDomaine").value.trim(), annee: document.getElementById("formAnnee").value
+  });
+  ["formDiplome","formEtablissement","formDomaine","formAnnee"].forEach(function(id){ document.getElementById(id).value = ""; });
+  afficherFormations();
+  sauvegarderTout();
+}
+function supprimerFormation(i) { _cvData.formations.splice(i, 1); afficherFormations(); sauvegarderTout(); }
+function afficherFormations() {
+  var el = document.getElementById("listeFormations");
+  if (!_cvData.formations.length) { el.innerHTML = '<div class="empty">Aucune formation ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.formations.map(function(f, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + f.diplome + '</b><span>' + (f.etablissement || "") + (f.annee ? " · " + f.annee : "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerFormation(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+function ajouterCompetenceCv() {
+  var val = document.getElementById("cvNewCompCompetence").value;
+  var nom = (val === "__autre__") ? document.getElementById("cvNewCompAutre").value.trim() : val;
+  if (!nom) return;
+  if (_cvData.competences.indexOf(nom) === -1) _cvData.competences.push(nom);
+  document.getElementById("cvNewCompAutre").value = "";
+  afficherCompetencesCv();
+  sauvegarderTout();
+}
+function supprimerCompetenceCv(nom) { _cvData.competences = _cvData.competences.filter(function(c){ return c !== nom; }); afficherCompetencesCv(); sauvegarderTout(); }
+function afficherCompetencesCv() {
+  var el = document.getElementById("listeCompetencesCv");
+  if (!_cvData.competences.length) { el.innerHTML = '<div class="empty">Aucune compétence ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.competences.map(function(c){
+    return '<span class="cv-chip" style="background:rgba(249,115,22,.1);color:#C2410C">' + c + ' <button style="border:none;background:none;color:inherit;cursor:pointer" onclick="supprimerCompetenceCv(\'' + c.replace(/'/g,"\\'") + '\')">✕</button></span>';
+  }).join("");
+}
+
+function ajouterLangue() {
+  var nom = document.getElementById("langueNom").value.trim();
+  if (!nom) return;
+  _cvData.langues.push({ langue: nom, niveau: document.getElementById("langueNiveau").value });
+  document.getElementById("langueNom").value = "";
+  afficherLangues();
+  sauvegarderTout();
+}
+function supprimerLangue(i) { _cvData.langues.splice(i, 1); afficherLangues(); sauvegarderTout(); }
+function afficherLangues() {
+  var el = document.getElementById("listeLangues");
+  if (!_cvData.langues.length) { el.innerHTML = '<div class="empty">Aucune langue ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.langues.map(function(l, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + l.langue + '</b><span>' + l.niveau + '</span></div>' +
+      '<button class="item-del" onclick="supprimerLangue(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+async function ajouterCertification() {
+  var nom = document.getElementById("certNom").value.trim();
+  if (!nom) { afficherMsgCv("Le nom de la certification est obligatoire.", false); return; }
+  var documentUrl = null;
+  var fichier = document.getElementById("certFichier").files[0];
+  if (fichier) {
+    var chemin = _userId + "/cert-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (!up.error) documentUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+  _cvData.certifications.push({
+    nom: nom, organisme: document.getElementById("certOrganisme").value.trim(),
+    annee: document.getElementById("certAnnee").value, document_url: documentUrl
+  });
+  ["certNom","certOrganisme","certAnnee"].forEach(function(id){ document.getElementById(id).value = ""; });
+  document.getElementById("certFichier").value = "";
+  afficherCertifications();
+  sauvegarderTout("Certification ajoutée ✅");
+}
+function supprimerCertification(i) { _cvData.certifications.splice(i, 1); afficherCertifications(); sauvegarderTout(); }
+function afficherCertifications() {
+  var el = document.getElementById("listeCertifications");
+  if (!_cvData.certifications.length) { el.innerHTML = '<div class="empty">Aucune certification ajoutée.</div>'; return; }
+  el.innerHTML = _cvData.certifications.map(function(c, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + c.nom + '</b><span>' + (c.organisme || "") + (c.annee ? " · " + c.annee : "") + (c.document_url ? " · 📎 document joint" : "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerCertification(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+async function ajouterPortfolio() {
+  var titre = document.getElementById("portTitre").value.trim();
+  if (!titre) { afficherMsgCv("Le titre du projet est obligatoire.", false); return; }
+  var imageUrl = null;
+  var fichier = document.getElementById("portImage").files[0];
+  if (fichier) {
+    var chemin = _userId + "/portfolio-" + Date.now() + "-" + fichier.name;
+    var up = await _supabase.storage.from("lokali-cv-fichiers").upload(chemin, fichier);
+    if (!up.error) imageUrl = _supabase.storage.from("lokali-cv-fichiers").getPublicUrl(chemin).data.publicUrl;
+  }
+  _cvData.portfolio.push({ titre: titre, lien_url: document.getElementById("portLien").value.trim(), image_url: imageUrl });
+  document.getElementById("portTitre").value = ""; document.getElementById("portLien").value = ""; document.getElementById("portImage").value = "";
+  afficherPortfolio();
+  sauvegarderTout("Ajouté au portfolio ✅");
+}
+function supprimerPortfolio(i) { _cvData.portfolio.splice(i, 1); afficherPortfolio(); sauvegarderTout(); }
+function afficherPortfolio() {
+  var el = document.getElementById("listePortfolio");
+  if (!_cvData.portfolio.length) { el.innerHTML = '<div class="empty">Aucun élément de portfolio.</div>'; return; }
+  el.innerHTML = _cvData.portfolio.map(function(p, i){
+    return '<div class="item-row"><div class="item-row-text"><b>' + p.titre + '</b><span>' + (p.lien_url || "") + '</span></div>' +
+      '<button class="item-del" onclick="supprimerPortfolio(' + i + ')">✕</button></div>';
+  }).join("");
+}
+
+var _couleurCv = "#F97316";
+function choisirCouleurCv(el) {
+  _couleurCv = el.dataset.couleur;
+  document.querySelectorAll(".couleur-cv-choix").forEach(function(c){ c.classList.remove("selectionnee"); });
+  el.classList.add("selectionnee");
+  rendreApercu();
+}
+
+function rendreApercu() {
+  var d = _cvData;
+  var photo = d.photo_url ? '<img class="cv-photo" src="' + d.photo_url + '">' : '<div class="cv-photo-vide">👤</div>';
+  var contacts = [];
+  if (d.telephone) contacts.push("📞 " + d.telephone);
+  if (d.whatsapp) contacts.push("💬 " + d.whatsapp);
+  if (d.email_public) contacts.push("✉️ " + d.email_public);
+  if (d.ville) contacts.push("📍 " + d.ville + (d.pays ? ", " + d.pays : ""));
+
+  var html = '<style>#cvApercu .cv-section-titre{color:' + _couleurCv + ' !important;border-color:' + _couleurCv + ' !important}' +
+    '#cvApercu .cv-chip{background:' + _couleurCv + '1A !important;color:' + _couleurCv + ' !important}</style>';
+
+  html += '<div class="cv-header">' + photo +
+    '<div><div class="cv-nom">' + (d.nom_complet || "Nom non renseigné") + '</div>' +
+    '<div class="cv-titre">' + (d.titre_professionnel || "") + '</div>' +
+    '<div class="cv-contacts">' + contacts.map(function(c){ return '<span>' + c + '</span>'; }).join("") + '</div></div></div>';
+
+  html += '<div class="cv-body">';
+
+  if (d.presentation) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Présentation</div><div class="cv-exp-desc">' + d.presentation + '</div></div>';
+  }
+  if (d.experiences && d.experiences.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Expériences professionnelles</div>' +
+      d.experiences.map(function(e){
+        var periode = (e.debut || "?") + " → " + (e.en_cours ? "Aujourd'hui" : (e.fin || "?"));
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + e.poste + (e.structure ? " — " + e.structure : "") + '</div>' +
+          '<div class="cv-exp-meta">' + periode + '</div>' +
+          (e.description ? '<div class="cv-exp-desc">' + e.description + '</div>' : '') + '</div>';
+      }).join("") + '</div>';
+  }
+  if (d.formations && d.formations.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Formations</div>' +
+      d.formations.map(function(f){
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + f.diplome + '</div>' +
+          '<div class="cv-exp-meta">' + (f.etablissement || "") + (f.domaine ? " · " + f.domaine : "") + (f.annee ? " · " + f.annee : "") + '</div></div>';
+      }).join("") + '</div>';
+  }
+  if (d.competences && d.competences.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Compétences</div>' +
+      d.competences.map(function(c){ return '<span class="cv-chip">' + c + '</span>'; }).join("") + '</div>';
+  }
+  if (d.langues && d.langues.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Langues</div>' +
+      d.langues.map(function(l){ return '<span class="cv-chip">' + l.langue + " — " + l.niveau + '</span>'; }).join("") + '</div>';
+  }
+  if (d.certifications && d.certifications.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Certifications</div>' +
+      d.certifications.map(function(c){
+        return '<div class="cv-exp-item"><div class="cv-exp-poste">' + c.nom + '</div><div class="cv-exp-meta">' + (c.organisme || "") + (c.annee ? " · " + c.annee : "") + '</div></div>';
+      }).join("") + '</div>';
+  }
+  if (d.portfolio && d.portfolio.length) {
+    html += '<div class="cv-section"><div class="cv-section-titre">Portfolio</div>' +
+      d.portfolio.map(function(p){
+        return '<div class="cv-portfolio-item">' + (p.image_url ? '<img src="' + p.image_url + '">' : '') + '<div>' + p.titre + '</div></div>';
+      }).join("") + '</div>';
+  }
+
+  html += '</div>';
+
+  var idPourLien = _lectureSeule ? _idConsulte : _userId;
+  var lienVerif = window.location.origin + "/lokali-cv.html?voir=" + idPourLien;
+  var dateMaj = _cvUpdatedAt ? new Date(_cvUpdatedAt).toLocaleDateString("fr-FR") : new Date().toLocaleDateString("fr-FR");
+  html += '<div style="border-top:1px solid #E2E8F0;padding:14px 32px;font-size:11px;color:#94A3B8;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">' +
+    '<span>Document généré via LOKALI · Vérifiable sur ' + lienVerif + ' · Mis à jour le ' + dateMaj + '</span>' +
+    '<span id="cvScoreConfiance"></span>' +
+    '</div>';
+
+  document.getElementById("cvApercu").innerHTML = html;
+  if (idPourLien) afficherScoreConfiance(_supabase, idPourLien, "cvScoreConfiance");
+}
+
+function copierLienPublic() {
+  var lien = window.location.origin + "/lokali-cv.html?voir=" + _userId;
+  navigator.clipboard.writeText(lien).then(function() {
+    alert("Lien copié ✅\n" + lien);
+  }).catch(function() {
+    prompt("Copie ce lien :", lien);
+  });
+}
+
+function toggleQrCv() {
+  var zone = document.getElementById("qrCvZone");
+  if (zone.style.display !== "none") { zone.style.display = "none"; return; }
+  zone.style.display = "";
+  if (window.LokaliQR) {
+    LokaliQR.genererDansElement("qrCvZone", window.location.origin + "/lokali-cv.html?voir=" + _userId, {
+      label: "Scanne pour consulter ce CV",
+      nomFichier: "lokali-cv-qrcode"
+    });
+  }
+}
+
+
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

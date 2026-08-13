@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>LOKALI Marchés — Fournisseurs et opportunités B2B</title>
+<meta name="description" content="Trouvez des fournisseurs, grossistes et producteurs, ou publiez vos besoins B2B gratuitement sur LOKALI, partout en Afrique francophone.">
+<link rel="canonical" href="https://mylokali.com/lokali-marches.html">
+<meta property="og:title" content="LOKALI Marchés — Fournisseurs et opportunités B2B">
+<meta property="og:description" content="Trouvez des fournisseurs, grossistes et producteurs, ou publiez vos besoins B2B gratuitement sur LOKALI, partout en Afrique francophone.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mylokali.com/lokali-marches.html">
+<meta property="og:locale" content="fr_FR">
+<meta name="twitter:card" content="summary">
+
+<style>
+:root{
+  --orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--green:#059669;
+  --dark:#F1F5F9;--dark2:#FFFFFF;--dark3:#E2E8F0;
+  --card:#FFFFFF;--border:rgba(15,23,42,.10);
+  --white:#1E293B;--gray:#64748B;--radius:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:60px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);box-shadow:0 2px 12px rgba(15,23,42,.06);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:18px;font-weight:900}
+.nav-logo b{color:var(--orange-txt)}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--white);text-decoration:none;
+  background:rgba(15,23,42,.08);border:1px solid var(--border);border-radius:20px;padding:7px 14px;font-weight:600}
+.nav-back:hover{background:rgba(15,23,42,.14)}
+.wrap{max-width:640px;margin:0 auto;padding:80px 16px 20px}
+h1{font-size:22px;margin-bottom:4px}
+.subtitle{color:var(--gray);font-size:14px;margin-bottom:12px}
+.stats-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.stat-pill{font-size:11px;font-weight:800;color:#34D399;background:rgba(5,150,105,.15);border-radius:20px;padding:4px 12px}
+.tabs{display:flex;gap:8px;margin-bottom:18px;border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{padding:12px 10px;font-size:14px;font-weight:600;color:var(--gray);white-space:nowrap;cursor:pointer;border-bottom:3px solid transparent;min-height:44px;display:inline-flex;align-items:center}
+.tab.active{color:var(--orange-txt);border-color:var(--orange)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.card h3{font-size:15px;margin-bottom:10px}
+label{display:block;font-size:12px;color:var(--gray);margin:10px 0 4px}
+input,textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);
+  background:rgba(15,23,42,.05);color:var(--white);font-size:14px;font-family:inherit}
+textarea{min-height:70px;resize:vertical}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;
+  padding:10px 20px;font-size:14px;font-weight:700;cursor:pointer;margin-top:12px}
+.btn:hover{background:var(--orange2)}
+.btn-sm{padding:6px 14px;font-size:12px;margin-top:0}
+.marche-item{border-bottom:1px solid var(--border);padding:14px 0}
+.marche-item:last-child{border-bottom:none}
+.marche-title{font-weight:700;font-size:15px}
+.marche-meta{font-size:12px;color:var(--gray);margin:4px 0 8px}
+.badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:700;background:rgba(15,52,96,.5);color:#93C5FD}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:24px 0}
+.msg{font-size:13px;padding:10px 12px;border-radius:10px;margin-bottom:12px}
+.msg-ok{background:rgba(5,150,105,.15);color:#34D399}
+.msg-err{background:rgba(239,68,68,.15);color:#F87171}
+.filtre-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.filtre-chip{background:var(--card);border:1px solid var(--border);color:var(--white);font-size:12.5px;
+  font-weight:600;border-radius:20px;padding:12px 16px;cursor:pointer;white-space:nowrap;min-height:44px;display:inline-flex;align-items:center}
+.filtre-chip.active{background:var(--orange);border-color:var(--orange);color:#fff}
+.filtres-avances{margin-bottom:14px}
+.filtres-avances-toggle{font-size:12.5px;font-weight:700;color:var(--gray);cursor:pointer;padding:8px 2px;user-select:none}
+.filtres-avances-panel{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-top:6px}
+.fraicheur-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.fraicheur-btn{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;
+  background:rgba(15,23,42,.04);border:1px solid var(--border);color:var(--gray);min-height:36px;display:inline-flex;align-items:center}
+.fraicheur-btn.active{background:var(--orange);border-color:var(--orange);color:#fff}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo"><svg viewBox="0 0 260 60" xmlns="http://www.w3.org/2000/svg" style="height:26px;width:auto;margin-right:6px" aria-label="LOKALI">
+  <defs>
+    <linearGradient id="pinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F97316"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#EA580C"/>
+      <stop offset="100%" stop-color="#FB923C"/>
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(4,4) scale(0.62)">
+    <path d="M42 6 C 24 6 10 19 10 36 C 10 56 42 74 42 74 C 42 74 74 56 74 36 C 74 19 60 6 42 6 Z" fill="url(#pinGrad)"/>
+    <circle cx="28" cy="34" r="6.5" fill="#FFFFFF"/>
+    <circle cx="56" cy="34" r="6.5" fill="#FFFFFF"/>
+    <line x1="28" y1="34" x2="56" y2="34" stroke="#FFFFFF" stroke-width="3.6" stroke-linecap="round"/>
+  </g>
+
+  <text x="70" y="40" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="30" letter-spacing="1.5">
+    <tspan fill="url(#textGrad)">LO</tspan><tspan fill="#1E293B">KALI</tspan>
+  </text>
+</svg><b>MARCHÉS</b></span>
+  <a class="nav-back" href="/">‹ Accueil</a>
+</nav>
+
+<div class="wrap">
+  <h1>Fournisseurs & opportunités B2B</h1>
+  <div class="subtitle">Grossistes, producteurs, distributeurs et entreprises qui recherchent</div>
+  <div class="stats-bar">
+    <span class="stat-pill" id="statFournisseurs">…</span>
+    <span class="stat-pill" id="statMarches">…</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="marches">Marchés ouverts</div>
+    <div class="tab" data-tab="publier">Publier un marché</div>
+    <div class="tab" data-tab="profil">Mon profil fournisseur</div>
+  </div>
+
+  <div id="authGate" class="card" style="display:none">
+    <h3>Connexion requise</h3>
+    <p style="font-size:13px;color:var(--gray)">Connecte-toi depuis LOKALI pour répondre ou publier un marché.</p>
+    <a class="btn" href="/">Aller me connecter</a>
+  </div>
+
+  <!-- MARCHÉS OUVERTS -->
+  <div id="tab-marches" class="tab-content">
+    <div class="filtre-chips" id="marchesChips"></div>
+
+    <div class="filtres-avances">
+      <div class="filtres-avances-toggle" onclick="toggleFiltresAvances()">🔎 Filtres avancés (budget, fraîcheur) <span id="filtresAvancesFleche">▾</span></div>
+      <div class="filtres-avances-panel" id="filtresAvancesPanel" style="display:none">
+        <div class="row2">
+          <div><label>Budget minimum (FCFA)</label><input type="number" id="filtrePrixMin" placeholder="0"></div>
+          <div><label>Budget maximum (FCFA)</label><input type="number" id="filtrePrixMax" placeholder="Aucun maximum"></div>
+        </div>
+        <label>Fraîcheur du marché</label>
+        <div class="fraicheur-btns" id="fraicheurBtns">
+          <span class="fraicheur-btn active" data-val="">Tous</span>
+          <span class="fraicheur-btn" data-val="24h">24h</span>
+          <span class="fraicheur-btn" data-val="7j">7 jours</span>
+          <span class="fraicheur-btn" data-val="30j">30 jours</span>
+        </div>
+        <button class="btn btn-sm" style="width:100%;margin-top:10px" onclick="appliquerFiltresMarches()">Appliquer les filtres</button>
+        <button class="btn btn-sm" style="width:100%;margin-top:6px;background:rgba(15,23,42,.08);color:var(--white)" onclick="reinitialiserFiltresMarches()">Réinitialiser</button>
+      </div>
+    </div>
+
+    <div id="marchesList" class="card"><div class="empty">Chargement des marchés...</div></div>
+  </div>
+
+  <!-- PUBLIER -->
+  <div id="tab-publier" class="tab-content" style="display:none">
+    <div id="publierMsg"></div>
+    <div class="card">
+      <h3>Publier un marché</h3>
+      <label>Titre</label>
+      <input id="mTitre" placeholder="Ex: Fourniture de 500 ordinateurs portables">
+      <label>Description</label>
+      <textarea id="mDescription" placeholder="Détaille précisément ton besoin, tes exigences..."></textarea>
+      <label>Secteur / catégorie</label>
+      <select id="mCategorie"></select>
+      <div class="row2">
+        <div><label>Quantité</label><input id="mQuantite" placeholder="Ex: 500 unités"></div>
+        <div><label>Pays</label><select id="mPays"></select></div>
+      </div>
+      <div class="row2">
+        <div><label>Ville</label><select id="mVille"></select></div>
+        <div id="mVilleAutreWrap" style="display:none"><label>Précise la ville</label><input id="mVilleAutre" placeholder="Nom de la ville"></div>
+      </div>
+      <div class="row2">
+        <div><label>Budget min (FCFA)</label><input id="mBudgetMin" type="number"></div>
+        <div><label>Budget max (FCFA)</label><input id="mBudgetMax" type="number"></div>
+      </div>
+      <label>Date limite</label>
+      <input id="mDateLimite" type="date">
+      <div id="mPhotosZone"></div>
+      <button class="btn" onclick="publierMarche()">Publier le marché</button>
+    </div>
+  </div>
+
+  <!-- PROFIL FOURNISSEUR -->
+  <div id="tab-profil" class="tab-content" style="display:none">
+    <div id="profilMsg"></div>
+    <div class="card">
+      <h3>Mon profil fournisseur</h3>
+      <label>Nom de l'entreprise</label>
+      <input id="pNom" placeholder="Ex: Ivoire Distribution SARL">
+      <label>Secteur d'activité</label>
+      <select id="pSecteur"></select>
+      <label>Description</label>
+      <textarea id="pDescription" placeholder="Présente ton entreprise, tes produits, tes capacités..."></textarea>
+      <div class="row2">
+        <div><label>Pays</label><select id="pPays"></select></div>
+        <div><label>Ville</label><select id="pVille"></select></div>
+      </div>
+      <div id="pVilleAutreWrap" style="display:none">
+        <label>Précise la ville</label>
+        <input id="pVilleAutre" placeholder="Nom de la ville">
+      </div>
+      <label>Capacité de production</label>
+      <input id="pCapacite" placeholder="Ex: 1000 unités/mois">
+      <button class="btn" onclick="sauvegarderProfilFournisseur()">Enregistrer mon profil</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/lokali-referentiel.js"></script>
+<script src="/lokali-contact.js"></script>
+<script src="/lokali-photos-widget.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+
+var _userId = null;
+var _fournisseurId = null;
+var _mPhotos = null;
+
+function activerOnglet(nom) {
+  document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("active", t.dataset.tab === nom); });
+  document.querySelectorAll(".tab-content").forEach(function(c){ c.style.display = (c.id === "tab-" + nom) ? "" : "none"; });
+}
+document.querySelectorAll(".tab").forEach(function(t){
+  t.addEventListener("click", function(){ activerOnglet(t.dataset.tab); });
+});
+
+function afficherMsg(elId, texte, ok) {
+  var el = document.getElementById(elId);
+  el.innerHTML = '<div class="msg ' + (ok ? "msg-ok" : "msg-err") + '">' + texte + '</div>';
+  setTimeout(function(){ el.innerHTML = ""; }, 4000);
+}
+
+async function initSession() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  initDropdownsMarches();
+  if (session) {
+    _userId = session.user.id;
+    if (window.LokaliPhotos) {
+      _mPhotos = LokaliPhotos.creerUploader("mPhotos", 5);
+      document.getElementById("mPhotosZone").appendChild(_mPhotos.element);
+    }
+    var r = await _supabase.from("lokt_fournisseurs").select("*").eq("user_id", _userId).maybeSingle();
+    if (r.data) {
+      _fournisseurId = r.data.id;
+      document.getElementById("pNom").value = r.data.nom_entreprise || "";
+      document.getElementById("pSecteur").value = r.data.secteur || "";
+      document.getElementById("pDescription").value = r.data.description || "";
+      document.getElementById("pPays").value = r.data.pays || "Côte d'Ivoire";
+      fillVillesByPays(document.getElementById("pPays").value, document.getElementById("pVille"));
+      var villes = VILLES_PAR_PAYS[document.getElementById("pPays").value] || [];
+      if (r.data.ville && villes.indexOf(r.data.ville) === -1) {
+        document.getElementById("pVille").value = "__autre__";
+        document.getElementById("pVilleAutreWrap").style.display = "";
+        document.getElementById("pVilleAutre").value = r.data.ville || "";
+      } else {
+        document.getElementById("pVille").value = r.data.ville || "";
+      }
+      document.getElementById("pCapacite").value = r.data.capacite_production || "";
+    }
+  } else {
+    var tabPublier = document.querySelector('.tab[data-tab="publier"]');
+    var tabProfil = document.querySelector('.tab[data-tab="profil"]');
+    if (tabPublier) tabPublier.style.display = "none";
+    if (tabProfil) tabProfil.style.display = "none";
+  }
+  chargerStats();
+  chargerMarches();
+}
+
+function initDropdownsMarches() {
+  fillSecteursSelect(document.getElementById("mCategorie"));
+  fillPaysSelect(document.getElementById("mPays"));
+  document.getElementById("mPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("mVille"));
+  });
+  document.getElementById("mVille").addEventListener("change", function() {
+    document.getElementById("mVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+  fillSecteursSelect(document.getElementById("pSecteur"));
+  fillPaysSelect(document.getElementById("pPays"));
+  document.getElementById("pPays").addEventListener("change", function() {
+    fillVillesByPays(this.value, document.getElementById("pVille"));
+  });
+  document.getElementById("pVille").addEventListener("change", function() {
+    document.getElementById("pVilleAutreWrap").style.display = (this.value === "__autre__") ? "" : "none";
+  });
+}
+
+async function chargerStats() {
+  try {
+    var f = await _supabase.from("lokt_fournisseurs").select("*", { count: "exact", head: true }).eq("actif", true);
+    document.getElementById("statFournisseurs").textContent = (f.count || 0) + " fournisseurs inscrits";
+    var m = await _supabase.from("lokt_marches").select("*", { count: "exact", head: true }).eq("statut", "ouvert");
+    document.getElementById("statMarches").textContent = (m.count || 0) + " marchés ouverts";
+  } catch(e) {}
+}
+
+async function sauvegarderProfilFournisseur() {
+  if (!_userId) { afficherMsg("profilMsg", "Connecte-toi d'abord.", false); return; }
+  var nom = document.getElementById("pNom").value.trim();
+  if (!nom) { afficherMsg("profilMsg", "Le nom de l'entreprise est obligatoire.", false); return; }
+  var villeVal = document.getElementById("pVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("pVilleAutre").value.trim();
+  var payload = {
+    user_id: _userId,
+    nom_entreprise: nom,
+    secteur: document.getElementById("pSecteur").value,
+    description: document.getElementById("pDescription").value.trim(),
+    ville: villeVal,
+    pays: document.getElementById("pPays").value,
+    capacite_production: document.getElementById("pCapacite").value.trim(),
+    updated_at: new Date().toISOString()
+  };
+  var r = await _supabase.from("lokt_fournisseurs").upsert(payload, { onConflict: "user_id" }).select().single();
+  if (r.error) { afficherMsg("profilMsg", "Erreur : " + r.error.message, false); return; }
+  _fournisseurId = r.data.id;
+  afficherMsg("profilMsg", "Profil fournisseur enregistré ✅", true);
+  chargerStats();
+}
+
+async function publierMarche() {
+  if (!_userId) { afficherMsg("publierMsg", "Connecte-toi d'abord.", false); return; }
+  var titre = document.getElementById("mTitre").value.trim();
+  var description = document.getElementById("mDescription").value.trim();
+  if (!titre || !description) { afficherMsg("publierMsg", "Titre et description sont obligatoires.", false); return; }
+  var villeVal = document.getElementById("mVille").value;
+  if (villeVal === "__autre__") villeVal = document.getElementById("mVilleAutre").value.trim();
+  var payload = {
+    auteur_id: _userId,
+    titre: titre,
+    description: description,
+    categorie: document.getElementById("mCategorie").value,
+    quantite: document.getElementById("mQuantite").value.trim(),
+    budget_min: parseInt(document.getElementById("mBudgetMin").value) || null,
+    budget_max: parseInt(document.getElementById("mBudgetMax").value) || null,
+    pays: document.getElementById("mPays").value,
+    ville: villeVal,
+    date_limite: document.getElementById("mDateLimite").value || null,
+    photos: _mPhotos ? _mPhotos.getPhotos() : []
+  };
+  payload.statut = "ouvert";
+  var r = await _supabase.from("lokt_marches").insert(payload);
+  if (r.error) { afficherMsg("publierMsg", "Erreur : " + r.error.message, false); return; }
+  afficherMsg("publierMsg", "Marché publié ✅", true);
+  ["mTitre","mDescription","mQuantite","mBudgetMin","mBudgetMax","mDateLimite"].forEach(function(id){ document.getElementById(id).value = ""; });
+  activerOnglet("marches");
+  chargerMarches();
+  chargerStats();
+}
+
+async function chargerMarches() {
+  var el = document.getElementById("marchesList");
+  var r = await _supabase.from("lokt_marches").select("*").eq("statut", "ouvert").order("created_at", { ascending: false }).limit(30);
+  if (r.error || !r.data || !r.data.length) { el.innerHTML = '<div class="empty">Aucun marché ouvert pour le moment.</div>'; return; }
+
+  el.innerHTML = r.data.map(function(m){
+    var budget = (m.budget_min || m.budget_max) ? (m.budget_min || "?") + " - " + (m.budget_max || "?") + " FCFA" : "Budget non précisé";
+    var lieu = m.ville || "Lieu non précisé";
+    return '<div class="marche-item" data-categorie="' + (m.categorie || "") + '" data-budgetmin="' + (m.budget_min || "") + '" data-budgetmax="' + (m.budget_max || "") + '" data-date="' + m.created_at + '">' +
+      (m.categorie ? '<span class="badge">' + m.categorie + '</span> ' : '') +
+      '<div class="marche-title">' + m.titre + '</div>' +
+      '<div class="marche-meta">' + lieu + (m.quantite ? ' · ' + m.quantite : '') + ' · ' + budget + '</div>' +
+      '<div style="font-size:13px;color:var(--gray);margin-bottom:8px">' + m.description.slice(0, 160) + (m.description.length > 160 ? '…' : '') + '</div>' +
+      (window.LokaliPhotos ? LokaliPhotos.creerGalerieHTML(m.photos) : '') +
+      '<button class="btn btn-sm" onclick="proposer(\'' + m.id + '\')">Faire une proposition</button> ' +
+      '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="ouvrirConversationDepuisModule(_supabase, _userId, \'marche\', \'' + m.id + '\', \'' + m.auteur_id + '\', \'' + m.titre.replace(/'/g,"\\'") + '\')">💬 Contacter</button> ' +
+      '<button class="btn btn-sm" style="background:rgba(15,23,42,.08);color:var(--white)" onclick="partagerMarche(\'' + m.id + '\',\'' + m.titre.replace(/'/g,"\\'") + '\')">🔗 Partager</button>' +
+      '</div>';
+  }).join("");
+  construireChipsMarches();
+}
+
+function partagerMarche(marcheId, titre) {
+  var url = window.location.origin + "/lokali-marches.html?marche=" + marcheId;
+  var texte = "🛒 " + titre + " — à voir sur LOKALI";
+  if (navigator.share) {
+    navigator.share({ title: titre, text: texte, url: url }).catch(function(){});
+  } else {
+    window.open("https://wa.me/?text=" + encodeURIComponent(texte + " : " + url), "_blank");
+  }
+}
+
+function construireChipsMarches() {
+  var select = document.getElementById("mCategorie");
+  var chipsWrap = document.getElementById("marchesChips");
+  if (!select || !chipsWrap || !select.options.length) return;
+  var options = Array.prototype.slice.call(select.options).filter(function(o){ return o.value; }).slice(0, 12);
+  if (!options.length) return;
+  chipsWrap.innerHTML = '<span class="filtre-chip active" data-val="">Tous</span>' +
+    options.map(function(o){ return '<span class="filtre-chip" data-val="' + o.value.replace(/"/g,'&quot;') + '">' + o.textContent + '</span>'; }).join("");
+  chipsWrap.querySelectorAll(".filtre-chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      chipsWrap.querySelectorAll(".filtre-chip").forEach(function(c){ c.classList.remove("active"); });
+      chip.classList.add("active");
+      _filtreCategorieMarches = chip.dataset.val;
+      appliquerFiltresMarches();
+    });
+  });
+
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b){ b.classList.remove("active"); });
+      btn.classList.add("active");
+      _filtreFraicheurMarches = btn.dataset.val;
+      appliquerFiltresMarches();
+    });
+  });
+}
+
+// ── Filtres avancés : budget min/max + fraîcheur ──
+var _filtreCategorieMarches = "";
+var _filtreFraicheurMarches = "";
+
+function toggleFiltresAvances() {
+  var panel = document.getElementById("filtresAvancesPanel");
+  var fleche = document.getElementById("filtresAvancesFleche");
+  var ouvert = panel.style.display !== "none";
+  panel.style.display = ouvert ? "none" : "";
+  fleche.textContent = ouvert ? "▾" : "▴";
+}
+
+function appliquerFiltresMarches() {
+  var filtreMin = parseFloat(document.getElementById("filtrePrixMin").value);
+  var filtreMax = parseFloat(document.getElementById("filtrePrixMax").value);
+  var maintenant = new Date();
+  var seuilsHeures = { "24h": 24, "7j": 24 * 7, "30j": 24 * 30 };
+
+  var items = document.querySelectorAll("#marchesList .marche-item");
+  var aucunVisible = true;
+  items.forEach(function(it){
+    var visible = true;
+    if (_filtreCategorieMarches && it.dataset.categorie !== _filtreCategorieMarches) visible = false;
+
+    var bMin = it.dataset.budgetmin ? parseFloat(it.dataset.budgetmin) : null;
+    var bMax = it.dataset.budgetmax ? parseFloat(it.dataset.budgetmax) : null;
+    if (!isNaN(filtreMin) && bMax !== null && bMax < filtreMin) visible = false;
+    if (!isNaN(filtreMin) && bMax === null && bMin !== null && bMin < filtreMin) visible = false;
+    if (!isNaN(filtreMax) && bMin !== null && bMin > filtreMax) visible = false;
+
+    if (_filtreFraicheurMarches && it.dataset.date) {
+      var diffHeures = (maintenant - new Date(it.dataset.date)) / 3600000;
+      if (diffHeures > seuilsHeures[_filtreFraicheurMarches]) visible = false;
+    }
+
+    it.style.display = visible ? "" : "none";
+    if (visible) aucunVisible = false;
+  });
+
+  var elVide = document.getElementById("marchesVideFiltre");
+  if (elVide) elVide.remove();
+  if (aucunVisible && items.length) {
+    document.getElementById("marchesList").insertAdjacentHTML("beforeend", '<div class="empty" id="marchesVideFiltre">Aucun marché ne correspond à ces filtres.</div>');
+  }
+}
+
+function reinitialiserFiltresMarches() {
+  document.getElementById("filtrePrixMin").value = "";
+  document.getElementById("filtrePrixMax").value = "";
+  _filtreFraicheurMarches = "";
+  document.querySelectorAll("#fraicheurBtns .fraicheur-btn").forEach(function(b, i){ b.classList.toggle("active", i === 0); });
+  appliquerFiltresMarches();
+}
+
+async function proposer(marcheId) {
+  if (!_userId) { alert("Connecte-toi d'abord pour faire une proposition."); window.location.href = "/"; return; }
+  if (!_fournisseurId) {
+    var creationF = await _supabase.from("lokt_fournisseurs").insert({ user_id: _userId }).select().single();
+    if (creationF.error) { alert("Erreur : " + creationF.error.message); return; }
+    _fournisseurId = creationF.data.id;
+  }
+  var description = prompt("Décris ton offre (produits, capacité, délai...) :");
+  if (!description) return;
+  var prix = prompt("Prix proposé (FCFA, optionnel) :");
+  var delai = prompt("Délai de livraison en jours (optionnel) :");
+  var ins = await _supabase.from("lokt_marche_propositions").insert({
+    marche_id: marcheId, fournisseur_id: _fournisseurId, description_offre: description,
+    prix_propose: parseInt(prix) || null, delai_jours: parseInt(delai) || null
+  });
+  if (ins.error) { alert("Erreur : " + ins.error.message); return; }
+  alert("Proposition envoyée ✅");
+}
+
+initSession();
+</script>
+<script src="/lokali-widgets-unifie.js"></script>
+<script src="/lokali-bandeau-sponsors.js"></script>
+</body>
+</html>

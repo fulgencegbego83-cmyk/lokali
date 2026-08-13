@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light">
+<title>Suivre ma commande — LOKALI</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+:root{color-scheme:light;--orange:#F97316;--orange2:#FB923C;--orange-txt:#C2410C;--dark:#F1F5F9;--card:#FFFFFF;
+  --border:rgba(15,23,42,.10);--white:#1E293B;--gray:#64748B;--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Manrope',Arial,sans-serif;background:var(--dark);color:var(--white);padding-bottom:40px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.95);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(15,23,42,.06);padding:10px 16px;min-height:56px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--white);font-size:16px;font-weight:900}
+.wrap{max-width:600px;margin:0 auto;padding:72px 16px 20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:14px}
+.empty{color:var(--gray);font-size:13px;text-align:center;padding:40px 0}
+#carteLivraison{width:100%;height:260px;border-radius:var(--radius);overflow:hidden;margin-bottom:14px;background:#e5e7eb}
+.etape{display:flex;gap:12px;padding:10px 0}
+.etape-point{width:14px;height:14px;border-radius:50%;background:rgba(15,23,42,.15);flex-shrink:0;margin-top:3px;position:relative}
+.etape.faite .etape-point{background:#059669}
+.etape:not(:last-child) .etape-point:after{content:"";position:absolute;top:14px;left:6px;width:2px;height:28px;background:rgba(15,23,42,.1)}
+.etape.faite:not(:last-child) .etape-point:after{background:#059669}
+.etape-texte{font-size:13px;font-weight:700}
+.etape:not(.faite) .etape-texte{color:var(--gray);font-weight:600}
+.btn{display:inline-block;background:var(--orange);color:#fff;border:none;border-radius:30px;padding:12px 20px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-logo" href="/">LOKALI</a>
+  <a class="nav-logo" href="/" style="font-size:13px">Accueil ›</a>
+</nav>
+
+<div class="wrap">
+  <div id="zoneConnexionRequise" class="card" style="display:none;text-align:center">
+    <div style="font-size:32px;margin-bottom:10px">🔒</div>
+    <h2 style="margin-bottom:8px">Connexion requise</h2>
+    <p style="font-size:13px;color:var(--gray);margin-bottom:14px">Connecte-toi pour suivre ta commande.</p>
+    <a class="btn" href="/?action=inscription">Se connecter</a>
+  </div>
+
+  <div id="zoneSuivi" style="display:none">
+    <div class="card" style="text-align:center">
+      <div style="font-size:13px;color:var(--gray);margin-bottom:4px">Commande</div>
+      <div id="produitNom" style="font-size:18px;font-weight:900;margin-bottom:4px"></div>
+      <div id="produitPrix" style="font-size:14px;color:var(--orange2);font-weight:800"></div>
+    </div>
+
+    <div class="card" id="carteZone" style="display:none;padding:0;overflow:hidden">
+      <div id="carteLivraison"></div>
+      <p id="carteInfo" style="font-size:12px;color:var(--gray);padding:12px 16px;text-align:center"></p>
+    </div>
+
+    <div class="card">
+      <h3 style="font-size:14px;margin-bottom:14px">Statut de ta commande</h3>
+      <div id="etapesListe"></div>
+    </div>
+
+    <div class="card" id="livreurZone" style="display:none">
+      <h3 style="font-size:14px;margin-bottom:10px">Ton livreur</h3>
+      <div id="livreurInfo" style="font-size:13px;color:var(--gray)"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPA_URL = "https://qmwdneqxyyvrcrseudwt.supabase.co";
+var SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFtd2RuZXF4eXl2cmNyc2V1ZHd0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI2NDIwMDEsImV4cCI6MjA5ODIxODAwMX0.pQIxHsk080-SY-eeG268zS-uhJHuFQv6QE6pcH5vBB8";
+var _supabase = supabase.createClient(SUPA_URL, SUPA_KEY);
+var _userId = null;
+var _carte = null;
+var _marqueurLivreur = null;
+var _canalPosition = null;
+
+var ETAPES_STATUT = [
+  { cle: "paiement_en_attente", texte: "Paiement en attente de vérification" },
+  { cle: "paiement_confirme", texte: "Paiement confirmé" },
+  { cle: "commande_confirmee", texte: "Commande confirmée par le vendeur" },
+  { cle: "preparation", texte: "Préparation en cours" },
+  { cle: "pret", texte: "Colis prêt" },
+  { cle: "livreur_affecte", texte: "Livreur affecté" },
+  { cle: "colis_recupere", texte: "Colis récupéré par le livreur" },
+  { cle: "livraison_en_cours", texte: "Livraison en cours" },
+  { cle: "livre", texte: "Livré" }
+];
+
+async function initSuivi() {
+  var res = await _supabase.auth.getSession();
+  var session = res && res.data ? res.data.session : null;
+  if (!session) { document.getElementById("zoneConnexionRequise").style.display = "block"; return; }
+  _userId = session.user.id;
+
+  var params = new URLSearchParams(window.location.search);
+  var commandeId = params.get("id");
+  if (!commandeId) { document.getElementById("zoneSuivi").innerHTML = '<div class="empty">Commande introuvable.</div>'; document.getElementById("zoneSuivi").style.display = "block"; return; }
+
+  document.getElementById("zoneSuivi").style.display = "block";
+  chargerCommande(commandeId);
+  _supabase
+    .channel("commande-" + commandeId)
+    .on("postgres_changes", { event: "UPDATE", schema: "public", table: "lokt_commandes", filter: "id=eq." + commandeId }, function(){ chargerCommande(commandeId); })
+    .subscribe();
+}
+
+async function chargerCommande(commandeId) {
+  var r = await _supabase.from("lokt_commandes").select("*").eq("id", commandeId).maybeSingle();
+  if (!r.data) { document.getElementById("zoneSuivi").innerHTML = '<div class="empty">Cette commande n\'existe pas ou tu n\'y as pas accès.</div>'; return; }
+  var c = r.data;
+
+  document.getElementById("produitNom").textContent = c.nom_produit;
+  document.getElementById("produitPrix").textContent = c.prix ? c.prix.toLocaleString("fr-FR") + " FCFA" : "";
+
+  var etapesAffichees = ETAPES_STATUT;
+  if (c.mode_reception === "retrait") {
+    etapesAffichees = ETAPES_STATUT.filter(function(e){ return e.cle !== "livreur_affecte" && e.cle !== "colis_recupere" && e.cle !== "livraison_en_cours"; });
+  }
+  var indexActuel = etapesAffichees.findIndex(function(e){ return e.cle === c.statut; });
+
+  document.getElementById("etapesListe").innerHTML = etapesAffichees.map(function(e, i){
+    return '<div class="etape ' + (i <= indexActuel ? "faite" : "") + '"><div class="etape-point"></div><div class="etape-texte">' + e.texte + '</div></div>';
+  }).join("");
+
+  if (c.statut === "annulee") document.getElementById("etapesListe").innerHTML = '<div class="etape faite" style="color:#DC2626"><div class="etape-point" style="background:#DC2626"></div><div class="etape-texte">Commande annulée</div></div>';
+  if (c.statut === "probleme") document.getElementById("etapesListe").innerHTML += '<div class="etape faite" style="color:#DC2626"><div class="etape-point" style="background:#DC2626"></div><div class="etape-texte">Un problème est survenu — le vendeur te contactera</div></div>';
+
+  if (c.mode_reception === "livraison" && c.statut === "livraison_en_cours") {
+    document.getElementById("carteZone").style.display = "block";
+    suivrePositionLivreur(c.id, c.livraison_lat, c.livraison_lng);
+  } else {
+    document.getElementById("carteZone").style.display = "none";
+  }
+}
+
+function suivrePositionLivreur(commandeId, latDestination, lngDestination) {
+  if (!_carte) {
+    _carte = L.map("carteLivraison").setView([latDestination || 5.34, lngDestination || -4.03], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution: "© OpenStreetMap" }).addTo(_carte);
+    if (latDestination && lngDestination) {
+      L.marker([latDestination, lngDestination], { title: "Ton adresse" }).addTo(_carte)
+        .bindPopup("📍 Adresse de livraison").openPopup();
+    }
+  }
+
+  async function rafraichirPosition() {
+    var r = await _supabase.from("lokt_livraison_position").select("*").eq("commande_id", commandeId).maybeSingle();
+    if (!r.data) { document.getElementById("carteInfo").textContent = "En attente de la position du livreur..."; return; }
+    var pos = [r.data.lat, r.data.lng];
+    if (_marqueurLivreur) {
+      _marqueurLivreur.setLatLng(pos);
+    } else {
+      _marqueurLivreur = L.marker(pos, { title: "Ton livreur" }).addTo(_carte).bindPopup("🛵 Ton livreur");
+    }
+    _carte.panTo(pos);
+    var minutesEcoulees = Math.round((Date.now() - new Date(r.data.updated_at).getTime()) / 60000);
+    document.getElementById("carteInfo").textContent = minutesEcoulees < 1 ? "Position mise à jour à l'instant" : "Position mise à jour il y a " + minutesEcoulees + " min";
+  }
+
+  rafraichirPosition();
+  if (!_canalPosition) {
+    _canalPosition = setInterval(rafraichirPosition, 15000);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", initSuivi);
+</script>
+</body>
+</html>
